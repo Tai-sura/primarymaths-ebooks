@@ -1,4 +1,4 @@
-import { BOOK, SOLUTION_BY_ID, hasGraphic, hasGuide } from "../book.js";
+import { BOOK, BOOK_DIR, SOLUTION_BY_ID, hasGraphic, hasGuide } from "../book.js";
 import { hasEmbed } from "./embed.js";
 import { guideButton } from "./guide.js";
 
@@ -648,6 +648,27 @@ export function buildOverlay(page, overlay) {
       Object.assign(chip.style, { left: `${cx}px`, top: `${cy}px` });
       chip.innerHTML = (canGraphic(q.id) ? graphicButton(q.id) : "") + (hasGuide(q.id) ? guideButton(q.id) : "");
       overlay.append(chip);
+      continue;
+    }
+    if (q.stamps?.length) {
+      // The answer is the teacher's own red mark cut from the ANS page: pasted back
+      // at the same spot it shows the answer in its blank, exactly as the key prints
+      // it, with no working and no card. Nothing to lay out, and the page never moves.
+      for (const s of q.stamps) {
+        const img = document.createElement("img");
+        img.className = "ans-stamp";
+        img.src = `${BOOK_DIR}${s.img}`;
+        img.alt = "";
+        img.draggable = false;
+        Object.assign(img.style, {
+          left: `${s.rect[0]}px`,
+          top: `${s.rect[1]}px`,
+          width: `${s.rect[2] - s.rect[0]}px`,
+          height: `${s.rect[3] - s.rect[1]}px`,
+        });
+        overlay.append(img);
+      }
+      q.space = 0;
       continue;
     }
     const qa = document.createElement("div");

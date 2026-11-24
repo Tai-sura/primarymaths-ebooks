@@ -1082,3 +1082,14 @@ body.embed-open { overflow: hidden; }
 .qa.card.scroll .qa-in { overflow: auto; }
 .qa.card .qa-bar { top: 34px; bottom: 6px; }
 
+
+/* ---------- answers cut from the ANS page (book.json "answerStamps") ----------
+   A fill-in book shows the teacher's red answer in its own blank: the PNG is the
+   ANS page cropped round one answer, drawn at the page point it came from. */
+.ans-stamp {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
