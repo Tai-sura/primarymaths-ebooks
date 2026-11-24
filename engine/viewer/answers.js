@@ -684,16 +684,18 @@ export function buildOverlay(page, overlay) {
         qa.append(ln);
       }
       overlay.append(qa);
-      // A stamped answer opens from its own Play button. It sits just inside the
-      // text column at the top-right of the answer line (layout `cardAt` measured
-      // on blank paper, stepped left so the right-edge toolbar never covers it),
-      // not on the page: a tap anywhere else does nothing.
-      const at = q.cardAt ? [Math.max(60, q.cardAt[0] - 24), q.cardAt[1]] : [522, first[1] + 1];
+      // A stamped answer opens from its own Play button: the same ▸ button, box and
+      // fill as an inline answer's Play, so a book never shows two kinds of Play.
+      // `playAt` is the spot tools/extract_pages.py measured - the top-right of the
+      // answer line, inside the text column and clear of printed ink - so the
+      // right-edge toolbar cannot cover it. A tap anywhere else does nothing.
+      const at = q.playAt || (q.cardAt ? [Math.max(60, q.cardAt[0] - 24), q.cardAt[1]] : [522, first[1] + 1]);
       const play = document.createElement("button");
       play.type = "button";
       play.className = "ans-play";
       play.dataset.act = "stamp";
       play.dataset.q = q.id;
+      play.textContent = "▸";
       play.title = "Show the answer";
       play.setAttribute("aria-label", `Show the answer for question ${q.label || q.id}`);
       Object.assign(play.style, { left: `${at[0]}px`, top: `${at[1]}px` });
