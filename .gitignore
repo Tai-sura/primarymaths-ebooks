@@ -1,0 +1,9 @@
+# Source PDFs and authoring references are not needed by the web app.
+*.pdf
+books/*/source/
+books/*/reference/
+# Manim's working files (tools/render_media.py copies the finished videos into books/*/media/).
+tools/_manim/
+/media/
+__pycache__/
+node_modules/
