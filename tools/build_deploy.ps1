@@ -24,7 +24,10 @@ if (Test-Path $swDst) {
 }
 
 if (Test-Path $Dst) {
-  Get-ChildItem $Dst -Force | Where-Object { $_.Name -ne ".git" } | Remove-Item -Recurse -Force
+  # Keep the authoring side when the deploy clone is also the source repo (the
+  # maths site carries tools/, docs/ and .cursor/ next to the published files).
+  $keep = @(".git", "tools", "docs", ".cursor", ".gitignore")
+  Get-ChildItem $Dst -Force | Where-Object { $keep -notcontains $_.Name } | Remove-Item -Recurse -Force
 } else {
   New-Item -ItemType Directory -Force -Path $Dst | Out-Null
 }

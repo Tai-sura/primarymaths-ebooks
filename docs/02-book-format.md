@@ -88,7 +88,7 @@ For a fill-in worksheet the answer *is* the red mark on the ANS page: a word in 
 "stamps": [{ "img": "answers/p03_q01.png", "rect": [135.8, 150.0, 199.5, 179.2] }]
 ```
 
-The reader draws that PNG over the page at `rect` (page points, so it lands exactly where it was on the key) and lays nothing else out: no card, no `space`, no page cut. A stamp is hidden until its blank is tapped — tap again to hide it, and Show all / Hide all work too — so the page reads exactly as printed until the answer is asked for. MC and long questions keep the in-page working.
+The reader draws that PNG over the page at `rect` (page points, so it lands exactly where it was on the key) and lays nothing else out: no card, no `space`, no page cut. Each stamp has a small Play button at the top-right of its line: press it and the answer appears in its blank, press it again and it hides. Show all / Hide all drive every stamp. the page reads exactly as printed until the answer is asked for. MC and long questions keep the in-page working.
 
 Run `check_book.mjs` afterwards: it fails when a stamp falls outside the page or has no image, and a missing PNG shows up as an HTTP 404. Re-running `extract_pages.py` re-cuts every stamp, so a page change cannot leave a stale answer behind.
 
