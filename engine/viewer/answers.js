@@ -505,6 +505,20 @@ function placeCtl(qa, els) {
   const { rows, side, width } = ctlGrid(qa, qa.offsetHeight);
   ctl.style.setProperty("--rows", rows);
   ctl.classList.toggle("side", side);
+  const x0 = parseFloat(qa.style.left) || 0;
+  const y0 = parseFloat(qa.style.top) || 0;
+  // A hand-placed strip (book.json `ctlAt`, in page points) wins over the measured
+  // one: some questions leave only a narrow gap between the answer and a printed
+  // figure, and no rule can find it from the ink alone.
+  if (qa.ctlAt) {
+    const want = Math.min(PAGE_W - width - 2, qa.ctlAt[0]) - x0;
+    // A pinned strip may sit in the page's left margin, left of the card itself.
+    ctl.style.left = `${Math.max(2 - x0, want)}px`;
+    if (qa.ctlAt[1] != null) ctl.style.top = `${qa.ctlAt[1] - y0}px`;
+    ctl.style.right = "auto";
+    ctl.dataset.home = ctl.style.left;
+    return;
+  }
   const right = els.reduce((m, el) => Math.max(m, el.offsetLeft + inkWidth(el)), 0);
   const bar = qa.classList.contains("scroll") ? BAR : 0;
   if (bar) {
@@ -512,8 +526,6 @@ function placeCtl(qa, els) {
     qa.querySelector(".qa-bar").style.left = `${Math.ceil(right) + 3}px`;
   }
   const limit = qa.offsetWidth - width - (side ? 24 : 0);
-  const x0 = parseFloat(qa.style.left) || 0;
-  const y0 = parseFloat(qa.style.top) || 0;
   const fig = figureLeft(qa, y0, y0 + qa.offsetHeight, x0);
   const figLimit = fig == null ? Infinity : fig - x0 - FIG_MARGIN - width - (side ? 24 : 0);
   let left = Math.min(right + 6 + bar, limit, figLimit);
@@ -718,6 +730,9 @@ export function buildOverlay(page, overlay) {
     const qa = document.createElement("div");
     qa.className = isCard(q) ? "qa card" : "qa";
     qa.dataset.q = q.id;
+    // `ctlAt` pins the step buttons by hand for a question whose measured spot
+    // lands on a printed figure (see book.json `extract.overrides`).
+    if (q.ctlAt) qa.ctlAt = q.ctlAt;
     Object.assign(qa.style, { left: `${x0}px`, top: `${y0}px`, width: `${x1 - x0}px`, height: `${y1 - y0}px` });
     if (isCard(q)) {
       // A worksheet's page has no blank paper to write the working in: the answer
