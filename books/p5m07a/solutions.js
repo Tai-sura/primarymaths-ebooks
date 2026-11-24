@@ -35,7 +35,8 @@ export const SOLUTIONS = [
     boxes: [{
       steps: [
         t("A diameter is made of two radii."),
-        m(`\\text{length of diameter} = \\underline{2} \\times \\text{length of radius}`),
+        m(`\\text{length of diameter}`),
+        m(`= \\underline{2} \\times \\text{length of radius}`),
       ],
     }],
   },
@@ -570,10 +571,10 @@ export const SOLUTIONS = [
     id: "hw5",
     boxes: [{
       steps: [
-        t("(a) Draw AB through O with A and B on the circumference — a diameter."),
+        t("(a) Draw AB through O, with A and B on the circle — a diameter."),
         t("(b) Draw another diameter CD through O, not on AB."),
         t("(c) Draw OE from the centre to the circumference — a radius."),
-        t("(d) Draw FG with F and G on the circle and the line not passing through O — a chord."),
+        t("(d) Draw FG with F and G on the circle, the line missing O — a chord."),
       ],
     }],
   },
@@ -582,7 +583,8 @@ export const SOLUTIONS = [
     boxes: [{
       steps: [
         t("Measure the diameter AB and the radius OE from the figure."),
-        m(`\\text{(a) AB} = ${U("5")} \\text{ cm}, \\quad \\text{OE} = ${U("2.5")} \\text{ cm}`),
+        m(`\\text{(a) AB} = ${U("5")} \\text{ cm}`),
+        m(`\\text{OE} = ${U("2.5")} \\text{ cm}`),
       ],
     }, {
       steps: [
@@ -645,7 +647,7 @@ export const SOLUTIONS = [
     id: "hw11",
     boxes: [{
       steps: [
-        m(`\\text{Circle S: diameter} = 1 \\text{ cm} = 10 \\text{ mm}`),
+        m(`\\text{1 cm} = 10 \\text{ mm}`),
         m(`\\text{radius} = 10 \\div 2`),
         m(`= ${U("5")} \\text{ mm}`),
       ],
@@ -655,10 +657,9 @@ export const SOLUTIONS = [
     id: "hw12",
     boxes: [{
       steps: [
-        m(`\\text{radius} = 12 \\text{ cm} \\Rightarrow \\text{diameter} = 24 \\text{ cm}`),
+        m(`\\text{diameter} = 2 \\times 12 = 24 \\text{ cm}`),
         t("AB spans four diameters."),
-        m(`\\text{AB} = 8 \\times 12`),
-        m(`= ${U("96")} \\text{ cm}`),
+        m(`\\text{AB} = 8 \\times 12 = ${U("96")} \\text{ cm}`),
       ],
     }],
   },
