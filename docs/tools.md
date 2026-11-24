@@ -71,6 +71,7 @@ These are files in this workspace, so they are ours to edit and are not upstream
 | three.js + Mixamo | A real climbing clip exists, but 3D shading clashes with the printed line art on the page. |
 | rtk (Rust Token Killer) | Hooks only work under Bash, we run pwsh, and it truncates the coordinates and checksums the QA depends on. |
 | Graphify | Useful for "what touches this module"; not better than grep for finding the exact write site. Pilot only, no install. |
+| elephant-goldfish-model (EGM, google) | Pilot run 2026-11-25: its two reviewer prompts (naive-reader paraphrase + hostile critic) found ~24 real gaps in `docs/01-workflow.md`, so the *method* is kept as the shared skill `doc-review`. The plugin itself is not installed: it needs a fresh-context subagent harness (DSH is not supported), SkillSpector rates `egm-review` CAUTION with a HIGH finding (it reads agent config dirs to locate its own resources), and its rubrics target software specs. |
 
 ## 6. Keeping this file honest
 
