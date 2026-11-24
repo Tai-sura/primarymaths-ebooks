@@ -59,6 +59,24 @@
         "section": "level1"
       },
       {
+        "id": "q4",
+        "page": 3,
+        "label": "4",
+        "section": "level1"
+      },
+      {
+        "id": "q5",
+        "page": 3,
+        "label": "5",
+        "section": "level1"
+      },
+      {
+        "id": "q6",
+        "page": 3,
+        "label": "6",
+        "section": "level1"
+      },
+      {
         "id": "q7",
         "page": 3,
         "label": "7",
@@ -125,6 +143,42 @@
         "section": "level1"
       },
       {
+        "id": "q18",
+        "page": 4,
+        "label": "18",
+        "section": "level1"
+      },
+      {
+        "id": "q19",
+        "page": 4,
+        "label": "19",
+        "section": "level1"
+      },
+      {
+        "id": "q20",
+        "page": 4,
+        "label": "20",
+        "section": "level1"
+      },
+      {
+        "id": "q21",
+        "page": 4,
+        "label": "21",
+        "section": "level1"
+      },
+      {
+        "id": "q22",
+        "page": 4,
+        "label": "22",
+        "section": "level1"
+      },
+      {
+        "id": "q23",
+        "page": 4,
+        "label": "23",
+        "section": "level1"
+      },
+      {
         "id": "q24",
         "page": 5,
         "label": "24",
@@ -134,12 +188,6 @@
         "id": "q25",
         "page": 5,
         "label": "25",
-        "section": "level1"
-      },
-      {
-        "id": "q3",
-        "page": 5,
-        "label": "3",
         "section": "level1"
       },
       {
@@ -182,12 +230,6 @@
         "id": "q33",
         "page": 5,
         "label": "33",
-        "section": "level1"
-      },
-      {
-        "id": "q24",
-        "page": 5,
-        "label": "24",
         "section": "level1"
       },
       {
@@ -267,6 +309,104 @@
         "page": 9,
         "label": "46",
         "section": "level2"
+      },
+      {
+        "id": "hw1",
+        "page": 10,
+        "label": "1",
+        "section": "homework",
+        "note": "A, B, C and D are points on the ____"
+      },
+      {
+        "id": "hw2",
+        "page": 10,
+        "label": "2",
+        "section": "homework",
+        "note": "____ is a diameter of the circle"
+      },
+      {
+        "id": "hw3",
+        "page": 10,
+        "label": "3",
+        "section": "homework",
+        "note": "OA, ____ and ____ are ____ of the circle"
+      },
+      {
+        "id": "hw4",
+        "page": 10,
+        "label": "4",
+        "section": "homework",
+        "note": "C, ____ and ____ form an isosceles triangle"
+      },
+      {
+        "id": "hw5",
+        "page": 10,
+        "label": "5",
+        "section": "homework",
+        "note": "Draw two diameters AB and CD; a radius OE; a chord FG off the centre"
+      },
+      {
+        "id": "hw6",
+        "page": 10,
+        "label": "6",
+        "section": "homework",
+        "note": "Measure AB and OE; diameter/radius relation; FG vs diameter"
+      },
+      {
+        "id": "hw7",
+        "page": 10,
+        "label": "7",
+        "section": "homework",
+        "note": "Can/cannot draw a segment longer than AB or shorter than OE"
+      },
+      {
+        "id": "hw8",
+        "page": 11,
+        "label": "8",
+        "section": "homework",
+        "note": "Table: circle P, radius 33 cm -> diameter"
+      },
+      {
+        "id": "hw9",
+        "page": 11,
+        "label": "9",
+        "section": "homework",
+        "note": "Table: circle Q, diameter 24 cm -> radius"
+      },
+      {
+        "id": "hw10",
+        "page": 11,
+        "label": "10",
+        "section": "homework",
+        "note": "Table: circle R, radius 9.5 cm -> diameter"
+      },
+      {
+        "id": "hw11",
+        "page": 11,
+        "label": "11",
+        "section": "homework",
+        "note": "Table: circle S, diameter 1 cm -> radius in mm"
+      },
+      {
+        "id": "hw12",
+        "page": 11,
+        "label": "12",
+        "section": "homework",
+        "note": "Five equal circles, radii 12 cm: find AB"
+      },
+      {
+        "id": "hw13",
+        "page": 11,
+        "label": "13",
+        "section": "homework",
+        "note": "Two large + two small circles: perimeter of the trapezium of centres"
+      },
+      {
+        "id": "hw14",
+        "page": 11,
+        "label": "14",
+        "section": "homework",
+        "note": "Semicircle on BC, radius 10 cm: area of rectangle ABCD"
       }
     ],
     "anchors": {},
