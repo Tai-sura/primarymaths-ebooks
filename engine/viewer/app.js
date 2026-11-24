@@ -171,6 +171,7 @@ function act(name, id) {
   else if (name === "back") setReveal(id, revealed(id) - 1);
   else if (name === "all") setReveal(id, totalSteps(id));
   else if (name === "reset") setReveal(id, 0);
+  else if (name === "stamp") setReveal(id, revealed(id) > 0 ? 0 : totalSteps(id));
   else if (name === "graphic") openGraphic(id);
   else if (name === "guide") openGuide(id, questionLabel(id));
 }
@@ -976,12 +977,8 @@ function bindViewport() {
     const qa = event.target.closest(".qa");
     if (!qa) return;
     const id = qa.dataset.q;
-    // A stamped answer is a tap-to-reveal mark cut from the key: tap shows it,
-    // tapping it again hides it.
-    if (qa.classList.contains("stamp")) {
-      setReveal(id, revealed(id) > 0 ? 0 : totalSteps(id));
-      return;
-    }
+    // A stamped answer opens from its own Play button (data-act="stamp"); the stamp
+    // area itself is not clickable, so a tap on the printed page does nothing.
     if (!event.target.closest(".abox")) return;
     const hidden = event.target.closest(".ln.hid");
     if (hidden) setReveal(id, Number(hidden.dataset.i) + 1);

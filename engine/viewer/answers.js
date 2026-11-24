@@ -684,6 +684,20 @@ export function buildOverlay(page, overlay) {
         qa.append(ln);
       }
       overlay.append(qa);
+      // A stamped answer opens from its own Play button. It sits just inside the
+      // text column at the top-right of the answer line (layout `cardAt` measured
+      // on blank paper, stepped left so the right-edge toolbar never covers it),
+      // not on the page: a tap anywhere else does nothing.
+      const at = q.cardAt ? [Math.max(60, q.cardAt[0] - 24), q.cardAt[1]] : [522, first[1] + 1];
+      const play = document.createElement("button");
+      play.type = "button";
+      play.className = "ans-play";
+      play.dataset.act = "stamp";
+      play.dataset.q = q.id;
+      play.title = "Show the answer";
+      play.setAttribute("aria-label", `Show the answer for question ${q.label || q.id}`);
+      Object.assign(play.style, { left: `${at[0]}px`, top: `${at[1]}px` });
+      overlay.append(play);
       q.space = 0;
       continue;
     }
@@ -1375,4 +1389,9 @@ export function paint(root, id, n) {
     if (inner) placeCtl(el, [...inner.children]);
   });
   root.querySelectorAll(`.mcl[data-q="${id}"], .ring[data-q="${id}"]`).forEach((el) => el.classList.toggle("show", done));
+  // The stamp's Play button shows whether its answer is out.
+  root.querySelectorAll(`.ans-play[data-q="${id}"]`).forEach((el) => {
+    el.classList.toggle("on", n > 0);
+    el.title = n > 0 ? "Hide the answer" : "Show the answer";
+  });
 }
