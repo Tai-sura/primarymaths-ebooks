@@ -653,21 +653,37 @@ export function buildOverlay(page, overlay) {
     if (q.stamps?.length) {
       // The answer is the teacher's own red mark cut from the ANS page: pasted back
       // at the same spot it shows the answer in its blank, exactly as the key prints
-      // it, with no working and no card. Nothing to lay out, and the page never moves.
+      // it, with no working and no card. Each stamp is a hidden line of its question,
+      // so a tap (or Show all) reveals it and the page never moves.
+      const rs = q.stamps.map((s) => s.rect);
+      const x0 = Math.min(...rs.map((r) => r[0])) - 6;
+      const y0 = Math.min(...rs.map((r) => r[1])) - 6;
+      const x1 = Math.max(...rs.map((r) => r[2])) + 6;
+      const y1 = Math.max(...rs.map((r) => r[3])) + 6;
+      const qa = document.createElement("div");
+      qa.className = "qa stamp";
+      qa.dataset.q = q.id;
+      Object.assign(qa.style, { left: `${x0}px`, top: `${y0}px`, width: `${x1 - x0}px`, height: `${y1 - y0}px` });
       for (const s of q.stamps) {
+        const ln = document.createElement("div");
+        ln.className = "ln stamp-line";
+        ln.dataset.q = q.id;
+        ln.dataset.i = "0";
+        Object.assign(ln.style, {
+          left: `${s.rect[0] - x0}px`,
+          top: `${s.rect[1] - y0}px`,
+          width: `${s.rect[2] - s.rect[0]}px`,
+          height: `${s.rect[3] - s.rect[1]}px`,
+        });
         const img = document.createElement("img");
         img.className = "ans-stamp";
         img.src = `${BOOK_DIR}${s.img}`;
         img.alt = "";
         img.draggable = false;
-        Object.assign(img.style, {
-          left: `${s.rect[0]}px`,
-          top: `${s.rect[1]}px`,
-          width: `${s.rect[2] - s.rect[0]}px`,
-          height: `${s.rect[3] - s.rect[1]}px`,
-        });
-        overlay.append(img);
+        ln.append(img);
+        qa.append(ln);
       }
+      overlay.append(qa);
       q.space = 0;
       continue;
     }
@@ -954,7 +970,9 @@ function answerRight(q, qa, bar, wide) {
   const { width, side } = ctlGrid(qa, regionHeight(q));
   const buttons = width + (side ? 24 : 0);
   const pageEdge = PAGE_W - 4 - buttons - 6 - x0;
-  const ink = figureLeft(qa, q.region[1], q.region[3], x0);
+  // A region drawn over printed ruled lines is not a figure: every column has ink,
+  // and treating that as a figure would shrink the answer to a sliver.
+  const ink = q.plain ? null : figureLeft(qa, q.region[1], q.region[3], x0);
   const clear = ink == null ? pageEdge : ink - FIG_MARGIN - buttons - 6 - x0;
   const room = Math.min(pageEdge, clear);
   if (!wide) return Math.min(right, room) - bar;
@@ -1304,6 +1322,8 @@ export function layoutAnswers(world, layout) {
       if (!qa) continue;
       // A card is set inside itself when it opens, not on the page.
       if (qa.classList.contains("card")) continue;
+      // A stamped answer has nothing to lay out: the key's own image is the answer.
+      if (qa.classList.contains("stamp")) continue;
       qa.classList.remove("flow", "scroll");
       qa.style.height = `${regionHeight(q)}px`;
       const sol = SOLUTION_BY_ID[q.id];

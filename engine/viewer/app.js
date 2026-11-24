@@ -973,9 +973,16 @@ function bindViewport() {
       act("all", square.dataset.q);
       return;
     }
-    const qa = event.target.closest(".abox") && event.target.closest(".qa");
+    const qa = event.target.closest(".qa");
     if (!qa) return;
     const id = qa.dataset.q;
+    // A stamped answer is a tap-to-reveal mark cut from the key: tap shows it,
+    // tapping it again hides it.
+    if (qa.classList.contains("stamp")) {
+      setReveal(id, revealed(id) > 0 ? 0 : totalSteps(id));
+      return;
+    }
+    if (!event.target.closest(".abox")) return;
     const hidden = event.target.closest(".ln.hid");
     if (hidden) setReveal(id, Number(hidden.dataset.i) + 1);
     else if (revealed(id) < totalSteps(id)) setReveal(id, revealed(id) + 1);

@@ -1093,3 +1093,12 @@ body.embed-open { overflow: hidden; }
   user-select: none;
   -webkit-user-drag: none;
 }
+
+/* A stamped answer: the key's red mark, hidden until the reader taps its blank. */
+.qa.stamp { z-index: 4; cursor: pointer; touch-action: manipulation; }
+.qa.stamp .ln.stamp-line { position: absolute; padding: 0; margin: 0; display: block; min-width: 0; }
+.qa.stamp .ln.stamp-line.hid::before { display: none; }
+.qa.stamp .ans-stamp { display: block; width: 100%; height: 100%; pointer-events: none; }
+/* A stamped answer shows nothing until it is tapped: the printed blank is the cue,
+   so the usual red "tap" hint stays off. */
+.qa.stamp .ln.stamp-line.hid.next::after { content: none; }
