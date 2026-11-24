@@ -56,6 +56,16 @@ for (const p of [`reader.html?book=${id}`, `books/${id}/layout.json`, `books/${i
   const text = await get(p, "text");
   if (text === null && p.endsWith(".js")) fails.push(`${p}: not served`);
 }
+// The service worker only refetches when CACHE changes: if a file differs from the
+// local one but the CACHE was not bumped, every reader keeps the old copy.
+const same = (a, b) => a.replace(/\r\n/g, "\n") === b.replace(/\r\n/g, "\n");
+for (const rel of [`books/${id}/book.json`, `books/${id}/layout.json`, `books/${id}/solutions.js`]) {
+  const local = fs.readFileSync(path.join(ROOT, rel), "utf8");
+  const liveText = await get(rel, "text");
+  if (liveText !== null && !same(local, liveText) && liveCache === localCache) {
+    fails.push(`${rel} differs from the local build but CACHE is still "${localCache}" - bump it, or readers keep the old file`);
+  }
+}
 if (live?.answerStamps?.length) {
   const imgs = fs.readdirSync(path.join(ROOT, "books", id, "answers"));
   const first = await get(`books/${id}/answers/${imgs[0]}`, "text");
