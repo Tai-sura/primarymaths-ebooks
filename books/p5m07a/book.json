@@ -10,9 +10,22 @@
   "source": {
     "que": "source/P5 Maths L07 Circles (A)[QUE].pdf",
     "ans": "source/P5 Maths L07 Circles (A)[ANS].pdf",
-    "ansPageOffset": -1
+    "ansPageOffset": 0
   },
-  "sections": [],
+  "sections": [
+    {
+      "id": "level1",
+      "label": "Level 1"
+    },
+    {
+      "id": "level2",
+      "label": "Level 2"
+    },
+    {
+      "id": "homework",
+      "label": "Homework"
+    }
+  ],
   "continuation": {
     "top": 96,
     "x": 48,
@@ -26,7 +39,236 @@
       546
     ],
     "footer": 822,
-    "questions": [],
+    "questions": [
+      {
+        "id": "q1",
+        "page": 3,
+        "label": "1",
+        "section": "level1"
+      },
+      {
+        "id": "q2",
+        "page": 3,
+        "label": "2",
+        "section": "level1"
+      },
+      {
+        "id": "q3",
+        "page": 3,
+        "label": "3",
+        "section": "level1"
+      },
+      {
+        "id": "q7",
+        "page": 3,
+        "label": "7",
+        "section": "level1"
+      },
+      {
+        "id": "q8",
+        "page": 3,
+        "label": "8",
+        "section": "level1"
+      },
+      {
+        "id": "q9",
+        "page": 3,
+        "label": "9",
+        "section": "level1"
+      },
+      {
+        "id": "q10",
+        "page": 3,
+        "label": "10",
+        "section": "level1"
+      },
+      {
+        "id": "q11",
+        "page": 3,
+        "label": "11",
+        "section": "level1"
+      },
+      {
+        "id": "q12",
+        "page": 4,
+        "label": "12",
+        "section": "level1"
+      },
+      {
+        "id": "q13",
+        "page": 4,
+        "label": "13",
+        "section": "level1"
+      },
+      {
+        "id": "q14",
+        "page": 4,
+        "label": "14",
+        "section": "level1"
+      },
+      {
+        "id": "q15",
+        "page": 4,
+        "label": "15",
+        "section": "level1"
+      },
+      {
+        "id": "q16",
+        "page": 4,
+        "label": "16",
+        "section": "level1"
+      },
+      {
+        "id": "q17",
+        "page": 4,
+        "label": "17",
+        "section": "level1"
+      },
+      {
+        "id": "q24",
+        "page": 5,
+        "label": "24",
+        "section": "level1"
+      },
+      {
+        "id": "q25",
+        "page": 5,
+        "label": "25",
+        "section": "level1"
+      },
+      {
+        "id": "q3",
+        "page": 5,
+        "label": "3",
+        "section": "level1"
+      },
+      {
+        "id": "q26",
+        "page": 5,
+        "label": "26",
+        "section": "level1"
+      },
+      {
+        "id": "q27",
+        "page": 5,
+        "label": "27",
+        "section": "level1"
+      },
+      {
+        "id": "q28",
+        "page": 5,
+        "label": "28",
+        "section": "level1"
+      },
+      {
+        "id": "q30",
+        "page": 5,
+        "label": "30",
+        "section": "level1"
+      },
+      {
+        "id": "q31",
+        "page": 5,
+        "label": "31",
+        "section": "level1"
+      },
+      {
+        "id": "q32",
+        "page": 5,
+        "label": "32",
+        "section": "level1"
+      },
+      {
+        "id": "q33",
+        "page": 5,
+        "label": "33",
+        "section": "level1"
+      },
+      {
+        "id": "q24",
+        "page": 5,
+        "label": "24",
+        "section": "level1"
+      },
+      {
+        "id": "q34",
+        "page": 6,
+        "label": "34",
+        "section": "level2"
+      },
+      {
+        "id": "q35",
+        "page": 6,
+        "label": "35",
+        "section": "level2"
+      },
+      {
+        "id": "q36",
+        "page": 6,
+        "label": "36",
+        "section": "level2"
+      },
+      {
+        "id": "q37",
+        "page": 6,
+        "label": "37",
+        "section": "level2"
+      },
+      {
+        "id": "q38",
+        "page": 7,
+        "label": "38",
+        "section": "level2"
+      },
+      {
+        "id": "q39",
+        "page": 7,
+        "label": "39",
+        "section": "level2"
+      },
+      {
+        "id": "q40",
+        "page": 7,
+        "label": "40",
+        "section": "level2"
+      },
+      {
+        "id": "q41",
+        "page": 7,
+        "label": "41",
+        "section": "level2"
+      },
+      {
+        "id": "q42",
+        "page": 8,
+        "label": "42",
+        "section": "level2"
+      },
+      {
+        "id": "q43",
+        "page": 8,
+        "label": "43",
+        "section": "level2"
+      },
+      {
+        "id": "q44",
+        "page": 8,
+        "label": "44",
+        "section": "level2"
+      },
+      {
+        "id": "q45",
+        "page": 9,
+        "label": "45",
+        "section": "level2"
+      },
+      {
+        "id": "q46",
+        "page": 9,
+        "label": "46",
+        "section": "level2"
+      }
+    ],
     "anchors": {},
     "fixedAnchors": {},
     "overrides": {}
