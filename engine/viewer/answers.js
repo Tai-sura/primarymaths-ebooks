@@ -698,7 +698,19 @@ export function buildOverlay(page, overlay) {
       play.textContent = "▸";
       play.title = "Show the answer";
       play.setAttribute("aria-label", `Show the answer for question ${q.label || q.id}`);
-      Object.assign(play.style, { left: `${at[0]}px`, top: `${at[1]}px` });
+      // `playSize` lets a blank that sits in a table cell or between two printed
+      // cells take a smaller Play: the same button, drawn to fit beside its blank
+      // instead of being parked on the far side of the page. Full size is 24 x 22
+      // (.ans-play); radius and glyph scale with it so it still reads as one button.
+      const [pw, ph] = q.playSize || [24, 22];
+      Object.assign(play.style, {
+        left: `${at[0]}px`,
+        top: `${at[1]}px`,
+        width: `${pw}px`,
+        height: `${ph}px`,
+        borderRadius: `${Math.max(3, Math.round((ph * 6) / 22))}px`,
+        fontSize: `${Math.max(9, Math.round((ph * 14) / 22))}px`,
+      });
       overlay.append(play);
       q.space = 0;
       continue;
