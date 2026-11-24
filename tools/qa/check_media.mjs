@@ -59,6 +59,16 @@ const base = `http://127.0.0.1:${server.address().port}/`;
 const book = JSON.parse(fs.readFileSync(path.join(ROOT, "books", id, "book.json"), "utf8"));
 const layout = JSON.parse(fs.readFileSync(path.join(ROOT, "books", id, "layout.json"), "utf8"));
 const media = book.media || [];
+// A panel video has to arrive on a school iPad: the pipeline keeps them small.
+const SIZE_LIMIT = 300 * 1024;
+for (const item of media) {
+  const file = path.join(ROOT, "books", id, item.src || "");
+  if (!fs.existsSync(file)) continue;
+  const bytes = fs.statSync(file).size;
+  if (bytes > SIZE_LIMIT) {
+    console.log(`  WARN  ${item.src}: ${Math.round(bytes / 1024)} KB, over the 300 KB panel budget - shorten the scene or raise the budget here`);
+  }
+}
 const outDir = path.join(ROOT, "books", id, "reference", "qa");
 if (shots) fs.mkdirSync(outDir, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

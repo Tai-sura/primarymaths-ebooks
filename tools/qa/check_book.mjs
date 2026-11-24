@@ -117,14 +117,42 @@ try {
      An inverted region (bottom above top) makes growSheet cut the page above the
      answer, so the card lands on the next question's printed text. It comes from
      a dense page whose band the extractor could not place; see layout_triage.py. */
-  for (const pg of layout.pages) {
+  const seenIds = new Map();
+  // A stamp or a card never cuts the page, so its old `space` value is ignored and
+  // two of them may share a band without overlapping anything.
+  const noCut = new Set(book.answerCards || []);
+  for (const qid of book.answerStamps || []) noCut.add(qid);
+  if (book.answers === "cards") for (const qid of laidOut) noCut.add(qid);
+  for (const [pi, pg] of layout.pages.entries()) {
     const sheetH = pg.height || 841.92;
+    const sheetW = pg.width || 595.32;
+    const regions = [];
     for (const q of pg.questions) {
+      seenIds.set(q.id, (seenIds.get(q.id) || 0) + 1);
       const [x0, y0, x1, y1] = q.region || [];
       if (!(x1 > x0)) fail(`${q.id}: answer region has no width (${(q.region || []).join(", ")})`);
       else if (y1 < y0) fail(`${q.id}: answer region is inverted (bottom ${y1} above top ${y0}) - re-run extract_pages.py; a worksheet page needs "answers": "cards"`);
-      else if (y1 > sheetH - 8) warn(`${q.id}: answer region runs past the page (bottom ${y1} of ${Math.round(sheetH)})`);
+      else {
+        if (x0 < 0 || y0 < 0 || x1 > sheetW + 2 || y1 > sheetH) {
+          fail(`${q.id}: answer region falls outside the page (${q.region.join(", ")} in ${Math.round(sheetW)} x ${Math.round(sheetH)})`);
+        } else if (y1 > sheetH - 8) {
+          warn(`${q.id}: answer region runs past the page (bottom ${y1} of ${Math.round(sheetH)})`);
+        }
+        if (q.space && !noCut.has(q.id)) regions.push({ q, x0, y0, x1, y1: y1 + q.space });
+      }
     }
+    // Two answers side by side are fine; two answers over the same paper are not.
+    regions.sort((a, b) => a.y0 - b.y0);
+    for (let i = 1; i < regions.length; i++) {
+      const a = regions[i - 1];
+      const b = regions[i];
+      if (Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0) > 2 && b.y0 < a.y1 - 2) {
+        fail(`${a.q.id} and ${b.q.id} on page ${pg.page}: answer regions overlap (${a.q.id} ends at ${Math.round(a.y1)}, ${b.q.id} starts at ${Math.round(b.y0)}) - re-run extract_pages.py or fix their overrides`);
+      }
+    }
+  }
+  for (const [qid, n] of seenIds) {
+    if (n > 1) fail(`${qid}: appears ${n} times in layout.json - a question must have exactly one anchor`);
   }
 
   /* ---------- answers cut from the ANS page ---------- */

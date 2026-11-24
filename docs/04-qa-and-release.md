@@ -66,6 +66,20 @@ python tools/qa/check_folio.py <id>      # --verbose lists every page
 
 Run it on every book after any engine change, and on a book whenever its page images or `layout.json` are rebuilt. It is a standing part of the gate, not a one-off.
 
+### Book list, live build and media budget
+
+```powershell
+node tools/qa/check_catalog.mjs                              # catalogue, folders and status agree
+node tools/qa/check_live.mjs <id> --expect-cache ebooks-vN   # the published site serves this build
+```
+
+`check_catalog.mjs` fails a listed book with no folder, a live book that is not
+listed, a book whose folder and `id` disagree, and a live book with no
+`docs/chapters/<id>.md`. `check_live.mjs` reads the published `sw.js` CACHE, the
+live `book.json` status and the reader/layout/solutions responses, so a missed
+cache bump or a failed deploy is caught instead of assumed. `check_media.mjs`
+warns when a panel video is over the 300 KB budget.
+
 For a book with scenario boards (`"infographics": true`):
 
 ```powershell

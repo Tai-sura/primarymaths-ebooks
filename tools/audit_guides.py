@@ -233,6 +233,21 @@ def run(book_dir, item):
         print(f"  {time:5.1f} s  \"{label}\" at {where} touches {what}{detail}  ({gap:+.1f} pt)")
 
 
+def markup_preflight(book):
+    """`textsvg` cannot draw Pango markup, so say so before a render fails part-way."""
+    hits = []
+    for guide in book.get("guides", []):
+        module = (guide.get("scene") or "").split(":")[0]
+        path = ROOT / "tools" / "manim" / f"{module}.py"
+        if not path.exists():
+            hits.append(f"{module}: no tools/manim/{module}.py")
+            continue
+        for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if "MarkupText" in line:
+                hits.append(f"{path.name}:{n} uses MarkupText - the textsvg fallback raises on it")
+    return hits
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if not args:
@@ -240,6 +255,8 @@ def main():
     book_dir = ROOT / "books" / args[0]
     book = json.loads((book_dir / "book.json").read_text(encoding="utf-8"))
     wanted = set(args[1:])
+    for hit in markup_preflight(book):
+        print("  WARN  " + hit)
     for item in book.get("guides", []):
         if not wanted or item["scene"].split(":")[1] in wanted:
             run(book_dir, item)

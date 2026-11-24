@@ -273,7 +273,9 @@ screenshot in `books/<id>/reference/qa/`, and run the iPad checklist in
 [04-qa-and-release.md](04-qa-and-release.md).
 
 A book is ready to release when `check_book` reports **0 FAIL and 0 WARN**, or
-when every remaining WARN has a written acceptance in the chapter log.
+when every remaining WARN has a written acceptance in the chapter log. Run
+`node tools/qa/check_catalog.mjs` too: it fails a live book missing from the
+catalogue, a listed book with no folder, and a live book with no chapter log.
 
 ## Stage 7: Release
 
@@ -286,10 +288,11 @@ when every remaining WARN has a written acceptance in the chapter log.
    Before pushing, tag the previous state (`git tag pre-<id>-vN`) so a bad
    release can be reverted in one command (`git revert` or `git reset --hard
    pre-<id>-vN` and push).
-4. **Verify the live site, do not assume it**: open `reader.html?book=<id>` on
-   the published URL after a minute and check the book loads with the new
-   content (and `sw.js` shows the new `CACHE`). A push that changed nothing is
-   indistinguishable from a push that broke the page until you look.
+4. **Verify the live site, do not assume it**: after a minute, run
+   `node tools/qa/check_live.mjs <id> --expect-cache <the CACHE you bumped to>`.
+   It checks the published `sw.js`, the live `book.json` status and the reader,
+   layout and solutions files. A push that changed nothing is indistinguishable
+   from a push that broke the page until you look.
 5. Check `books/catalog.json` still lists the book, and the `README.md` table is
    regenerated from it. The chapter log is updated.
 
