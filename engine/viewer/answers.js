@@ -11,6 +11,13 @@ const BAR = 10;
  * question: an answer that needs more room than its region scrolls inside it.
  */
 const BASE = BOOK.answerScale ?? 1;
+/**
+ * `book.json` "answers": "cards" for a book whose printed pages are a worksheet:
+ * there is no blank paper under a question to set the working in, so every answer
+ * opens in a card over the page and the printed page is never cut or covered.
+ */
+const CARDS = BOOK.answers === "cards";
+const ANSWER_QUESTIONS = new Map();
 
 /** Per-question step metadata: global reveal index of every line (headings get -1). */
 export const META = {};
@@ -638,10 +645,36 @@ export function buildOverlay(page, overlay) {
       continue;
     }
     const qa = document.createElement("div");
-    qa.className = "qa";
+    qa.className = CARDS ? "qa card" : "qa";
     qa.dataset.q = q.id;
     Object.assign(qa.style, { left: `${x0}px`, top: `${y0}px`, width: `${x1 - x0}px`, height: `${y1 - y0}px` });
-    qa.innerHTML = `<div class="qa-in"></div><div class="qa-bar" title="Drag to scroll the answer"><i></i></div>${ctlHTML(q.id)}`;
+    if (CARDS) {
+      // A worksheet's page has no blank paper to write the working in: the answer
+      // waits in a card over the page, and the printed page never moves.
+      q.space = 0;
+      qa.hidden = true;
+      qa.innerHTML = `<div class="card-head"><strong>${esc(q.label ? `Q${q.label}` : q.id)} · worked solution</strong>${ctlHTML(q.id)}<button type="button" class="card-close" title="Close (Esc)">✕</button></div><div class="qa-in"></div><div class="qa-bar" title="Drag to scroll the answer"><i></i></div>`;
+      qa.querySelector(".card-close").addEventListener("click", (event) => {
+        event.stopPropagation();
+        closeAnswer();
+      });
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "ans-chip";
+      chip.dataset.q = q.id;
+      chip.textContent = "?";
+      chip.title = `Show the worked solution for question ${q.label || q.id}`;
+      chip.setAttribute("aria-label", chip.title);
+      Object.assign(chip.style, { left: "5px", top: `${Math.max(2, (q.anchor ? q.anchor[0] : y0) - 4)}px` });
+      chip.addEventListener("click", (event) => {
+        event.stopPropagation();
+        openAnswer(q.id);
+      });
+      overlay.append(chip);
+      ANSWER_QUESTIONS.set(q.id, q);
+    } else {
+      qa.innerHTML = `<div class="qa-in"></div><div class="qa-bar" title="Drag to scroll the answer"><i></i></div>${ctlHTML(q.id)}`;
+    }
     qa.querySelector(".qa-in").addEventListener("scroll", () => {
       syncBar(qa);
       scrolled?.(q.id);
@@ -667,6 +700,81 @@ export function buildOverlay(page, overlay) {
     }
   }
 }
+
+/* ---------- answers in a card (a worksheet page has no answer space) ---------- */
+
+let openCard = null;
+let revealNow = null;
+
+/** `fn(id)` gives the steps the reader has already revealed, so a card opens on them. */
+export function onAnswerOpen(fn) {
+  revealNow = fn;
+}
+
+/** Sets one answer inside its card: full card width, as tall as the working needs. */
+function layoutCard(q, qa) {
+  const [x0, , x1] = q.region;
+  const y0 = (q.anchor ? q.anchor[1] : q.region[1]) + 4;
+  const inner = qa.querySelector(".qa-in");
+  const sol = SOLUTION_BY_ID[q.id];
+  const full = META[q.id].boxes.map((items, k) => ({ box: sol.boxes[k], items }));
+  // A card floats over the page, so it may be almost as tall as the page itself.
+  const maxH = Math.max(160, Math.round(PAGE_H - 26));
+  qa.style.height = `${maxH}px`;
+  // The card's own box is the region the fitting code measures against.
+  const box = { ...q, space: 0, region: [x0, y0, x1, y0 + maxH] };
+  flowFit(box, qa, BASE, "scroll");
+  const used = parseFloat(inner.style.getPropertyValue("--used")) || maxH;
+  // The card is its header plus the working plus the small gap under it.
+  const h = Math.min(Math.ceil(used) + 44, maxH);
+  qa.style.height = `${h}px`;
+  box.region[3] = y0 + h;
+  if (used > h + 0.5) qa.classList.add("scroll");
+  else qa.classList.remove("scroll");
+  // Sit the card inside the page, under the question when there is room.
+  const top = Math.max(6, Math.min(y0, PAGE_H - h - 8));
+  qa.style.top = `${top}px`;
+  placeCtl(qa, [...inner.children]);
+  inner.scrollTop = 0;
+}
+
+/** Opens question `id`'s worked solution in its card over the page. */
+export function openAnswer(id) {
+  if (!CARDS) return;
+  const qa = document.querySelector(`.sheet .qa.card[data-q="${id}"]`);
+  const q = ANSWER_QUESTIONS.get(id);
+  if (!qa || !q) return;
+  if (openCard === qa) return;
+  closeAnswer();
+  openCard = qa;
+  qa.hidden = false;
+  qa.classList.add("open");
+  document.querySelector(`.ans-chip[data-q="${id}"]`)?.setAttribute("aria-expanded", "true");
+  layoutCard(q, qa);
+  paint(qa.closest(".sheet") || document, id, revealNow ? revealNow(id) : 0);
+  qa.scrollIntoView({ block: "center", inline: "nearest" });
+}
+
+/** Closes the open answer card, if any. */
+export function closeAnswer() {
+  if (!openCard) return;
+  document.querySelector(`.ans-chip[data-q="${openCard.dataset.q}"]`)?.removeAttribute("aria-expanded");
+  openCard.hidden = true;
+  openCard.classList.remove("open");
+  openCard = null;
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && openCard) {
+    closeAnswer();
+    event.stopPropagation();
+  }
+}, true);
+document.addEventListener("click", (event) => {
+  if (!openCard) return;
+  if (event.target.closest?.(".qa.card, .ans-chip")) return;
+  closeAnswer();
+});
 
 /**
  * Cuts boxes taller than H into pieces that each fit H, using the rendered line
@@ -806,6 +914,9 @@ const FIG_MARGIN = 14;
 function answerRight(q, qa, bar, wide) {
   const x0 = q.region[0];
   const right = q.region[2] - x0 - CTL - 2;
+  // An answer card floats over the page, so the printed page under it is not a
+  // figure to keep clear of: the card uses its whole width.
+  if (qa.classList.contains("card")) return right - bar;
   const { width, side } = ctlGrid(qa, regionHeight(q));
   const buttons = width + (side ? 24 : 0);
   const pageEdge = PAGE_W - 4 - buttons - 6 - x0;
@@ -1157,6 +1268,8 @@ export function layoutAnswers(world, layout) {
     for (const q of page.questions) {
       const qa = world.querySelector(`.qa[data-q="${q.id}"]`);
       if (!qa) continue;
+      // A card is set inside itself when it opens, not on the page.
+      if (qa.classList.contains("card")) continue;
       qa.classList.remove("flow", "scroll");
       qa.style.height = `${regionHeight(q)}px`;
       const sol = SOLUTION_BY_ID[q.id];

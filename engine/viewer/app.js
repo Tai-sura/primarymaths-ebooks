@@ -2,7 +2,7 @@ import { BOOK, BOOK_DIR, BOOK_ID, BOOK_NAME, STORAGE, SOLUTION_BY_ID, mountGraph
 import { createInk } from "../ink/ink.js";
 import { exportAnnotations, exportPdf } from "../export/export.js";
 import {
-  ANSWER_SIZES, answerScroller, answerSize, buildOverlay, keepInView, layoutAnswers, onAnswerScroll, onPageRows, paint, setAnswerSize, totalSteps,
+  ANSWER_SIZES, answerScroller, answerSize, buildOverlay, keepInView, layoutAnswers, onAnswerOpen, onAnswerScroll, onPageRows, paint, setAnswerSize, totalSteps,
 } from "./answers.js";
 import { renderLinks, clearLinks } from "./links.js";
 import { addMedia, toggleMedia } from "./media.js";
@@ -97,6 +97,9 @@ function setReveal(id, n) {
   saveUI();
   syncLinks(id);
 }
+
+/* An answer card opens on the steps the reader has already revealed. */
+onAnswerOpen((id) => revealed(id));
 
 /** Paints every question; `from` (id → steps shown before) scrolls long answers to what changed. */
 function paintAll(from = null) {
@@ -912,7 +915,7 @@ function bindViewport() {
   window.addEventListener("pointercancel", end);
 
   window.addEventListener("click", (event) => {
-    if (performance.now() < suppressClickUntil && !event.target.closest(".toolbar, .topbar, .drawer, .sel-menu, .presenter")) {
+    if (performance.now() < suppressClickUntil && !event.target.closest(".toolbar, .topbar, .drawer, .sel-menu, .presenter, .ans-chip, .qa.card")) {
       event.stopPropagation();
       event.preventDefault();
     }

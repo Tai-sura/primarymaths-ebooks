@@ -196,7 +196,7 @@ body[data-mode="laser"] #viewport { cursor: crosshair; }
 }
 .media.playing .media-play { opacity: 0.6; }
 
-/* Second round button beside ▶: the same printed panel, as an interactive widget
+/* Second round button beside ?? the same printed panel, as an interactive widget
    (book.json media "widget"). Sized and coloured like the graphic button on a question. */
 .media-widget {
   position: absolute;
@@ -719,7 +719,7 @@ body.tools-collapsed #tools-collapse { opacity: 1; }
 .g-read { margin: 10px 0; padding: 10px 12px; border-radius: 12px; background: #fff; border: 1px solid #e4dccd; }
 /* A phone is 358 px of drawer width: label + range + output + two nudges + play needs 360 px, so it
    used to overflow by 16 px at a 390 px viewport (measured 2026-11-20). The label takes a row of its
-   own and the range keeps 80 px, so − / range / + / output / ▶ share the second row: measured 81 px
+   own and the range keeps 80 px, so ??/ range / + / output / ??share the second row: measured 81 px
    per slider, against 169 px when the range was forced onto a row of its own. */
 @media (max-width: 460px) {
   .g-lab { flex: 1 1 100%; min-width: 0; }
@@ -879,7 +879,7 @@ body.present .toolbar.dock-bottom { bottom: calc(76px + env(safe-area-inset-bott
     top: auto;
     width: 100%;
     /* As tall as its content, up to 92% of the screen. A fixed 62vh cut the bottom of a tall widget
-       off: phy11 Q6 is 897 px of drawer body and the ✓/✗ statements sat 135 px below the fold on an
+       off: phy11 Q6 is 897 px of drawer body and the ????statements sat 135 px below the fold on an
        iPad Pro 11 portrait, 213 px on an iPad mini and 550 px on a phone (measured 2026-11-20). At
        92% the three portrait iPads show the whole widget (drawer 959 / 953 / 932 px, scroll 0). */
     height: auto;
@@ -1013,4 +1013,72 @@ body.embed-open { overflow: hidden; }
   .embed-modal { padding: 8px; }
   .embed-card { width: 100%; height: 100%; border-radius: 12px; }
 }
+
+
+/* ---------- answers in a card (book.json "answers": "cards") ----------
+   A worksheet's page has no blank paper for the working, so each answer waits in
+   a card over the page: a small ? chip in the left margin opens it, the printed
+   page is never cut, and the card is as tall as the working needs. */
+.ans-chip {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid #a9bcd8;
+  background: #eef3fb;
+  color: #2f5d9e;
+  font: 600 10px/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+  cursor: pointer;
+  z-index: 9;
+  touch-action: manipulation;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.ans-chip:hover,
+.ans-chip:focus-visible { background: #dbe7f8; border-color: #7f9dc6; }
+.ans-chip[aria-expanded="true"] { background: #2f5d9e; color: #fff; border-color: #2f5d9e; }
+
+.qa.card {
+  z-index: 8;
+  background: #fffefb;
+  border: 1px solid #d8c9a8;
+  border-radius: 8px;
+  box-shadow: 0 8px 26px rgba(30, 25, 15, 0.22);
+  overflow: hidden;
+}
+.qa.card .card-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 4px 0 10px;
+  background: #f7f0e1;
+  border-bottom: 1px solid #e4d7bd;
+  font: 600 12px/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #6d5c3b;
+}
+.qa.card .card-head strong { flex: 1 1 auto; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qa.card .card-head .ctl {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  display: flex;
+  grid-auto-flow: row;
+  gap: 4px;
+}
+.qa.card .card-head .prog { font: 400 11px/1 system-ui, sans-serif; color: #8a7c5e; min-width: 22px; }
+.qa.card .card-close {
+  border: 0;
+  background: transparent;
+  color: #6d5c3b;
+  font-size: 13px;
+  line-height: 1;
+  padding: 5px 6px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.qa.card .card-close:hover { background: #eadfc7; }
+.qa.card .qa-in { top: 34px; bottom: 6px; left: 6px; }
+.qa.card.scroll .qa-in { overflow: auto; }
+.qa.card .qa-bar { top: 34px; bottom: 6px; }
 
