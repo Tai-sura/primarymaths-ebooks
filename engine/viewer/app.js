@@ -98,8 +98,8 @@ function setReveal(id, n) {
   syncLinks(id);
 }
 
-/* An answer card opens on the steps the reader has already revealed. */
-onAnswerOpen((id) => revealed(id));
+/* An answer card opens with the whole working shown, so a ? tap is a lookup. */
+onAnswerOpen((id, n) => setReveal(id, n));
 
 /** Paints every question; `from` (id → steps shown before) scrolls long answers to what changed. */
 function paintAll(from = null) {

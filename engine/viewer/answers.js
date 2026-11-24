@@ -12,12 +12,18 @@ const BAR = 10;
  */
 const BASE = BOOK.answerScale ?? 1;
 /**
- * `book.json` "answers": "cards" for a book whose printed pages are a worksheet:
- * there is no blank paper under a question to set the working in, so every answer
- * opens in a card over the page and the printed page is never cut or covered.
+ * `book.json` "answers": "cards" puts every answer in a card (a worksheet with no
+ * blank paper at all); "answerCards": ["q1", …] does it for the fill-in questions
+ * only, so MC and long questions keep the usual in-page working.
  */
 const CARDS = BOOK.answers === "cards";
+const CARD_IDS = new Set(BOOK.answerCards || []);
 const ANSWER_QUESTIONS = new Map();
+
+/** True when this question's working opens in a card over the page. */
+function isCard(q) {
+  return CARDS || CARD_IDS.has(q.id);
+}
 
 /** Per-question step metadata: global reveal index of every line (headings get -1). */
 export const META = {};
@@ -645,10 +651,10 @@ export function buildOverlay(page, overlay) {
       continue;
     }
     const qa = document.createElement("div");
-    qa.className = CARDS ? "qa card" : "qa";
+    qa.className = isCard(q) ? "qa card" : "qa";
     qa.dataset.q = q.id;
     Object.assign(qa.style, { left: `${x0}px`, top: `${y0}px`, width: `${x1 - x0}px`, height: `${y1 - y0}px` });
-    if (CARDS) {
+    if (isCard(q)) {
       // A worksheet's page has no blank paper to write the working in: the answer
       // waits in a card over the page, and the printed page never moves.
       q.space = 0;
@@ -665,7 +671,10 @@ export function buildOverlay(page, overlay) {
       chip.textContent = "?";
       chip.title = `Show the worked solution for question ${q.label || q.id}`;
       chip.setAttribute("aria-label", chip.title);
-      Object.assign(chip.style, { left: "5px", top: `${Math.max(2, (q.anchor ? q.anchor[0] : y0) - 4)}px` });
+      Object.assign(chip.style, {
+        left: `${(q.cardAt && q.cardAt[0]) || 5}px`,
+        top: `${Math.max(2, q.cardAt ? q.cardAt[1] : (q.anchor ? q.anchor[0] : y0) - 4)}px`,
+      });
       chip.addEventListener("click", (event) => {
         event.stopPropagation();
         openAnswer(q.id);
@@ -706,7 +715,7 @@ export function buildOverlay(page, overlay) {
 let openCard = null;
 let revealNow = null;
 
-/** `fn(id)` gives the steps the reader has already revealed, so a card opens on them. */
+/** `fn(id, steps)` reveals steps in the reader's own state, so a card and the page agree. */
 export function onAnswerOpen(fn) {
   revealNow = fn;
 }
@@ -742,7 +751,6 @@ function layoutCard(q, qa) {
 
 /** Opens question `id`'s worked solution in its card over the page. */
 export function openAnswer(id) {
-  if (!CARDS) return;
   const qa = document.querySelector(`.sheet .qa.card[data-q="${id}"]`);
   const q = ANSWER_QUESTIONS.get(id);
   if (!qa || !q) return;
@@ -753,7 +761,10 @@ export function openAnswer(id) {
   qa.classList.add("open");
   document.querySelector(`.ans-chip[data-q="${id}"]`)?.setAttribute("aria-expanded", "true");
   layoutCard(q, qa);
-  paint(qa.closest(".sheet") || document, id, revealNow ? revealNow(id) : 0);
+  // A card is a lookup: it opens with the whole working in view. The ◂ and ↺
+  // buttons still hide steps again for a step-by-step read.
+  if (revealNow) revealNow(id, totalSteps(id));
+  else paint(qa.closest(".sheet") || document, id, totalSteps(id));
   qa.scrollIntoView({ block: "center", inline: "nearest" });
 }
 
