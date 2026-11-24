@@ -714,7 +714,9 @@ export function onAnswerOpen(fn) {
 /** Sets one answer inside its card: full card width, as tall as the working needs. */
 function layoutCard(q, qa) {
   const [x0, , x1] = q.region;
-  const y0 = (q.anchor ? q.anchor[1] : q.region[1]) + 4;
+  // Under the whole question, not just its number line: the answer card should not
+  // cover the question the reader is answering.
+  const y0 = Math.max(q.anchor ? q.anchor[1] + 4 : 0, q.region[1]);
   const inner = qa.querySelector(".qa-in");
   const sol = SOLUTION_BY_ID[q.id];
   const full = META[q.id].boxes.map((items, k) => ({ box: sol.boxes[k], items }));
