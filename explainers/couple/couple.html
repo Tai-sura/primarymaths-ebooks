@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>力偶（couple）· 力偶矩與支點位置無關（jpfm08 p7）</title>
+<style>
+  :root { --ink:#23231f; --ink2:#63635a; --line:#dcd7ca; --card:#fffefb; --accent:#2f6fbf; --amber:#b47a17; --red:#b03c2c; --green:#2e7d5b; }
+  html,body { margin:0; padding:0; background:#f4f1ea; color:var(--ink);
+    font:14px/1.5 ui-sans-serif,system-ui,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif; }
+  #app { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:18px;
+    max-width:1180px; margin:0 auto; padding:14px 16px 10px; }
+  #stage { background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:6px; touch-action:none; min-width:0; cursor:ew-resize; }
+  #canvas-holder { display:block; line-height:0; }
+  #canvas-holder canvas { display:block; width:100% !important; height:auto !important; border-radius:4px; }
+  h1 { font-size:16px; margin:0 0 2px; font-weight:600; }
+  .sub { color:var(--ink2); font-size:12px; margin:0 0 9px; }
+  .presets { display:flex; gap:8px; margin:0 0 10px; }
+  .presets button { flex:1; font:inherit; font-size:12px; padding:6px 4px; border:1px solid var(--line);
+    border-radius:6px; background:#fff; color:var(--ink); cursor:pointer; }
+  .presets button:hover { background:#f6f3ec; }
+  .row { display:flex; align-items:center; gap:8px; margin:0 0 7px; }
+  .row label { width:88px; flex:none; color:var(--ink2); font-size:12px; }
+  .row input[type=range] { flex:1; min-width:0; accent-color:var(--accent); height:18px; }
+  .row output { width:56px; flex:none; text-align:right; font-variant-numeric:tabular-nums; font-size:13px; }
+  .read { border-top:1px solid var(--line); padding-top:9px; margin-top:7px; }
+  .read div { display:flex; justify-content:space-between; gap:10px; font-variant-numeric:tabular-nums;
+    padding:2px 0; font-size:13px; }
+  .read span:first-child { color:var(--ink2); }
+  .read .big { font-size:14px; font-weight:600; }
+  .key { margin-top:8px; font-size:13px; font-weight:600; color:var(--green); }
+  .cap { font-size:11px; color:#8a887f; margin-top:8px; line-height:1.5; }
+  @media (max-width:900px) { #app { grid-template-columns:minmax(0,1fr); } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage"><div id="canvas-holder"></div></div>
+  <div id="panel">
+    <h1>力偶（couple）</h1>
+    <p class="sub">兩個力：大小相等、方向相反、不沿同一條線。</p>
+
+    <div class="presets">
+      <button id="demo" type="button">示範：F 50 N、d 1.2 m</button>
+    </div>
+
+    <div class="row">
+      <label for="f">力的大小 F</label>
+      <input id="f" type="range" min="10" max="100" step="1" value="50">
+      <output id="f-out">50 N</output>
+    </div>
+    <div class="row">
+      <label for="d">兩力距離 d</label>
+      <input id="d" type="range" min="0.2" max="2" step="0.05" value="1.2">
+      <output id="d-out">1.2 m</output>
+    </div>
+    <div class="row">
+      <label for="pivot">支點位置</label>
+      <input id="pivot" type="range" min="0" max="3.6" step="0.05" value="1.8">
+      <output id="pivot-out">1.8 m</output>
+    </div>
+
+    <div class="read">
+      <div><span>M₁（左邊向上的力）</span><span id="o-m1">—</span></div>
+      <div><span>M₂（右邊向下的力）</span><span id="o-m2">—</span></div>
+      <div class="big"><span>合計 ΣM（對支點）</span><span id="o-sum">—</span></div>
+      <div class="big"><span>力偶矩 M = F × d</span><span id="o-m">—</span></div>
+    </div>
+    <div class="key">力偶矩與支點位置無關</div>
+    <div class="cap">印刷定義：兩個力大小相等、方向相反、不共線；力偶矩 = 力 × 兩力的垂直距離。UI 示範值：F 10–100 N、d 0.2–2.0 m；桿長 3.6 m 只作示意。</div>
+  </div>
+</div>
+
+<script src="../p5.min.js"></script>
+<script>
+// 印刷只有定義與 M = F × d；下面 F 10–100、d 0.2–2.0、50、1.2 係 UI 示範值。
+const L = 3.6;                       // 桿長（示意框，唔係印刷數值）
+const PAD = 58;
+const C = {
+  paper: [251, 250, 247], ink: [35, 35, 31], ink2: [99, 99, 90], line: [214, 208, 196],
+  up: [47, 111, 191], down: [180, 122, 23], pivot: [58, 56, 50], green: [46, 125, 91],
+};
+const S = { F: 50, d: 1.2, pivot: 1.8 };
+
+const num = (v) => (Math.round(v * 100) / 100).toFixed(2).replace(/\.?0+$/, '');
+const f1 = (v) => (Math.round(v * 10) / 10).toString().replace(/\.0$/, '');
+const signed = (v) => (v > 0 ? '+' : '') + f1(v);
+const sense = (v) => (v > 0.05 ? '逆時針' : v < -0.05 ? '順時針' : '平衡');
+
+function moments() {
+  const x1 = L / 2 - S.d / 2;        // 向上的力
+  const x2 = L / 2 + S.d / 2;        // 向下的力
+  // 對支點取矩，逆時針為正：M = F_y (x − pivot)
+  const m1 = S.F * (x1 - S.pivot);
+  const m2 = -S.F * (x2 - S.pivot);
+  return { x1, x2, m1, m2, sum: m1 + m2, M: S.F * S.d };
+}
+
+function sync() {
+  const r = moments();
+  document.getElementById('f-out').textContent = S.F + ' N';
+  document.getElementById('d-out').textContent = num(S.d) + ' m';
+  document.getElementById('pivot-out').textContent = num(S.pivot) + ' m';
+  document.getElementById('o-m1').textContent = Math.abs(r.m1) < 0.05
+    ? '0 N·m' : signed(r.m1) + ' N·m（' + sense(r.m1) + '）';
+  document.getElementById('o-m2').textContent = Math.abs(r.m2) < 0.05
+    ? '0 N·m' : signed(r.m2) + ' N·m（' + sense(r.m2) + '）';
+  document.getElementById('o-sum').textContent = signed(r.sum) + ' N·m（' + sense(r.sum) + '）';
+  document.getElementById('o-m').textContent = f1(r.M) + ' N·m（' + sense(r.sum) + '）';
+  if (typeof redraw === 'function') redraw();
+}
+
+function canvasSize() {
+  const holder = document.getElementById('canvas-holder');
+  const w = Math.max(320, Math.floor(holder.clientWidth || 800));
+  const h = Math.max(420, Math.min(560, window.innerHeight - 240, Math.round(w * 0.62) + 150));
+  return { w, h };
+}
+
+function setup() {
+  const { w, h } = canvasSize();
+  createCanvas(w, h).parent('canvas-holder');
+  noLoop();
+  textFont('system-ui, sans-serif');
+  sync();
+}
+
+function windowResized() {
+  const { w, h } = canvasSize();
+  resizeCanvas(w, h);
+  sync();
+}
+
+let view = { ppm: 1, rodY: 0 };
+
+function drawForce(x, y, dir, label, colour) {
+  const len = 26 + 64 * (S.F / 100);
+  const tipY = dir > 0 ? y - len : y + len;
+  stroke(...colour); strokeWeight(3); strokeCap(ROUND);
+  line(x, y, x, tipY);
+  noStroke(); fill(...colour);
+  if (dir > 0) triangle(x - 7, tipY + 12, x + 7, tipY + 12, x, tipY - 2);
+  else triangle(x - 7, tipY - 12, x + 7, tipY - 12, x, tipY + 2);
+  textAlign(CENTER, dir > 0 ? BOTTOM : TOP); textSize(12); fill(...C.ink);
+  text(label, x, dir > 0 ? tipY - 16 : tipY + 16);
+}
+
+function draw() {
+  const W = width, H = height;
+  const r = moments();
+  const ppm = (W - PAD * 2) / L;
+  const rodY = H * 0.50;
+  view = { ppm, rodY, padX: PAD };
+  const px = (x) => PAD + x * ppm;
+
+  background(...C.paper);
+
+  // 桿
+  stroke(138, 106, 69); strokeWeight(7); strokeCap(ROUND);
+  line(px(0), rodY, px(L), rodY);
+
+  // 兩支力：左邊向上、右邊向下，都垂直於桿
+  drawForce(px(r.x1), rodY, +1, 'F = ' + S.F + ' N', C.up);
+  drawForce(px(r.x2), rodY, -1, 'F = ' + S.F + ' N', C.down);
+
+  // 兩力的垂直距離 d
+  const dY = rodY + 44;
+  stroke(...C.line); strokeWeight(1);
+  line(px(r.x1), dY, px(r.x2), dY);
+  for (const x of [r.x1, r.x2]) {
+    stroke(...C.ink2); strokeWeight(1);
+    line(px(x), dY - 7, px(x), dY + 7);
+  }
+  noStroke(); fill(...C.ink); textAlign(CENTER, TOP); textSize(13);
+  text('d = ' + num(S.d) + ' m', (px(r.x1) + px(r.x2)) / 2, dY + 10);
+
+  // 支點（可拖）：桿上一個點
+  const pvx = px(S.pivot);
+  noStroke(); fill(...C.paper); circle(pvx, rodY, 15);
+  fill(...C.pivot); circle(pvx, rodY, 9);
+  fill(...C.ink2); textAlign(CENTER, BOTTOM); textSize(11);
+  text('支點', pvx, rodY - 14);
+
+  // 力偶矩轉向：弧形箭咀（順時針 = 右邊沉，與兩力一致）
+  const rad = 54;
+  noFill(); stroke(...C.green); strokeWeight(1.8);
+  arc(pvx, rodY, rad * 2, rad * 2, PI, TWO_PI);
+  noStroke(); fill(...C.green);
+  triangle(pvx + rad - 5, rodY - 9, pvx + rad + 5, rodY - 9, pvx + rad, rodY + 2);
+
+  // 頂部：力偶矩定義式（窄畫面分兩行）
+  noStroke();
+  if (W < 620) {
+    textAlign(LEFT, TOP); textSize(12); fill(...C.ink);
+    text('M = F × d = ' + S.F + ' × ' + num(S.d) + ' = ' + f1(r.M) + ' N·m', 18, 12);
+    textAlign(LEFT, TOP); textSize(11); fill(...C.ink2);
+    text('支點 ' + num(S.pivot) + ' m（可拖）', 18, 30);
+  } else {
+    textAlign(LEFT, TOP); textSize(13); fill(...C.ink);
+    text('力偶矩 M = 力 × 兩力的垂直距離 = ' + S.F + ' × ' + num(S.d) + ' = ' + f1(r.M) + ' N·m', 22, 18);
+    textAlign(RIGHT, TOP); textSize(12); fill(...C.ink2);
+    text('支點位置：' + num(S.pivot) + ' m（可拖）', W - 22, 18);
+  }
+
+  // 力矩條：M₁ / M₂ / Σ，以零線為中心；拖支點時前兩條變、Σ 條唔變
+  const maxAbs = Math.max(Math.abs(r.m1), Math.abs(r.m2), Math.abs(r.sum), 1);
+  const scale = (W / 2 - 100) / maxAbs;
+  const zeroX = W / 2;
+  const barTop = H * 0.72;
+  const barH = 15;
+  const gap = 24;
+  stroke(...C.line); strokeWeight(1);
+  line(zeroX, barTop - 9, zeroX, barTop + 2 * gap + barH + 9);
+  for (const [i, row] of [
+    { label: 'M₁', v: r.m1, colour: C.up },
+    { label: 'M₂', v: r.m2, colour: C.down },
+    { label: 'ΣM', v: r.sum, colour: C.green },
+  ].entries()) {
+    const y = barTop + i * gap;
+    const w = row.v * scale;
+    noStroke(); fill(...row.colour);
+    if (w >= 0) rect(zeroX, y, Math.max(1.5, w), barH, 2);
+    else rect(zeroX + w, y, Math.max(1.5, -w), barH, 2);
+    fill(...C.ink); textAlign(LEFT, CENTER); textSize(11);
+    text(row.label, 26, y + barH / 2);
+    // 數值放喺零線旁邊，唔會同左邊嘅行名打架
+    textAlign(w >= 0 ? RIGHT : LEFT, CENTER);
+    text(signed(row.v) + ' N·m', w >= 0 ? zeroX - 8 : zeroX + 8, y + barH / 2);
+  }
+
+  // 底部：核心句
+  textAlign(CENTER, BOTTOM); textSize(15); fill(...C.green);
+  text('力偶矩與支點位置無關', W / 2, H - 16);
+}
+
+function setPivotFromMouse() {
+  const x = Math.min(L, Math.max(0, (mouseX - view.padX) / view.ppm));
+  S.pivot = Math.round(x * 20) / 20;
+  document.getElementById('pivot').value = String(S.pivot);
+  sync();
+}
+
+function mousePressed() { setPivotFromMouse(); }
+function mouseDragged() { setPivotFromMouse(); }
+
+for (const id of ['f', 'd', 'pivot']) {
+  document.getElementById(id).addEventListener('input', (event) => {
+    const key = id === 'f' ? 'F' : id;
+    S[key] = Number(event.target.value);
+    sync();
+  });
+}
+document.getElementById('demo').addEventListener('click', () => {
+  S.F = 50; S.d = 1.2; S.pivot = 1.8;
+  document.getElementById('f').value = '50';
+  document.getElementById('d').value = '1.2';
+  document.getElementById('pivot').value = '1.8';
+  sync();
+});
+sync();
+</script>
+</body>
+</html>

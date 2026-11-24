@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Primary Maths">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+  <link rel="icon" type="image/png" href="assets/icon-180.png">
+  <meta name="theme-color" content="#163a86">
+  <title>Primary Maths Ebooks</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root { --navy: #163a86; --paper: #f3efe6; --ink: #1c1c1c; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 15px/1.4 -apple-system, "Segoe UI", Calibri, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) 24px env(safe-area-inset-left);
+    }
+    header { background: var(--navy); color: #fff; padding: 18px 24px 16px; }
+    header h1 { margin: 0; font-size: 22px; }
+    header p { margin: 4px 0 0; opacity: 0.8; font-size: 13px; }
+    .bar { display: flex; gap: 10px; align-items: center; padding: 14px 24px 0; flex-wrap: wrap; }
+    .bar input {
+      flex: 1; min-width: 200px; max-width: 420px; font: inherit; padding: 9px 12px;
+      border: 1px solid #cfc8b8; border-radius: 10px; background: #fff;
+    }
+    .continue { color: var(--navy); font-weight: 600; text-decoration: none; padding: 8px 12px; border-radius: 10px; background: #fff; border: 1px solid #d8d1c2; }
+    .continue[hidden] { display: none; }
+    main { padding: 4px 24px; }
+    h2 { font-size: 15px; color: #5b6170; margin: 22px 0 10px; letter-spacing: 0.02em; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+    .card {
+      display: flex; flex-direction: column; text-decoration: none; color: inherit; background: #fff;
+      border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); transition: transform 0.12s;
+    }
+    .card:active { transform: scale(0.98); }
+    .card img { width: 100%; aspect-ratio: 595 / 842; object-fit: cover; background: #eee; display: block; }
+    .card div { padding: 8px 10px 10px; }
+    .card strong { display: block; font-size: 14px; }
+    .card span { font-size: 12.5px; color: #5b6170; }
+    .card em { font-style: normal; font-size: 11px; color: #b04a00; }
+    .empty { color: #5b6170; padding: 20px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Primary Maths Ebooks</h1>
+    <p>Step-by-step solutions on the original notes, with Apple Pencil ink.</p>
+  </header>
+  <div class="bar">
+    <input id="filter" type="search" placeholder="Find a chapter, code or topic…" autocomplete="off">
+    <a id="continue" class="continue" hidden></a>
+  </div>
+  <main id="shelf"></main>
+  <script type="module">
+    const shelf = document.getElementById("shelf");
+    const filter = document.getElementById("filter");
+    const { books: ids } = await fetch("books/catalog.json", { cache: "no-store" }).then((r) => r.json());
+    // A book listed in the catalogue can be missing for a minute while Pages finishes a deploy, and a
+    // dropped entry looks like "the new book is not there". Retry once before giving up on it.
+    const loadBook = async (id) => {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const r = await fetch(`books/${id}/book.json`, { cache: "no-store" });
+          if (r.ok) return await r.json();
+        } catch { /* offline; try again */ }
+        await new Promise((done) => setTimeout(done, 1200));
+      }
+      return null;
+    };
+    const books = (await Promise.all(ids.map(loadBook))).filter(Boolean);
+    const name = (b) => [b.code, b.title].filter(Boolean).join(" ");
+    const href = (b) => `reader.html?book=${encodeURIComponent(b.id)}`;
+
+    let last = null;
+    try { last = localStorage.getItem("library-last"); } catch { /* private mode */ }
+    const lastBook = books.find((b) => b.id === last);
+    if (lastBook) {
+      const link = document.getElementById("continue");
+      link.href = href(lastBook);
+      link.textContent = `Continue: ${name(lastBook)}`;
+      link.hidden = false;
+    }
+
+    function render() {
+      const words = filter.value.toLowerCase().split(/\s+/).filter(Boolean);
+      const shown = books.filter((b) => {
+        const hay = [b.form, b.code, b.title, b.topic, b.year].join(" ").toLowerCase();
+        return words.every((w) => hay.includes(w));
+      });
+      shelf.replaceChildren();
+      if (!shown.length) {
+        shelf.innerHTML = '<p class="empty">No chapters match.</p>';
+        return;
+      }
+      const forms = [...new Set(shown.map((b) => b.form || "Other"))].sort();
+      for (const form of forms) {
+        const h = document.createElement("h2");
+        h.textContent = form;
+        const grid = document.createElement("div");
+        grid.className = "grid";
+        for (const b of shown.filter((x) => (x.form || "Other") === form).sort((a, c) => name(a).localeCompare(name(c)))) {
+          const card = document.createElement("a");
+          card.className = "card";
+          card.href = href(b);
+          const img = document.createElement("img");
+          img.src = `books/${b.id}/pages/p01.jpg`;
+          img.alt = "";
+          img.loading = "lazy";
+          const text = document.createElement("div");
+          const title = document.createElement("strong");
+          title.textContent = b.title;
+          const meta = document.createElement("span");
+          meta.textContent = [b.code, b.year].filter(Boolean).join(" · ");
+          text.append(title, meta);
+          if (b.status && b.status !== "live") {
+            const tag = document.createElement("em");
+            tag.textContent = ` ${b.status}`;
+            meta.append(tag);
+          }
+          card.append(img, text);
+          grid.append(card);
+        }
+        shelf.append(h, grid);
+      }
+    }
+    filter.addEventListener("input", render);
+    render();
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+  </script>
+</body>
+</html>

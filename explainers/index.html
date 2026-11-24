@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>互動示範 · 教學演示頁</title>
+<style>
+  :root { --ink:#1d1d1b; --ink2:#5b5b54; --line:#d8d3c8; --card:#fffefb; --accent:#2f6fbf; }
+  html,body { margin:0; padding:0; background:#f4f1ea; color:var(--ink);
+    font:15px/1.6 ui-sans-serif,system-ui,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif; }
+  main { max-width:980px; margin:0 auto; padding:36px 20px 56px; }
+  h1 { font-size:24px; margin:0 0 4px; font-weight:650; letter-spacing:.01em; }
+  .sub { color:var(--ink2); margin:0 0 26px; font-size:13.5px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+  a.card { display:block; text-decoration:none; color:inherit; background:var(--card);
+    border:1px solid var(--line); border-radius:10px; padding:16px 16px 14px;
+    transition:border-color .15s, transform .15s; }
+  a.card:hover { border-color:var(--accent); transform:translateY(-1px); }
+  .tag { display:inline-block; font-size:11px; letter-spacing:.06em; color:#8a887f;
+    border:1px solid var(--line); border-radius:99px; padding:1px 8px; margin-bottom:8px; }
+  .card h2 { font-size:16px; margin:0 0 6px; font-weight:600; }
+  .card p { margin:0; color:var(--ink2); font-size:13px; }
+  .go { margin-top:10px; font-size:13px; color:var(--accent); }
+  .note { margin-top:26px; padding-top:14px; border-top:1px solid var(--line);
+    color:var(--ink2); font-size:12.5px; }
+  .note a { color:var(--accent); }
+  code { font:12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace; background:#efece4;
+    padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>互動示範</h1>
+  <p class="sub">配合《Moment of force》的教學演示頁。每一頁都是獨立一頁：載入時靜止，拖 slider 或按鈕才動，一屏看完。</p>
+
+  <div class="grid">
+    <a class="card" href="moment-balance/moment-balance.html">
+      <span class="tag">p3 · q3 / q5</span>
+      <h2>力矩平衡 · 蹺蹺板</h2>
+      <p>拖重量與距離，樑隨力矩差傾斜。q3：600 N × 6 m 要 400 N × 9 m 才平衡；q5：重的那個要移入 2 m。</p>
+      <div class="go">開啟 →</div>
+    </a>
+
+    <a class="card" href="equilibrium-beam/equilibrium-beam.html">
+      <span class="tag">p5 · q11</span>
+      <h2>平衡條件 · 樑與支撐</h2>
+      <p>拖支點與載荷，即時看兩邊反作用力怎樣分。q11：樑 1 m、支點在 20 cm、樑重 10 N → F = 15 N、R = 25 N。</p>
+      <div class="go">開啟 →</div>
+    </a>
+
+    <a class="card" href="couple/couple.html">
+      <span class="tag">p7 · 力偶</span>
+      <h2>力偶 · 力矩與支點無關</h2>
+      <p>把支點由兩力左邊拖到右邊（甚至拉到兩力之外）：兩邊的力矩數字會變，但 ΣM 一直是 F × d。</p>
+      <div class="go">開啟 →</div>
+    </a>
+
+    <a class="card" href="centroid-hang/centroid-hang.html">
+      <span class="tag">p7 · 重心</span>
+      <h2>重心 · 懸掛法</h2>
+      <p>按「掛孔 A」再按「掛孔 B」：兩次鉛垂線的記號線相交處就是 c.g.，線尾有螺帽可對照印刷的實驗步驟。</p>
+      <div class="go">開啟 →</div>
+    </a>
+  </div>
+
+  <p class="note">
+    p1 的「力矩三格」動畫不是獨立頁，而是直接畫在 e-book 第 1 頁的圖上（覆蓋印刷圖框、不加任何數字）。回到 <a href="../index.html">書架</a> 開 jpfm08 第 1 頁即可看到。
+    <br>本頁示範以 <a href="https://p5js.org" rel="noopener">p5.js</a> 2.3.4 製作（LGPL-2.1，獨立檔案載入、未經修改）。
+  </p>
+</main>
+</body>
+</html>

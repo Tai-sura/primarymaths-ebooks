@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>平衡條件 · 樑與支撐（jpfm08 p5）</title>
+<style>
+  :root { --ink:#23231f; --ink2:#63635a; --line:#dcd7ca; --card:#fffefb; --accent:#2f6fbf; --amber:#b47a17; --red:#b03c2c; --green:#2e7d5b; }
+  html,body { margin:0; padding:0; background:#f4f1ea; color:var(--ink);
+    font:14px/1.5 ui-sans-serif,system-ui,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif; }
+  #app { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:18px;
+    max-width:1180px; margin:0 auto; padding:14px 16px 10px; }
+  #stage { background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:6px; touch-action:none; min-width:0; }
+  #canvas-holder { display:block; line-height:0; }
+  #canvas-holder canvas { display:block; width:100% !important; height:auto !important; border-radius:4px; }
+  h1 { font-size:16px; margin:0 0 2px; font-weight:600; }
+  .sub { color:var(--ink2); font-size:12px; margin:0 0 9px; }
+  .presets { display:flex; gap:8px; margin:0 0 10px; }
+  .presets button { flex:1; font:inherit; font-size:12px; padding:6px 4px; border:1px solid var(--line);
+    border-radius:6px; background:#fff; color:var(--ink); cursor:pointer; }
+  .presets button:hover { background:#f6f3ec; }
+  .row { display:flex; align-items:center; gap:8px; margin:0 0 6px; }
+  .row label { width:80px; flex:none; color:var(--ink2); font-size:12px; }
+  .row input[type=range] { flex:1; min-width:0; accent-color:var(--accent); height:18px; }
+  .row input[type=range]:disabled { opacity:.35; }
+  .row output { width:56px; flex:none; text-align:right; font-variant-numeric:tabular-nums; font-size:13px; }
+  .read { border-top:1px solid var(--line); padding-top:8px; margin-top:6px; }
+  .read div { display:flex; justify-content:space-between; gap:10px; font-variant-numeric:tabular-nums;
+    padding:2px 0; font-size:13px; }
+  .read span:first-child { color:var(--ink2); }
+  .eqs { margin-top:8px; display:grid; gap:4px; font:11px/1.45 ui-monospace,"SF Mono",Consolas,monospace; color:var(--ink2); }
+  .eqs b { color:var(--ink); font-weight:600; }
+  .state { margin-top:7px; font-size:13px; font-weight:600; color:var(--red); min-height:20px; }
+  .state.balanced { color:var(--green); }
+  .cap { font-size:11px; color:#8a887f; margin-top:8px; line-height:1.5; }
+  @media (max-width:900px) { #app { grid-template-columns:minmax(0,1fr); } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage"><div id="canvas-holder"></div></div>
+  <div id="panel">
+    <h1>平衡條件 · 樑與支撐</h1>
+    <p class="sub">淨力 0（不平動）＋ 淨力矩 0（不轉動）。</p>
+
+    <div class="presets">
+      <button id="pp" type="button">印刷示範</button>
+      <button id="pq" type="button">q11 · 樑 1 m</button>
+    </div>
+
+    <div class="row">
+      <label id="la" for="xa">支撐 A 位置</label>
+      <input id="xa" type="range" min="0.1" max="4.4" step="0.1" value="0.5">
+      <output id="xa-out">0.5 m</output>
+    </div>
+    <div class="row">
+      <label for="xb">支撐 B 位置</label>
+      <input id="xb" type="range" min="0.1" max="4.4" step="0.1" value="3.5">
+      <output id="xb-out">3.5 m</output>
+    </div>
+    <div class="row">
+      <label id="l1w" for="w1">載荷 1 重量</label>
+      <input id="w1" type="range" min="0" max="500" step="10" value="300">
+      <output id="w1-out">300 N</output>
+    </div>
+    <div class="row">
+      <label for="x1">載荷 1 位置</label>
+      <input id="x1" type="range" min="0" max="4.5" step="0.1" value="4.5">
+      <output id="x1-out">4.5 m</output>
+    </div>
+    <div class="row">
+      <label for="w2">載荷 2 重量</label>
+      <input id="w2" type="range" min="0" max="500" step="10" value="200">
+      <output id="w2-out">200 N</output>
+    </div>
+    <div class="row">
+      <label for="x2">載荷 2 位置</label>
+      <input id="x2" type="range" min="0" max="4.5" step="0.1" value="2">
+      <output id="x2-out">2 m</output>
+    </div>
+
+    <div class="read">
+      <div><span id="ra-label">R_A（支撐 A）</span><span id="o-ra">—</span></div>
+      <div><span id="rb-label">R_B（支撐 B）</span><span id="o-rb">—</span></div>
+      <div><span>淨力 ΣF</span><span id="o-net">—</span></div>
+    </div>
+    <div class="eqs" id="eqs"></div>
+    <div class="state" id="state">—</div>
+    <div class="cap" id="cap"></div>
+  </div>
+</div>
+
+<script src="../p5.min.js"></script>
+<script>
+const MAX_TILT = 0.16;
+const C = {
+  paper: [251, 250, 247], ground: [224, 219, 208], ink: [35, 35, 31], ink2: [99, 99, 90],
+  beam: [138, 106, 69], load: [47, 111, 191], react: [46, 125, 91], beamW: [150, 120, 60],
+  red: [176, 60, 44], green: [46, 125, 91],
+};
+
+// 印刷數字才有：300 / 1 / 200 / 1.5 / 3 / 500；q11：1 m / 0.2 m / 10 N / 15 / 25。
+// 樑長 4.5 m 只係「示意框」，唔係物理量（印刷冇印樑長），頁面已註明。
+const PRESETS = {
+  printed: { mode: 'pair', L: 4.5, xA: 0.5, xB: 3.5, w1: 300, x1: 4.5, w2: 200, x2: 2.0, wb: 0 },
+  q11: { mode: 'single', L: 1, xA: 0.2, xB: 0.8, w1: 15, x1: 0, w2: 0, x2: 0.5, wb: 10 },
+};
+const S = { mode: 'pair', L: 4.5, xA: 0.5, xB: 3.5, w1: 300, x1: 4.5, w2: 200, x2: 2.0, wb: 0 };
+
+const num = (v) => (Math.round(v * 100) / 100).toFixed(2).replace(/\.?0+$/, '');
+const fx = (v) => (Math.round(v * 10) / 10).toFixed(1);
+const f1 = (v) => (Math.round(v * 10) / 10).toString().replace(/\.0$/, '');
+
+function solution() {
+  const loads = [];
+  if (S.w1 > 0) loads.push({ w: S.w1, x: S.x1, name: 'load1' });
+  if (S.mode === 'pair' && S.w2 > 0) loads.push({ w: S.w2, x: S.x2, name: 'load2' });
+  if (S.wb > 0) loads.push({ w: S.wb, x: S.L / 2, beam: true });
+  const total = loads.reduce((a, l) => a + l.w, 0);
+
+  if (S.mode === 'pair') {
+    const d = S.xB - S.xA;
+    const sumA = loads.reduce((a, l) => a + l.w * (l.x - S.xA), 0);
+    const RB = Math.abs(d) > 1e-6 ? sumA / d : 0;
+    const RA = total - RB;
+    let tilt = 0, pivot = S.xA, ok = true;
+    if (RA < -1e-6) { ok = false; pivot = S.xB; tilt = Math.min(1, -RA / Math.max(total, 1)) * MAX_TILT; }
+    else if (RB < -1e-6) { ok = false; pivot = S.xA; tilt = -Math.min(1, -RB / Math.max(total, 1)) * MAX_TILT; }
+    return { mode: 'pair', loads, total, RA, RB, R: 0, tilt, pivot, ok, d };
+  }
+
+  // 單一支點：反作用力 = 總重量；力矩對支點不平就傾
+  let cw = 0, acw = 0;
+  for (const l of loads) {
+    const dd = l.x - S.xA;
+    if (dd > 0) cw += l.w * dd; else acw += -l.w * dd;
+  }
+  const net = cw - acw;
+  const lever = Math.max(0.001, ...loads.map((l) => Math.abs(l.x - S.xA)));
+  const tilt = Math.max(-1, Math.min(1, (net / (lever * Math.max(total, 1))) * 3)) * MAX_TILT;
+  return { mode: 'single', loads, total, RA: total, RB: 0, R: total, tilt, pivot: S.xA, ok: Math.abs(net) < 0.5, cw, acw, net };
+}
+
+// 對某點取矩，順時針 / 逆時針兩邊嘅項（未知反作用力用符號表示）
+function termsAbout(r, px, extra = []) {
+  const cw = [], acw = [];
+  let cwSum = 0, acwSum = 0;
+  for (const l of r.loads) {
+    const d = Math.abs(l.x - px);
+    if (d < 1e-6) continue;
+    const isCW = l.x > px;                       // 向下嘅載荷：在右邊 = 順時針
+    const term = (r.mode === 'single' && l.name === 'load1' ? 'F' : l.w) + '×' + num(d);
+    (isCW ? cw : acw).push(term);
+    if (isCW) cwSum += l.w * d; else acwSum += l.w * d;
+  }
+  for (const e of extra) {                       // 反作用力（向上）：在左邊 = 順時針
+    const d = Math.abs(e.x - px);
+    if (d < 1e-6) continue;
+    const isCW = e.up ? e.x < px : e.x > px;
+    (isCW ? cw : acw).push(e.name + '×' + num(d));
+  }
+  return { cw: cw.join(' + ') || '0', acw: acw.join(' + ') || '0', cwSum, acwSum };
+}
+
+function sync() {
+  const r = solution();
+  document.getElementById('xa-out').textContent = fx(S.xA) + ' m';
+  document.getElementById('xb-out').textContent = fx(S.xB) + ' m';
+  document.getElementById('w1-out').textContent = S.w1 + ' N';
+  document.getElementById('x1-out').textContent = fx(S.x1) + ' m';
+  document.getElementById('w2-out').textContent = S.w2 + ' N';
+  document.getElementById('x2-out').textContent = fx(S.x2) + ' m';
+
+  const oRa = document.getElementById('o-ra');
+  const oRb = document.getElementById('o-rb');
+  if (r.mode === 'pair') {
+    document.getElementById('ra-label').textContent = 'R_A（支撐 A）';
+    document.getElementById('rb-label').textContent = 'R_B（支撐 B）';
+    oRa.textContent = f1(r.RA) + ' N';
+    oRb.textContent = f1(r.RB) + ' N';
+  } else {
+    document.getElementById('ra-label').textContent = 'R_P（支撐 P）';
+    document.getElementById('rb-label').textContent = 'F（X 端）';
+    oRa.textContent = f1(r.R) + ' N';
+    oRb.textContent = S.w1 + ' N';
+  }
+  document.getElementById('o-net').textContent =
+    f1(r.total - (r.mode === 'pair' ? r.RA + r.RB : r.R)) + ' N';
+
+  const eqs = document.getElementById('eqs');
+  const state = document.getElementById('state');
+  if (r.mode === 'pair') {
+    const b = termsAbout(r, S.xB, [{ name: 'R_A', x: S.xA, up: true }]);
+    const a = termsAbout(r, S.xA, [{ name: 'R_B', x: S.xB, up: true }]);
+    eqs.innerHTML =
+      '<div>對 B 取矩：<b>' + b.cw + ' = ' + b.acw + '</b> → R_A = ' + f1(r.RA) + ' N</div>' +
+      '<div>對 A 取矩：<b>' + a.cw + ' = ' + a.acw + '</b> → R_B = ' + f1(r.RB) + ' N</div>';
+    if (r.ok) {
+      state.className = 'state balanced';
+      state.textContent = '平衡：淨力 0、淨力矩 0（R_A ' + f1(r.RA) + ' N、R_B ' + f1(r.RB) + ' N）';
+    } else {
+      state.className = 'state';
+      state.textContent = r.RA < 0
+        ? '不成立：R_A 需要 ' + f1(r.RA) + ' N（支撐不能拉）→ 樑繞 B 傾倒'
+        : '不成立：R_B 需要 ' + f1(r.RB) + ' N（支撐不能拉）→ 樑繞 A 傾倒';
+    }
+  } else {
+    const p = termsAbout(r, S.xA);
+    const others = r.loads.filter((l) => l.name !== 'load1');
+    const d1 = Math.max(1e-6, Math.abs(S.x1 - S.xA));
+    let cwO = 0, acwO = 0;
+    for (const l of others) {
+      const dd = l.x - S.xA;
+      if (dd > 0) cwO += l.w * dd; else acwO += -l.w * dd;
+    }
+    const req = S.x1 > S.xA ? (acwO - cwO) / d1 : (cwO - acwO) / d1;
+    eqs.innerHTML =
+      '<div>對 P 取矩：<b>' + p.cw + ' = ' + p.acw + '</b> → F = ' + f1(req) + ' N（現在 ' + S.w1 + ' N）</div>' +
+      '<div>淨力 0：<b>R_P = F + 樑重 = ' + f1(r.R) + ' N</b></div>';
+    if (r.ok) {
+      state.className = 'state balanced';
+      state.textContent = '平衡：F = ' + S.w1 + ' N、R_P = ' + f1(r.R) + ' N';
+    } else {
+      state.className = 'state';
+      state.textContent = (r.net > 0 ? '右邊下沉' : '左邊下沉') + '：力矩差 ' + f1(r.net) + ' N·m';
+    }
+  }
+
+  document.getElementById('cap').textContent = r.mode === 'pair'
+    ? '印刷示範：300 N 距 B 1 m、200 N 距 B 1.5 m、A 距 B 3 m → R_A = 0、R_B = 500 N。樑長印刷未印，畫面 4.5 m 只作示意框；樑重忽略。'
+    : 'q11：樑 1 m、支點 P 在 20 cm、樑重 10 N（作用在 50 cm）、X 端加 F → 平衡時 F = 15 N、R_P = 25 N。';
+  if (typeof redraw === 'function') redraw();
+}
+
+function applyPreset(name) {
+  Object.assign(S, PRESETS[name]);
+  const single = S.mode === 'single';
+  const set = (id, value, min, max, step) => {
+    const el = document.getElementById(id);
+    el.min = min; el.max = max; el.step = step; el.value = String(value);
+  };
+  set('xa', S.xA, single ? 0 : 0.1, single ? S.L : 4.4, single ? 0.05 : 0.1);
+  set('xb', S.xB, 0.1, 4.4, 0.1);
+  set('w1', S.w1, 0, single ? 40 : 500, single ? 1 : 10);
+  set('x1', S.x1, 0, S.L, single ? 0.05 : 0.1);
+  set('w2', S.w2, 0, 500, 10);
+  set('x2', S.x2, 0, S.L, 0.1);
+  document.getElementById('xb').disabled = single;
+  document.getElementById('w2').disabled = single;
+  document.getElementById('x2').disabled = single;
+  document.getElementById('la').textContent = single ? '支點 P 位置' : '支撐 A 位置';
+  document.getElementById('l1w').textContent = single ? 'X 端 F' : '載荷 1 重量';
+  sync();
+}
+
+function canvasSize() {
+  const holder = document.getElementById('canvas-holder');
+  const w = Math.max(320, Math.floor(holder.clientWidth || 800));
+  const h = Math.max(430, Math.min(560, window.innerHeight - 240, Math.round(w * 0.62) + 150));
+  return { w, h };
+}
+
+function setup() {
+  const { w, h } = canvasSize();
+  createCanvas(w, h).parent('canvas-holder');
+  noLoop();
+  textFont('system-ui, sans-serif');
+  sync();
+}
+
+function windowResized() {
+  const { w, h } = canvasSize();
+  resizeCanvas(w, h);
+  redraw();
+}
+
+function draw() {
+  const W = width, H = height;
+  const r = solution();
+  const L = S.L;
+  const padX = 52;
+  const ppm = (W - padX * 2) / L;
+  const beamY = H * 0.40;
+  const ground = beamY + H * 0.18;
+  const px = (x) => padX + x * ppm;
+  const cos = Math.cos(r.tilt), sin = Math.sin(r.tilt);
+  const pivotPx = px(r.pivot);
+  const onBeam = (x) => [pivotPx + (px(x) - pivotPx) * cos, beamY + (px(x) - pivotPx) * sin];
+
+  background(...C.paper);
+
+  // 地面
+  stroke(...C.ground); strokeWeight(1);
+  line(20, ground, W - 20, ground);
+
+  // 樑
+  const [bx0, by0] = onBeam(0);
+  const [bx1, by1] = onBeam(L);
+  stroke(...C.beam); strokeWeight(9); strokeCap(ROUND);
+  line(bx0, by0, bx1, by1);
+
+  // 支撐（三角座）
+  const supports = r.mode === 'pair' ? [S.xA, S.xB] : [S.xA];
+  for (const sx of supports) {
+    noStroke(); fill(58, 56, 50);
+    triangle(px(sx) - 26, ground, px(sx) + 26, ground, px(sx), beamY + 3);
+    textAlign(CENTER, TOP); textSize(12); fill(...C.ink2);
+    text(r.mode === 'pair' ? (sx === S.xA ? 'A' : 'B') : 'P', px(sx), ground + 6);
+  }
+  if (r.mode === 'single') {
+    textAlign(CENTER, TOP); textSize(12); fill(...C.ink2);
+    text('X', px(0), beamY + 16);
+    text('Y', px(L), beamY + 16);
+  }
+
+  // 載荷：向下箭咀（重力方向）
+  for (const l of r.loads) {
+    const [lx, ly] = onBeam(l.x);
+    const label = l.beam ? '樑重 ' + l.w + ' N' : (r.mode === 'single' && l.name === 'load1' ? 'F ' + l.w + ' N' : l.w + ' N');
+    const top = ly - 76;
+    stroke(...(l.beam ? C.beamW : C.load)); strokeWeight(2); strokeCap(ROUND);
+    line(lx, top, lx, ly - 6);
+    noStroke(); fill(...(l.beam ? C.beamW : C.load));
+    triangle(lx - 6, ly - 17, lx + 6, ly - 17, lx, ly - 5);
+    textAlign(CENTER, BOTTOM); textSize(12); fill(...C.ink);
+    text(label, lx, top - 4);
+  }
+
+  // 反作用力：向上箭咀
+  const maxR = Math.max(r.RA, r.RB, 1);
+  for (const sx of supports) {
+    const R = r.mode === 'pair' ? (sx === S.xA ? r.RA : r.RB) : r.R;
+    const tag = r.mode === 'pair' ? (sx === S.xA ? 'R_A' : 'R_B') : 'R_P';
+    if (R > 0.5) {
+      const len = 26 + 54 * Math.min(1, R / maxR);
+      stroke(...C.react); strokeWeight(2); strokeCap(ROUND);
+      line(px(sx), beamY - 8, px(sx), beamY - 8 - len);
+      noStroke(); fill(...C.react);
+      triangle(px(sx) - 6, beamY - 8 - len + 10, px(sx) + 6, beamY - 8 - len + 10, px(sx), beamY - 8 - len - 2);
+      textAlign(CENTER, BOTTOM); textSize(12); fill(...C.ink);
+      text(tag + ' = ' + f1(R) + ' N', px(sx), beamY - 8 - len - 6);
+    } else {
+      textAlign(CENTER, BOTTOM); textSize(12); fill(R < -0.5 ? C.red : C.ink2);
+      text(tag + ' = ' + f1(R) + ' N', px(sx), beamY - 16);
+    }
+  }
+
+  // 力矩不平就畫弧形箭咀（順時針 = 右邊沉）
+  if (!r.ok) {
+    const rad = 46;
+    noFill(); stroke(47, 111, 191, 170); strokeWeight(1.6);
+    arc(pivotPx, beamY, rad * 2, rad * 2, PI, TWO_PI);
+    noStroke(); fill(47, 111, 191);
+    if (r.tilt > 0) triangle(pivotPx + rad - 5, beamY - 9, pivotPx + rad + 5, beamY - 9, pivotPx + rad, beamY + 2);
+    else triangle(pivotPx - rad - 5, beamY - 9, pivotPx - rad + 5, beamY - 9, pivotPx - rad, beamY + 2);
+    textAlign(CENTER, BOTTOM); textSize(11); fill(47, 111, 191);
+    text(r.tilt > 0 ? '順時針' : '逆時針', pivotPx, beamY - rad - 8);
+  }
+
+  // 頂部：兩條平衡條件（窄畫面分兩行，唔會撞）
+  noStroke();
+  if (W < 620) {
+    textAlign(LEFT, TOP); textSize(11); fill(...C.ink2);
+    text('① 淨力 = 0（不平動）', 20, 14);
+    text('② 淨力矩 = 0（不轉動）', 20, 30);
+    textAlign(LEFT, TOP); textSize(11);
+    text(r.mode === 'pair' ? '兩支撐：反作用力由平衡條件解出' : '單支點：F 要令力矩平衡', 20, 46);
+  } else {
+    textAlign(LEFT, TOP); textSize(12); fill(...C.ink2);
+    text('① 淨力 = 0（不平動）  ② 淨力矩 = 0（不轉動）', 22, 16);
+    textAlign(RIGHT, TOP);
+    text(r.mode === 'pair' ? '兩支撐：反作用力由平衡條件解出' : '單支點：F 要令力矩平衡', W - 22, 16);
+  }
+
+  // 底部狀態
+  textAlign(CENTER, BOTTOM); textSize(15);
+  if (r.ok) {
+    fill(...C.green);
+    text(r.mode === 'pair'
+      ? '平衡 —— 淨力 0、淨力矩 0'
+      : '平衡 —— F × ' + num(Math.abs(S.x1 - S.xA)) + ' = 樑重 × ' + num(Math.abs(S.L / 2 - S.xA)), W / 2, H * 0.84);
+  } else {
+    fill(...C.red);
+    text(r.mode === 'pair' ? '有支撐被拉負值 → 樑傾倒' : (r.tilt > 0 ? '右邊下沉' : '左邊下沉'), W / 2, H * 0.84);
+  }
+  textAlign(CENTER, BOTTOM); textSize(11); fill(...C.ink2);
+  text('重力向下、反作用力向上；力矩 = 力 × 到支點的距離', W / 2, H - 14);
+}
+
+// slider id → 模型 key（支撐用大寫 A/B）
+const KEY = { xa: 'xA', xb: 'xB', w1: 'w1', x1: 'x1', w2: 'w2', x2: 'x2' };
+for (const id of Object.keys(KEY)) {
+  document.getElementById(id).addEventListener('input', (event) => {
+    S[KEY[id]] = Number(event.target.value);
+    sync();
+  });
+}
+document.getElementById('pp').addEventListener('click', () => applyPreset('printed'));
+document.getElementById('pq').addEventListener('click', () => applyPreset('q11'));
+applyPreset('printed');
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "id": "p5m07a",
+  "form": "P5",
+  "code": "P5 Maths 07",
+  "title": "Circles (A)",
+  "topic": "Circles",
+  "year": 2026,
+  "status": "draft",
+  "storage": "p5m07a",
+  "source": {
+    "que": "source/P5 Maths L07 Circles (A)[QUE].pdf",
+    "ans": "source/P5 Maths L07 Circles (A)[ANS].pdf",
+    "ansPageOffset": -1
+  },
+  "sections": [],
+  "continuation": {
+    "top": 96,
+    "x": 48,
+    "width": 499,
+    "bottom": 812
+  },
+  "extract": {
+    "zoom": 3,
+    "regionX": [
+      66,
+      546
+    ],
+    "footer": 822,
+    "questions": [],
+    "anchors": {},
+    "fixedAnchors": {},
+    "overrides": {}
+  }
+}
