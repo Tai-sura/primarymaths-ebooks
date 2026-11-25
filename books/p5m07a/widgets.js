@@ -3,12 +3,16 @@
  * graphic button. House rules: docs/03-authoring-style.md §5.
  *
  * Five pictures, each attached to the questions that ask the same thing:
- *   circleParts      q1  q2          what centre / radius / diameter / chord are
+ *   circleParts      q1  q2          Centre / Circumference / Radius / Diameter,
+ *                                    named the way the concept page names them
  *   radiusDiameter   q10 q11 q13     d = 2r, r = d ÷ 2 (and q18–q23, the table)
- *   chordOrDiameter  q12 q34         a line through the centre is a diameter;
- *                                    any other line across the circle is a chord
+ *   lineOrDiameter   q12 q34         a line through the centre is a diameter;
+ *                                    any other line across the circle is just a line segment
  *   circlesInRow     q36 hw12        n equal circles in a row: AB spans (n − 1) diameters
  *   overlapCircles   q40             two circles through each other's centres: PQ = 3r
+ *
+ * There is no "chord" anywhere: the course calls every straight line across a circle a line
+ * segment, and only the one through the centre a diameter.
  *
  * The printed page is never touched: the engine only draws a small graphic
  * button beside a question whose id is registered here.
@@ -43,62 +47,55 @@ function seg(svg, x1, y1, x2, y2, color, { dash = "", width = 2.5, arrow = false
   }, svg);
 }
 
-/** q1, q2, q10: the parts of a circle, with the radius turning. */
+/** q1, q2: the four parts of a circle, named the way the concept page names them. */
 function circleParts(root, card) {
   root.append(question(card));
-  const svg = scene(560, 330);
+  const svg = scene(560, 340);
   root.append(svg);
 
-  const cx = 280, cy = 165, R = 120;
+  const cx = 280, cy = 178, R = 118;
   const again = () => {
     clear(svg);
     circle(svg, cx, cy, R);
 
-    const a = angle.get() * DEG;
-    // the diameter is the same segment as the two radii, drawn through O
-    const x1 = cx - R * Math.cos(a), y1 = cy - R * Math.sin(a);
-    const x2 = cx + R * Math.cos(a), y2 = cy + R * Math.sin(a);
-    seg(svg, x1, y1, x2, y2, C.green, { dash: "7 5", width: 2.5 });
-    // the radius, from the centre to one end of the diameter
-    seg(svg, cx, cy, x2, y2, C.blue, { width: 3, arrow: true });
-    // a chord between the two ends of the radius and a third point on the circle
-    const b = a + 70 * DEG;
-    const x3 = cx + R * Math.cos(b), y3 = cy + R * Math.sin(b);
-    seg(svg, x2, y2, x3, y3, C.amber, { dash: "4 4", width: 2 });
+    // the circumference: a bold arc along the rim, so the name has something to point at
+    const a0 = 196 * DEG, a1 = 232 * DEG;
+    S("path", {
+      d: `M ${cx + R * Math.cos(a0)} ${cy + R * Math.sin(a0)} A ${R} ${R} 0 0 1 ${cx + R * Math.cos(a1)} ${cy + R * Math.sin(a1)}`,
+      fill: "none", stroke: C.amber, "stroke-width": 5, "stroke-linecap": "round",
+    }, svg);
 
+    const a = angle.get() * DEG;
+    const ux = Math.cos(a), uy = Math.sin(a);
+    const x2 = cx + R * ux, y2 = cy + R * uy;        // where the radius meets the rim
+    const x1 = cx - R * ux, y1 = cy - R * uy;        // the diameter's far end
+    seg(svg, x1, y1, x2, y2, C.green, { dash: "7 5", width: 2.5 });
+    seg(svg, cx, cy, x2, y2, C.blue, { width: 3, arrow: true });
     dot(svg, cx, cy);
     dot(svg, x2, y2, C.blue);
     dot(svg, x1, y1, C.green);
-    dot(svg, x3, y3, C.amber);
-    T(svg, cx - 6, cy + 20, "O", { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.ink });
-    /* The two length labels sit off the line, not on it: take the normal to the radius and send it
-     * away from the chord, so "r" always clears the blue line and "d" clears the green one. */
-    {
-      const ux = (x2 - cx) / R, uy = (y2 - cy) / R;      // along the radius
-      let nx = -uy, ny = ux;                              // a normal to it
-      const mx = (x2 + x3) / 2, my = (y2 + y3) / 2;       // the chord's midpoint
-      if ((mx - cx) * nx + (my - cy) * ny > 0) { nx = -nx; ny = -ny; }   // point away from the chord
-      const off = 18;
-      T(svg, cx + ux * R * 0.5 + nx * off - 4, cy + uy * R * 0.5 + ny * off + 5, "r",
-        { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.blue });
-      // the diameter's label goes on its far half, so it never sits on the rim
-      T(svg, cx - ux * R * 0.5 + nx * off - 4, cy - uy * R * 0.5 + ny * off + 5, "d",
-        { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.green });
-    }
-    // the chord's label stays with the chord: it is pushed from the chord's midpoint towards the
-    // centre, so it sits in the lens between the chord and O wherever the radius points
-    {
-      const mx = (x2 + x3) / 2, my = (y2 + y3) / 2;
-      const ox = mx - cx, oy = my - cy, L2 = Math.hypot(ox, oy) || 1;
-      T(svg, mx - (ox / L2) * 40 - 30, my - (oy / L2) * 40 + 5, "弦 chord",
-        { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.amber });
-    }
 
-    const chord = 2 * CM_R * Math.sin((35 * DEG));
+    /* Radius and diameter are collinear, so the only direction clear of both is the normal to
+     * that line. The two length labels go on the upper side of it, the centre's name on the
+     * lower side, which keeps every pair apart for all 360 degrees. */
+    let nx = -uy, ny = ux;
+    if (ny > 0) { nx = -nx; ny = -ny; }
+    const size = { class: "g-lab", "font-size": 14, "font-weight": 700 };
+    T(svg, cx + ux * R * 0.5 + nx * 22, cy + uy * R * 0.5 + ny * 22 + 5, "半徑 Radius",
+      { ...size, fill: C.blue, "text-anchor": "middle" });
+    T(svg, cx - ux * R * 0.5 + nx * 22, cy - uy * R * 0.5 + ny * 22 + 5, "直徑 Diameter",
+      { ...size, fill: C.green, "text-anchor": "middle" });
+    T(svg, cx - nx * 28, cy - ny * 28 + 5, "圓心 Centre",
+      { ...size, fill: C.ink, "text-anchor": "middle" });
+
+    // the circumference's name sits above the arc, clear of the rim (the arc is always up-left)
+    T(svg, 200, 48, "圓周 Circumference",
+      { ...size, fill: C.amber, "text-anchor": "middle" });
+
     out.set(
       `r = ${CM_R}\\text{ cm},\\quad d = 2r = ${2 * CM_R}\\text{ cm}`,
       true,
-      `所有半徑都一樣長（r = ${CM_R} cm）；直徑穿過圓心，是最長的弦（${2 * CM_R} cm）。圖中的弦只有 ${chord.toFixed(1)} cm。`,
+      `所有半徑都一樣長（r = ${CM_R} cm）；直徑穿過圓心，是圓內最長的直線（${2 * CM_R} cm）。圓周就是圍住整個圓的那條曲線。`,
       { yes: "d = 2r" },
     );
   };
@@ -155,8 +152,8 @@ function radiusDiameter(root, card, start = 9) {
   again();
 }
 
-/** q12, q34: where the line sits decides what it is called. */
-function chordOrDiameter(root, card) {
+/** q12, q34: only a line through the centre is a diameter; any other is just a line segment. */
+function lineOrDiameter(root, card) {
   root.append(question(card));
   const svg = scene(560, 320);
   root.append(svg);
@@ -173,13 +170,13 @@ function chordOrDiameter(root, card) {
     seg(svg, cx - hw, y, cx + hw, y, through ? C.green : C.amber, { width: 3 });
     dot(svg, cx, cy);
     T(svg, cx - 16, cy - 8, "O", { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.ink });
-    // A line at the top of the circle has no room above it: the chord's label goes under the chord
-    // and to the right of the dotted distance line, so neither the rim nor the reading is crossed;
-    // the reading itself sits on the other side of that line.
+    // A line near the top of the circle has no room above it: the label goes under the line and to
+    // the right of the dotted distance line, so neither the rim nor the reading is crossed; the
+    // reading itself sits on the other side of that line.
     if (through) {
       T(svg, cx + 36, cy - 10, "直徑", { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.green });
     } else {
-      T(svg, cx + 12, y + 20, "弦 chord",
+      T(svg, cx + 12, y + 20, "線段 line segment",
         { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.amber });
     }
     if (!through) {
@@ -189,10 +186,11 @@ function chordOrDiameter(root, card) {
     }
     if (through) {
       out.set(`\\text{直徑} = 2r = ${2 * CM_R}\\text{ cm}`, true,
-        "線經過圓心，所以是直徑；所有直徑都一樣長，也是圓內最長的弦。", { yes: "直徑" });
+        "線經過圓心，所以是直徑；所有直徑都一樣長，是圓內最長的直線。", { yes: "直徑" });
     } else {
-      out.set(`\\text{弦} = 2\\sqrt{r^2 - d^2} = ${(2 * half).toFixed(1)}\\text{ cm}`, null,
-        `線離開圓心 ${d} cm，所以是弦；離圓心越遠，弦越短（直徑 ${2 * CM_R} cm 是最長）。`, { yes: "弦" });
+      out.set(`\\text{線段} = 2\\sqrt{r^2 - d^2} = ${(2 * half).toFixed(1)}\\text{ cm}`, null,
+        `這條線離開圓心 ${d} cm，不經過圓心，所以只是一條線段（line segment）；離圓心越遠越短，最長的是直徑 ${2 * CM_R} cm。`,
+        { yes: "線段" });
     }
   };
 
@@ -326,8 +324,8 @@ const REGISTRY = {
   q22: (root) => radiusDiameter(root, "已知直徑，半徑就是直徑的一半。", 3),
   q23: (root) => radiusDiameter(root, "已知直徑，半徑就是直徑的一半。", 6),
 
-  q12: (root) => chordOrDiameter(root, "AD 穿過圓心，OC 只是半徑，BE 是不是直徑？"),
-  q34: (root) => chordOrDiameter(root, "AY 不穿過圓心。它還算不算直徑？"),
+  q12: (root) => lineOrDiameter(root, "AD 穿過圓心，OC 只是半徑，BE 是不是直徑？"),
+  q34: (root) => lineOrDiameter(root, "AY 不穿過圓心。它還算不算直徑？"),
 
   q36: (root) => circlesInRow(root, "四個圓排成一行，相鄰圓心相距 24 cm。AB 有多長？", { count: 4, start: 12 }),
   hw12: (root) => circlesInRow(root, "五個等圓，每個半徑 12 cm。AB 有多長？", { count: 5, start: 12 }),

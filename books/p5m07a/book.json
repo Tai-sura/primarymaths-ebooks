@@ -343,7 +343,7 @@
         "page": 10,
         "label": "5",
         "section": "homework",
-        "note": "Draw two diameters AB and CD; a radius OE; a chord FG off the centre"
+        "note": "Draw two diameters AB and CD; a radius OE; a line segment FG off the centre"
       },
       {
         "id": "hw6",
@@ -754,8 +754,8 @@
       "hw7": {
         "space": 163,
         "playAt": [
-          354,
-          678
+          470,
+          660
         ],
         "playSize": [
           20,
@@ -763,7 +763,7 @@
         ],
         "blankAt": [
           350.0,
-          679.0,
+          660.0,
           546.0
         ]
       },

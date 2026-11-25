@@ -372,7 +372,7 @@ export const SOLUTIONS = [
     boxes: [{
       steps: [
         t("AX and CX are radii, so X is the centre; BX is also a radius."),
-        t("AY does not pass through the centre X, so AY is a chord, not a diameter."),
+        t("AY does not pass through the centre X, so AY is not a diameter."),
         m(`\\text{not correct} = ${U("B")}`),
       ],
     }],
@@ -420,7 +420,7 @@ export const SOLUTIONS = [
     id: "q38",
     boxes: [{
       steps: [
-        t("F lies on chord AB, not on the circumference, so FG is not a radius."),
+        t("F lies on AB, not on the circumference, so FG is not a radius."),
         m(`\\text{not correct} = ${U("B")}`),
       ],
     }],
@@ -574,7 +574,7 @@ export const SOLUTIONS = [
         t("(a) Draw AB through O, with A and B on the circle — a diameter."),
         t("(b) Draw another diameter CD through O, not on AB."),
         t("(c) Draw OE from the centre to the circumference — a radius."),
-        t("(d) Draw FG with F and G on the circle, the line missing O — a chord."),
+        t("(d) Draw FG with F and G on the circle, the line missing O."),
       ],
     }],
   },
@@ -593,8 +593,8 @@ export const SOLUTIONS = [
       ],
     }, {
       steps: [
-        t("FG is a chord that does not pass through the centre."),
-        t("A chord never exceeds the diameter, so (c) FG is shorter than AB."),
+        t("FG is a line segment that does not pass through the centre."),
+        t("A line segment that misses the centre is shorter than the diameter, so (c) FG is shorter than AB."),
       ],
     }],
   },
