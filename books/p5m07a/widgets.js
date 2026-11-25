@@ -2,10 +2,12 @@
  * Interactive graphics for P5 Maths 07 Circles (A), opened from a question's
  * graphic button. House rules: docs/03-authoring-style.md §5.
  *
- * Five pictures, each attached to the questions that ask the same thing:
+ * Six pictures, each attached to the questions that ask the same thing:
  *   circleParts      q1  q2          Centre / Circumference / Radius / Diameter,
  *                                    named the way the concept page names them
- *   radiusDiameter   q10 q11 q13     d = 2r, r = d ÷ 2 (and q18–q23, the table)
+ *   radiusDiameter   q10 q11 q13     d = 2r, r = d ÷ 2
+ *   sixCircles       q18–q23         the printed six-circle figure (A–F) redrawn to
+ *                                    scale; one circle is coloured and dashed per question
  *   lineOrDiameter   q12 q34         a line through the centre is a diameter;
  *                                    any other line across the circle is just a line segment
  *   circlesInRow     q36 hw12        n equal circles in a row: AB spans (n − 1) diameters
@@ -18,7 +20,7 @@
  * button beside a question whose id is registered here.
  */
 
-import { C, S, T, scene, clear, slider, readout, question, buttonRow } from "../../engine/widgets/kit.js";
+import { C, S, T, H, fmt, scene, clear, slider, readout, question, buttonRow } from "../../engine/widgets/kit.js";
 
 const CM_R = 5;          // the radius our pictures show, in centimetres
 const DEG = Math.PI / 180;
@@ -309,6 +311,91 @@ function overlapCircles(root, card) {
 }
 
 /* ------------------------------------------------------------------ *
+ * q18–q23: the printed six-circle figure, redrawn to scale.           *
+ * ------------------------------------------------------------------ */
+
+// The radii are the book's answers: A 3, B 2, C 5, D 1.5, E 3, F 6 cm. The
+// centres keep the printed arrangement — C top left, F below it, A above B,
+// D and E to the right — so one drawing answers all six questions, and each
+// question only changes which circle is coloured and measured.
+const SIX = [
+  { id: "A", r: 3, colour: C.blue, cx: 345, cy: 105, badge: -104 },
+  { id: "B", r: 2, colour: C.green, cx: 262, cy: 155, badge: -146 },
+  { id: "C", r: 5, colour: C.amber, cx: 205, cy: 120, badge: -138 },
+  { id: "D", r: 1.5, colour: C.red, cx: 452, cy: 215, badge: -62 },
+  { id: "E", r: 3, colour: C.pink, cx: 415, cy: 262, badge: 38 },
+  { id: "F", r: 6, colour: C.ink, cx: 250, cy: 210, badge: 196 },
+];
+const SIX_UNIT = 17; // scene px per centimetre
+
+/** q18–q23: one figure, six circles; the question's circle takes its colour and dashes. */
+function sixCircles(root, card, start = "A") {
+  root.append(question(card));
+  const svg = scene(560, 340);
+  const keyRow = H("div", { style: "display:flex;flex-wrap:wrap;gap:18px;margin-top:10px;font-size:14px;font-weight:700" });
+  const out = readout();
+  root.append(svg, keyRow, out.el);
+  let pick = start;
+
+  // A dash swatch beside its reading: the two dashed lengths are named here and
+  // not on the figure, because the six circles overlap and a label set inside a
+  // 1.5 cm circle lands on its neighbours.
+  const key = (colour, dash, text) => {
+    const row = H("span", { style: `display:inline-flex;align-items:center;gap:8px;color:${colour}` });
+    const box = S("svg", { width: 54, height: 12, viewBox: "0 0 54 12" }, row);
+    S("line", { x1: 2, y1: 6, x2: 52, y2: 6, stroke: colour, "stroke-width": 2.6, "stroke-dasharray": dash }, box);
+    row.append(document.createTextNode(text));
+    return row;
+  };
+
+  const again = () => {
+    clear(svg);
+    const t = SIX.find((it) => it.id === pick) || SIX[0];
+    for (const it of SIX) {
+      S("circle", { cx: it.cx, cy: it.cy, r: it.r * SIX_UNIT, fill: "none", stroke: C.grey, "stroke-width": 1.4 }, svg);
+    }
+    const R = t.r * SIX_UNIT;
+    S("circle", {
+      cx: t.cx, cy: t.cy, r: R, fill: t.colour, "fill-opacity": 0.09,
+      stroke: t.colour, "stroke-width": 3.4,
+    }, svg);
+    // the diameter: long dash, straight across the centre
+    seg(svg, t.cx - R, t.cy, t.cx + R, t.cy, t.colour, { dash: "13 7", width: 2.6 });
+    // the radius: short dash, centre to rim at 208° so the two never lie on each other
+    const a = 208 * DEG;
+    seg(svg, t.cx, t.cy, t.cx + R * Math.cos(a), t.cy + R * Math.sin(a), t.colour, { dash: "6 5", width: 2.4 });
+    dot(svg, t.cx, t.cy, t.colour);
+    // the letters go last, on top of the rims they may cross
+    for (const it of SIX) {
+      const Rb = it.r * SIX_UNIT + 24;
+      const bx = it.cx + Rb * Math.cos(it.badge * DEG);
+      const by = it.cy + Rb * Math.sin(it.badge * DEG);
+      S("circle", {
+        cx: bx, cy: by, r: 12, fill: it.id === pick ? it.colour : "#fff",
+        stroke: it.colour, "stroke-width": 2,
+      }, svg);
+      T(svg, bx, by + 5, it.id, {
+        "font-size": 14, "font-weight": 700, "text-anchor": "middle",
+        fill: it.id === pick ? "#fff" : it.colour,
+      });
+    }
+    keyRow.replaceChildren(
+      key(t.colour, "6 5", `r = ${fmt(t.r)} cm 半徑`),
+      key(t.colour, "13 7", `d = ${fmt(2 * t.r)} cm 直徑`),
+    );
+    out.set(
+      `r = ${fmt(t.r)}\\text{ cm},\\quad d = 2r = ${fmt(2 * t.r)}\\text{ cm}`,
+      true,
+      `圓 ${t.id}：半徑 ${fmt(t.r)} cm，直徑 ${fmt(2 * t.r)} cm。圖中六個圓是同一個圖，點下面的字母逐個看。`,
+      { yes: "d = 2r" },
+    );
+  };
+
+  root.append(buttonRow(SIX.map((it) => [it.id, () => { pick = it.id; again(); }])));
+  again();
+}
+
+/* ------------------------------------------------------------------ *
  * What each question opens. One picture, several questions: the card
  * asks that question, the picture is the same idea.                  *
  * ------------------------------------------------------------------ */
@@ -320,12 +407,12 @@ const REGISTRY = {
   q10: (root) => radiusDiameter(root, "直徑的長度是半徑的多少倍？"),
   q11: (root) => radiusDiameter(root, "一個圓的半徑是 9 cm，它的直徑是多少？"),
   q13: (root) => radiusDiameter(root, "半徑是直徑的一半，還是兩倍？", 6),
-  q18: (root) => radiusDiameter(root, "直徑是半徑的 2 倍：把 r 拉動，看 d 怎樣變。"),
-  q19: (root) => radiusDiameter(root, "直徑是半徑的 2 倍：把 r 拉動，看 d 怎樣變。"),
-  q20: (root) => radiusDiameter(root, "直徑是半徑的 2 倍：把 r 拉動，看 d 怎樣變。"),
-  q21: (root) => radiusDiameter(root, "已知直徑，半徑就是直徑的一半。", 3),
-  q22: (root) => radiusDiameter(root, "已知直徑，半徑就是直徑的一半。", 3),
-  q23: (root) => radiusDiameter(root, "已知直徑，半徑就是直徑的一半。", 6),
+  q18: (root) => sixCircles(root, "Q18 的圓是 A。在圖中找出它：半徑 3 cm，直徑是多少？", "A"),
+  q19: (root) => sixCircles(root, "Q19 的圓是 B。在圖中找出它：半徑 2 cm，直徑是多少？", "B"),
+  q20: (root) => sixCircles(root, "Q20 的圓是 C。在圖中找出它：半徑 5 cm，直徑是多少？", "C"),
+  q21: (root) => sixCircles(root, "Q21 的圓是 D。圖中寫着直徑 3 cm：它的半徑是多少？", "D"),
+  q22: (root) => sixCircles(root, "Q22 的圓是 E。在圖中找出它：半徑 3 cm，直徑是多少？", "E"),
+  q23: (root) => sixCircles(root, "Q23 的圓是 F。在圖中找出它：半徑 6 cm，直徑是多少？", "F"),
 
   q12: (root) => lineOrDiameter(root, "AD 穿過圓心，OC 只是半徑，BE 是不是直徑？"),
   q34: (root) => lineOrDiameter(root, "AY 不穿過圓心。它還算不算直徑？"),

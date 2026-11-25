@@ -897,6 +897,19 @@
       "src": "media/circles-basics.mp4",
       "poster": "media/circles-basics-poster.png",
       "title": "The parts of a circle: Centre, Circumference, Radius, Diameter"
+    },
+    {
+      "page": 2,
+      "region": [
+        68,
+        556,
+        298,
+        750
+      ],
+      "scene": "p5m07a:CircleCompass",
+      "src": "media/circles-compass.mp4",
+      "poster": "media/circles-compass-poster.png",
+      "title": "How to draw a circle? — six steps with a compass"
     }
   ],
   "answerStamps": [

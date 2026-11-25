@@ -60,6 +60,23 @@ Coordinates are always in **PDF points**, measured from the top left of the page
 | `extract.fixedAnchors` | `{ id: [y0, y1] }` when there is no searchable text (e.g. a second method under one example). |
 | `extract.overrides` | `{ id: { "region": [x0, y0, x1, y1], "square": [...], "ring": [...], "space": N } }`, merged into the generated item. `square` is an MC answer box, filled with `letter` once all steps show. `ring` circles a printed option when the answer is complete. `space` opens N points of blank page under the region (cut at the region's own bottom) so a short answer can show in full without scrolling. |
 
+### A `media` entry's mp4 and poster are one pair
+
+The poster covers the printed panel until ▶ is tapped, so it must look like the
+video's **first** frame: a poster left over from an older render makes the panel
+jump the moment playback starts. Replace both files in the same change, and pull
+the poster from the new mp4 rather than reusing the page crop:
+
+```powershell
+ffmpeg -y -i books/<id>/media/<name>.mp4 -vf "select=eq(n\,0)" -frames:v 1 books/<id>/media/<name>-poster.png
+```
+
+The poster must equal frame 0 pixel for pixel (SSIM 1.0). `render_media.py` writes
+the *last* frame by default, which only fits a scene that ends on the printed page
+— for a panel that starts from it, take frame 0 as above. `check_media.mjs` counts
+the 300 KB budget per `src` file, so a light poster beside a 130 KB clip is fine.
+
+
 ---
 
 ### Answer space and page cuts

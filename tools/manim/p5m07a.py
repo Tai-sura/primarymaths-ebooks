@@ -28,8 +28,12 @@ Geometry, measured from books/p5m07a/pages/p02.jpg (1786 x 2526 px = 3.000 px/pt
 
 import math
 
+import numpy as np
+
 from manim import (
-    Arc, CapStyleType, Circle, Create, Dot, FadeIn, FadeOut, Line, NORMAL, Polygon, Text, VGroup, Write,
+    Arc, CapStyleType, Circle, Create, DashedLine, Dot, FadeIn, FadeOut, GrowFromCenter, Line,
+    NORMAL, Polygon, Rectangle, Scene, Text, VGroup, ValueTracker, Write, always_redraw, config,
+    smooth,
 )
 
 from jpfm08 import PageFilm
@@ -150,3 +154,302 @@ class CircleBasics(PageFilm):
         self.play(FadeOut(drawn), run_time=0.45)
         self.play(FadeIn(base), run_time=0.45)
         self.wait(0.5)
+
+
+# ------------------------------------------------------------------ the 6-panel comic film
+
+C_INK = "#242424"
+C_FRAME = "#141414"
+C_BAND = "#ffcc73"
+C_LEG = "#4a4f56"
+C_HI = "#aab1b8"
+C_METAL = "#dfe3e8"
+C_AMBER = "#e8890c"
+
+
+class CircleCompass(Scene):
+    """The printed 6-panel strip "How to draw a circle?" redrawn and animated (p5m07a p.1).
+
+    The printed strip is a licensed illustration, so none of it is reused: the six cells,
+    the compass and every stroke below are drawn from scratch, in the page's own palette
+    (orange band #ffcc73, ink line art, amber pencil). The layout and the reading order are
+    the printed ones, so the reader's eye follows the same six steps:
+
+        1 the compass is opened to the radius     2 the needle is set on the centre
+        3 a short arc starts                      4 the arc grows
+        5 the circle closes                       6 the radius is drawn in
+
+    The film opens on the finished comic - all six cells drawn - because the reader sees
+    frame 0 as the panel poster until they press play, and an empty strip there would hide
+    the printed comic behind six blank frames. It holds that image 0.40 s, clears it in
+    0.40 s, then draws the six cells again one at a time (step 1 at 0.80 s), and closes on
+    exactly the same finished image for 1.3 s. Poster, first frame and last frame are the
+    same pixels, so looping or stopping never jumps.
+
+    Geometry, measured on books/p5m07a/pages/p02.jpg (1786 x 2526 px = 3.000 px/pt):
+    the strip is one box x 68.0-298.0, y 556.3-750.0 pt. Its ink bands are the verticals
+    x 68.00-68.67 / 144.33-145.00 / 221.00-221.67 / 297.33-298.00 and the horizontals
+    y 556.33-557.00 / 653.66-654.00 / 749.33-750.00, so the frame line centres are
+    x 68.33 / 144.67 / 221.33 / 297.67 and y 556.67 / 653.83 / 749.67 (six cells of
+    76.3 x 96.5 pt). The orange band runs from each cell's top to +36.3 pt (measured
+    556.7-593.0 in row 1 and 654.0-690.0 in row 2); the white paper under it is cut at
+    the top-left, so the orange dips 15 pt lower over the first 21 pt of the cell.
+    REGION = (68, 556, 298, 750) = 230 x 194 pt (ratio 1.1856; film 690 x 582, i.e.
+    3 px/pt like the page). Its top edge is 0.33 pt above the printed frame and its left
+    edge 0.33 pt left of it, both blank white, so the film's own frame at the measured
+    positions replaces the printed one with no sliver of orange left over.
+
+    Note the strip ends at y 750.0, not 725.0: rows y 739-749 carry the bottom row's
+    drawings and y 749.33-750.00 is the frame's bottom line, with only white below
+    (y 751-790: ink 0). A region cut at 725 would slice the bottom off cells 4-6.
+
+    Step numbers 1-6 sit at each cell's top-left, 5.2 pt tall, as printed. The compass is
+    geometrically honest: the needle touches the cell's centre point and the pencil sits
+    exactly one radius away, so the arc it draws has radius = the compass opening.
+    """
+
+    BOOK = "p5m07a"
+    PAGE = 2
+    REGION = (68.0, 556.0, 298.0, 750.0)
+
+    COLS = (68.33, 144.67, 221.33, 297.67)      # frame line centres, page pt
+    ROWS = (556.67, 653.83, 749.67)
+    BAND = 36.3                                  # orange band height in every cell
+    R_C = 26.0                                   # the circle the compass draws
+    L = 34.0                                     # compass leg length
+
+    def setup(self):
+        x0, y0, x1, y1 = self.REGION
+        self.k = config.frame_height / (y1 - y0)
+        self.px = (x0 + x1) / 2.0
+        self.py = (y0 + y1) / 2.0
+        self.camera.background_color = "#ffffff"
+
+    # ---------- page points ----------
+
+    def P(self, x, y):
+        return np.array([(x - self.px) * self.k, (self.py - y) * self.k, 0.0])
+
+    def w(self, pt):
+        return pt * self.k * 100
+
+    def cell(self, i):
+        r, c = divmod(i, 3)
+        return (self.COLS[c], self.ROWS[r], self.COLS[c + 1], self.ROWS[r + 1])
+
+    def centre(self, i):
+        """The needle point of cell i: the centre of the circle drawn there."""
+        x0, y0, x1, y1 = self.cell(i)
+        return (x0 + 0.43 * (x1 - x0), y1 - 4.0 - self.R_C)
+
+    def polar(self, N, r, a_deg):
+        a = math.radians(a_deg)
+        return (N[0] + r * math.cos(a), N[1] + r * math.sin(a))
+
+    # ---------- the six cells ----------
+
+    def background(self):
+        g = VGroup()
+        for i in range(6):
+            x0, y0, x1, y1 = self.cell(i)
+            g.add(Polygon(self.P(x0, y0), self.P(x1, y0), self.P(x1, y0 + self.BAND),
+                          self.P(x0, y0 + self.BAND), color=C_BAND, fill_color=C_BAND,
+                          fill_opacity=1.0, stroke_width=0))
+            g.add(Polygon(self.P(x0 + 21, y0 + self.BAND), self.P(x1, y0 + self.BAND),
+                          self.P(x1, y1), self.P(x0, y1), self.P(x0, y0 + self.BAND + 15),
+                          color="#dcdcda", fill_color="#ffffff", fill_opacity=1.0,
+                          stroke_width=self.w(0.5)))
+        for x in self.COLS:
+            g.add(Line(self.P(x, self.ROWS[0]), self.P(x, self.ROWS[-1]), color=C_FRAME,
+                       stroke_width=self.w(0.67)))
+        for y in self.ROWS:
+            g.add(Line(self.P(self.COLS[0], y), self.P(self.COLS[-1], y), color=C_FRAME,
+                       stroke_width=self.w(0.67)))
+        for i in range(6):
+            x0, y0, x1, y1 = self.cell(i)
+            t = Text(str(i + 1), font=CJK, font_size=64, color=C_FRAME, disable_ligatures=True)
+            t.scale(5.2 * self.k / t.height)
+            t.move_to(self.P(x0 + 4.6, y0 + 5.4))
+            g.add(t)
+        return g
+
+    def ring(self, i):
+        """A thin amber outline that marks the cell being drawn right now."""
+        x0, y0, x1, y1 = self.cell(i)
+        inset = 1.7
+        return Rectangle(width=(x1 - x0 - 2 * inset) * self.k, height=(y1 - y0 - 2 * inset) * self.k,
+                         stroke_color=C_AMBER, stroke_width=self.w(1.4), fill_opacity=0.0).move_to(
+            self.P((x0 + x1) / 2.0, (y0 + y1) / 2.0))
+
+    # ---------- the compass (our own drawing) ----------
+
+    def compass(self, N, r, phi=0.0):
+        """Flat 2D compass: needle at N, pencil one radius r away at page angle phi."""
+        a = math.radians(phi)
+        u = np.array([math.cos(a), math.sin(a)])
+        Pn = np.array(N, float)
+        Pp = Pn + r * u
+        M = (Pn + Pp) / 2.0
+        hh = math.sqrt(max(self.L * self.L - (r / 2.0) ** 2, 1.0))
+        nrm = np.array([u[1], -u[0]])
+        if nrm[1] > 0:
+            nrm = -nrm
+        H = M + hh * nrm
+
+        def quad(a0, b0, wa, wb, color):
+            d = b0 - a0
+            ln = float(np.hypot(*d))
+            du = d / ln
+            nn = np.array([-du[1], du[0]])
+            return Polygon(self.P(*(a0 + nn * wa / 2)), self.P(*(a0 - nn * wa / 2)),
+                           self.P(*(b0 - nn * wb / 2)), self.P(*(b0 + nn * wb / 2)),
+                           color=color, fill_color=color, fill_opacity=1.0, stroke_width=0)
+
+        dn = (Pn - H) / float(np.hypot(*(Pn - H)))
+        dp = (Pp - H) / float(np.hypot(*(Pp - H)))
+        foot_n = Pn - dn * 5.0
+        foot_p = Pp - dp * 6.4
+
+        g = VGroup()
+        g.add(quad(H, foot_n, 3.8, 2.0, C_LEG))
+        g.add(quad(H, foot_p, 3.8, 2.2, C_LEG))
+        for foot, dvec in ((foot_n, dn), (foot_p, dp)):
+            nn = np.array([-dvec[1], dvec[0]]) * 0.95
+            g.add(Line(self.P(*(H + nn)), self.P(*(foot + nn)), color=C_HI, stroke_width=self.w(0.55)))
+        g.add(quad(H, H + nrm * 13.0, 3.1, 2.3, C_LEG))
+        # hinge: knurled wheel, body and pin
+        g.add(Circle(radius=5.2 * self.k, color=C_HI, stroke_width=self.w(0.7)).move_to(self.P(*H)))
+        g.add(Circle(radius=3.3 * self.k, color=C_LEG, stroke_width=0, fill_color=C_LEG,
+                     fill_opacity=1.0).move_to(self.P(*H)))
+        g.add(Circle(radius=1.2 * self.k, color=C_METAL, stroke_width=0, fill_color=C_METAL,
+                     fill_opacity=1.0).move_to(self.P(*H)))
+        g.add(Circle(radius=1.8 * self.k, color=C_LEG, stroke_width=0, fill_color=C_LEG,
+                     fill_opacity=1.0).move_to(self.P(*(H + nrm * 13.6))))
+        # the needle and the pencil, both ending exactly on their circles' points
+        g.add(Line(self.P(*foot_n), self.P(*Pn), color=C_INK, stroke_width=self.w(0.9)))
+        g.add(Dot(self.P(*Pn), radius=0.8 * self.k, color=C_INK))
+        g.add(quad(foot_p, Pp - dp * 3.6, 3.0, 2.6, C_METAL))
+        g.add(quad(Pp - dp * 3.9, Pp - dp * 0.9, 2.7, 2.3, C_AMBER))
+        g.add(quad(Pp - dp * 1.1, Pp, 1.9, 0.6, C_INK))
+        return g
+
+    def arc(self, N, r, a0, a1, color=C_INK, width=1.15):
+        """An arc of the circle about N between page angles a0 and a1 (degrees, y down)."""
+        if abs(a1 - a0) < 0.4:
+            return VGroup()
+        return Arc(radius=r * self.k, start_angle=math.radians(-a0),
+                   angle=math.radians(-(a1 - a0)), arc_center=self.P(*N),
+                   color=color, stroke_width=self.w(width))
+
+    def span(self, N, r):
+        """Cell 1: the opening of the compass, marked with a dashed span and two ticks."""
+        Pb = self.polar(N, r, 0.0)
+        g = VGroup()
+        g.add(DashedLine(self.P(*N), self.P(*Pb), color="#8a8f98", stroke_width=self.w(0.8),
+                         dash_length=1.7 * self.k))
+        for p in (N, Pb):
+            g.add(Line(self.P(p[0], p[1] - 1.8), self.P(p[0], p[1] + 1.8), color=C_INK,
+                       stroke_width=self.w(1.0)))
+        return g
+
+    def radius(self, N, r):
+        """Cell 6: the radius drawn in from the centre to the rim, ticked at both ends."""
+        end = (N[0] - r, N[1])
+        g = VGroup()
+        g.add(Line(self.P(*N), self.P(*end), color=C_INK, stroke_width=self.w(1.3)))
+        for p in (N, end):
+            g.add(Line(self.P(p[0], p[1] - 1.8), self.P(p[0], p[1] + 1.8), color=C_INK,
+                       stroke_width=self.w(1.1)))
+        return g
+
+    # ---------- the film ----------
+
+    def fine(self, i):
+        """The finished drawing of cell i, in the order the film builds it.
+
+        The film opens on all six of these (that is the poster, so the reader sees the
+        finished comic until they press play), clears them, and builds them again cell by
+        cell; the closing frame is therefore this same group in the same order, and the
+        poster, the first frame and the last frame are one and the same image.
+        """
+        N = self.centre(i)
+        if i == 0:
+            return VGroup(self.compass(N, self.R_C), self.span(N, self.R_C))
+        if i == 1:
+            return VGroup(self.compass(N, self.R_C),
+                          Dot(self.P(*N), radius=1.0 * self.k, color=C_INK))
+        if i in (2, 3, 4):
+            end = {2: 70.0, 3: 250.0, 4: 360.0}[i]
+            return VGroup(self.compass(N, self.R_C), self.arc(N, self.R_C, 0.0, end))
+        return VGroup(self.arc(N, self.R_C, 0.0, 360.0), self.radius(N, self.R_C))
+
+    def construct(self):
+        self.add(self.background())
+        comic = VGroup(*[self.fine(i) for i in range(6)])
+        self.add(comic)
+        self.wait(0.40)                          # poster: the finished comic, as printed
+        self.play(FadeOut(comic), run_time=0.40)  # clear, then draw it again step by step
+
+        # 1: the compass is opened to the radius
+        rg = self.ring(0)
+        N = self.centre(0)
+        self.play(FadeIn(rg), run_time=0.2)
+        tr = ValueTracker(7.0)
+        live = always_redraw(lambda: self.compass(N, tr.get_value()))
+        self.add(live)
+        self.play(tr.animate.set_value(self.R_C), run_time=0.85, rate_func=smooth)
+        self.remove(live)
+        self.add(self.compass(N, self.R_C))
+        self.play(Create(self.span(N, self.R_C)), run_time=0.4)
+        self.play(FadeOut(rg), run_time=0.2)
+        self.wait(0.25)
+
+        # 2: the needle is set on the centre
+        rg = self.ring(1)
+        N = self.centre(1)
+        dot = Dot(self.P(*N), radius=1.0 * self.k, color=C_INK)
+        ripple = Circle(radius=1.6 * self.k, color=C_AMBER, stroke_width=self.w(1.3)).move_to(self.P(*N))
+        self.play(FadeIn(rg), run_time=0.2)
+        self.play(FadeIn(self.compass(N, self.R_C)), GrowFromCenter(dot), run_time=0.5)
+        self.play(ripple.animate.scale(3.4).set_stroke(opacity=0), run_time=0.6)
+        self.remove(ripple)
+        self.play(FadeOut(rg), run_time=0.2)
+        self.wait(0.25)
+
+        # 3-5: the arc starts, grows, and closes the circle
+        for cell, a_from, a_to, rt, tail in ((2, 0.0, 70.0, 0.9, 0.25),
+                                             (3, 70.0, 250.0, 1.15, 0.25),
+                                             (4, 250.0, 360.0, 1.0, 0.3)):
+            rg = self.ring(cell)
+            N = self.centre(cell)
+            self.play(FadeIn(rg), run_time=0.2)
+            # the part already drawn, then the live arc takes it over: drawn once, never twice,
+            # so the closing frame is pixel-identical to the one fine() draws at the start
+            pre = self.arc(N, self.R_C, 0.0, a_from)
+            self.add(self.compass(N, self.R_C), pre)
+            self.remove(pre)
+            tr = ValueTracker(a_from)
+            live = always_redraw(lambda: VGroup(
+                self.arc(N, self.R_C, 0.0, tr.get_value()),
+                Dot(self.P(*self.polar(N, self.R_C, tr.get_value())), radius=1.15 * self.k,
+                    color=C_AMBER)))
+            self.add(live)
+            self.play(tr.animate.set_value(a_to), run_time=rt, rate_func=smooth)
+            self.remove(live)
+            self.add(self.arc(N, self.R_C, 0.0, a_to))
+            tipdot = Dot(self.P(*self.polar(N, self.R_C, a_to)), radius=1.15 * self.k, color=C_AMBER)
+            self.add(tipdot)
+            self.play(FadeOut(tipdot), run_time=0.25)
+            self.play(FadeOut(rg), run_time=0.2)
+            self.wait(tail)
+
+        # 6: the radius is drawn in
+        rg = self.ring(5)
+        N = self.centre(5)
+        self.play(FadeIn(rg), run_time=0.2)
+        self.play(Create(self.arc(N, self.R_C, 0.0, 360.0)), run_time=0.55)
+        self.play(Create(self.radius(N, self.R_C)), run_time=0.55)
+        self.play(FadeOut(rg), run_time=0.2)
+
+        # the finished comic holds; nothing fades to white
+        self.wait(1.3)
