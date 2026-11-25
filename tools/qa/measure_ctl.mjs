@@ -86,10 +86,14 @@ try {
   await page.tap("#hide-all");
   await sleep(600);
   for (let i = 0; i < 6; i++) {
-    await page.evaluate((qid) => document.querySelector(`.qa[data-q="${qid}"] .ctl button[data-act="next"]`).click(), "q19");
+    await page.evaluate(() => {
+      // The first question that has a step strip: a stamped answer has none.
+      const btn = document.querySelector(".qa .ctl button[data-act='next']");
+      if (btn) btn.click();
+    });
     await sleep(120);
   }
-  bad += report("q19 stepped by hand", await page.evaluate(MEASURE));
+  bad += report("stepped by hand", await page.evaluate(MEASURE));
 
   console.log(bad ? "\nFAIL: the strip covers the working" : "\nPASS: no strip covers the working");
   process.exitCode = bad ? 1 : 0;

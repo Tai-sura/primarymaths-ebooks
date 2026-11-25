@@ -63,6 +63,146 @@ def red_blobs(mask):
     return out
 
 
+def nudge_plays(layout, folder):
+    """Move a Play button that would sit on top of a red answer stamp.
+
+    The stamps are cut from the ANS page after `extract_pages.py` has placed the
+    Play buttons, so a button can end up over the printed red answer it opens.
+    Here each one is checked against the stamps on its page and, when it clashes,
+    nudged along its own line (shrinking if the gap is small) until it clears both
+    the stamp and the printed ink.
+    """
+    moved = 0
+    SIZES = ((24, 22), (20, 18), (18, 16), (16, 14), (14, 12), (12, 10))
+    for page in layout["pages"]:
+        img_path = folder / "pages" / f"p{page['page']:02d}.jpg"
+        if not img_path.exists():
+            continue
+        img = Image.open(img_path).convert("L")
+        sx = img.width / page["width"]
+        sy = img.height / page["height"]
+        rects = [s["rect"] for q in page["questions"] for s in (q.get("stamps") or [])]
+
+        def stamp_clear(x, y, w, h):
+            return not any(x < r[2] + 1.5 and r[0] - 1.5 < x + w
+                           and y < r[3] + 1.5 and r[1] - 1.5 < y + h for r in rects)
+
+        def ink_clear(x, y, w, h):
+            crop = img.crop((int(x * sx), int(y * sy), int((x + w) * sx), int((y + h) * sy)))
+            return crop.size[0] and crop.size[1] and crop.getextrema()[0] >= 150
+
+        for q in page["questions"]:
+            at = q.get("playAt")
+            if not q.get("stamps") or not at:
+                continue
+            w, h = q.get("playSize") or [24, 22]
+            if stamp_clear(at[0], at[1], w, h):
+                continue
+            reg = q["region"]
+            right = min(reg[2], page["width"] - 18)
+            best = None
+            for size in SIZES:
+                sw, sh = size
+                for dy in (0, -3, 3, -6, 6, -10, 10, -14, 14):
+                    for dx in (0, -6, 6, -12, 12, -20, 20, -28, 28, -40, 40, -56, 56, -72, 72):
+                        cx, cy = at[0] + dx, at[1] + dy
+                        if cx < reg[0] or cx + sw > right or cy < 2 or cy + sh > page["height"] - 2:
+                            continue
+                        if stamp_clear(cx, cy, sw, sh) and ink_clear(cx, cy, sw, sh):
+                            best = (cx, cy, sw, sh)
+                            break
+                    if best:
+                        break
+                if best:
+                    break
+            if best:
+                q["playAt"] = [round(best[0], 1), round(best[1], 1)]
+                q["playSize"] = [best[2], best[3]]
+                # The button now sits at a different point of the same line: record
+                # that corner as the line's end so the proximity check stays honest.
+                if q.get("blankAt"):
+                    q["blankAt"] = [q["blankAt"][0], round(best[1], 1), round(best[0] + best[2], 1)]
+                moved += 1
+    return moved
+
+
+def nudge_graphics(layout, folder):
+    """Keep the second (amber graphic) button off the red answer and off the Play.
+
+    `extract_pages.py` measures `graphicAt` with the Play box already taken, but the
+    stamps are cut after that, and a hand-pinned `playAt` can land the pair badly.
+    Here each graphic button is checked against the stamps, the ink and the Play, and
+    moved along its line (shrinking if the gap is small) until it clears all three.
+    """
+    moved = 0
+    SIZES = ((24, 22), (22, 20), (20, 18), (18, 16), (16, 14), (14, 12))
+    for page in layout["pages"]:
+        img_path = folder / "pages" / f"p{page['page']:02d}.jpg"
+        if not img_path.exists():
+            continue
+        img = Image.open(img_path).convert("L")
+        sx = img.width / page["width"]
+        sy = img.height / page["height"]
+        rects = [s["rect"] for q in page["questions"] for s in (q.get("stamps") or [])]
+        plays = [(q["playAt"][0], q["playAt"][1],
+                  q["playAt"][0] + (q.get("playSize") or [24, 22])[0],
+                  q["playAt"][1] + (q.get("playSize") or [24, 22])[1])
+                 for q in page["questions"] if q.get("playAt")]
+        placed = []
+
+        def stamp_clear(x, y, w, h):
+            return not any(x < r[2] + 1.5 and r[0] - 1.5 < x + w
+                           and y < r[3] + 1.5 and r[1] - 1.5 < y + h for r in rects)
+
+        def ink_clear(x, y, w, h):
+            crop = img.crop((int(x * sx), int(y * sy), int((x + w) * sx), int((y + h) * sy)))
+            return crop.size[0] and crop.size[1] and crop.getextrema()[0] >= 150
+
+        for q in page["questions"]:
+            at = q.get("graphicAt")
+            if not at:
+                continue
+            pw, ps = q.get("playAt"), q.get("playSize") or [24, 22]
+            w, h = q.get("graphicSize") or ps
+
+            def others_clear(x, y, ww, hh):
+                # Clear of every Play on the page and of the graphic buttons already
+                # placed: two graphics on neighbouring lines must not share a box.
+                for (a, b, c, d) in plays + placed:
+                    if x < c + 3 and a < x + ww + 3 and y < d + 3 and b < y + hh + 3:
+                        return False
+                return True
+
+            if stamp_clear(at[0], at[1], w, h) and others_clear(at[0], at[1], w, h) \
+                    and ink_clear(at[0], at[1], w, h):
+                placed.append((at[0], at[1], at[0] + w, at[1] + h))
+                continue
+            best = None
+            for size in SIZES:
+                sw, sh = size
+                for dy in (0, -3, 3, -6, 6, -10, 10, -14, 14, -20, 20, -26, 26):
+                    for dx in (0, -6, 6, -12, 12, -20, 20, -28, 28, -40, 40, -56, 56, -72, 72, -100, 100):
+                        cx, cy = at[0] + dx, at[1] + dy
+                        if cx < 2 or cx + sw > page["width"] - 18 or cy < 2 or cy + sh > page["height"] - 2:
+                            continue
+                        if stamp_clear(cx, cy, sw, sh) and others_clear(cx, cy, sw, sh) \
+                                and ink_clear(cx, cy, sw, sh):
+                            best = (cx, cy, sw, sh)
+                            break
+                    if best:
+                        break
+                if best:
+                    break
+            if best:
+                q["graphicAt"] = [round(best[0], 1), round(best[1], 1)]
+                q["graphicSize"] = [best[2], best[3]]
+                placed.append((best[0], best[1], best[0] + best[2], best[1] + best[3]))
+                moved += 1
+            else:
+                placed.append((at[0], at[1], at[0] + w, at[1] + h))
+    return moved
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
@@ -96,6 +236,13 @@ def main():
             print(f"p{page['page']}: no ANS page")
             continue
         mask, pix = red_mask(ans[ans_page - 1])
+        # The printed page under the stamp: ink that the page already shows must not
+        # be drawn a second time by the stamp (a table's "cm", a figure's arc). The
+        # answer itself sits on white paper in the QUE page, so it survives.
+        page_img = None
+        for cand in (folder / "pages" / f"p{page['page']:02d}.jpg",):
+            if cand.exists():
+                page_img = Image.open(cand).convert("L")
         blobs = red_blobs(mask) if mask.any() else []
         # The answer sits between its own printed line and the next question; a
         # blob that crosses a band edge (two touching circles) is clipped to each.
@@ -147,6 +294,44 @@ def main():
                     continue
                 box = (int(round(x0 * SCALE)), int(round(y0 * SCALE)), int(round(x1 * SCALE)), int(round(y1 * SCALE)))
                 img = Image.frombytes("RGB", (pix.width, pix.height), pix.samples).crop(box)
+                # Keep the red ink only: the crop is a rectangle round the answer, so
+                # it also holds black print (the cell's "cm", a rule, a figure). An
+                # opaque rectangle would paint over that print, and a plain white
+                # cut-out would draw it twice, so alpha follows how red a pixel is.
+                arr = np.asarray(img).astype("int32")
+                # The answer on the ANS page is often the teacher's red box round a
+                # printed word ("AD", "CF", "diameters"), so the black ink inside the
+                # crop belongs to the answer: keep every inked pixel (dark or red) and
+                # let only the white paper go transparent. A white rectangle would
+                # paint over the table rule or figure that runs under the answer.
+                lum = (arr[:, :, 0] * 299 + arr[:, :, 1] * 587 + arr[:, :, 2] * 114) // 1000
+                red = arr[:, :, 0] - (arr[:, :, 1] + arr[:, :, 2]) // 2
+                ink = np.minimum(lum, 255 - np.clip(red, 0, 255) // 2)
+                alpha = np.clip((205 - ink) * 255 // 30, 0, 255).astype("uint8")
+                # Drop what the printed page already carries: the crop is a rectangle
+                # round the answer, so it can hold the cell's "cm", a table rule or a
+                # figure's arc, and drawing those again doubles the print. The ANS scan
+                # sits a few points off the QUE one, so the two are aligned first - a
+                # fixed window big enough for the shift would eat a real answer word.
+                if page_img is not None:
+                    pq = page_img.crop(box)
+                    parr = np.asarray(pq).astype("int16")
+                    if parr.shape[:2] == alpha.shape:
+                        from scipy.ndimage import minimum_filter
+                        stamp_dark = ink < 170
+                        best = (-1, 0, 0)
+                        for dy in range(-12, 13, 2):
+                            for dx in range(-12, 13, 2):
+                                rolled = np.roll(np.roll(parr, dy, axis=0), dx, axis=1)
+                                hit = int((stamp_dark & (rolled < 200)).sum())
+                                if hit > best[0]:
+                                    best = (hit, dy, dx)
+                        _, dy, dx = best
+                        parr = np.roll(np.roll(parr, dy, axis=0), dx, axis=1)
+                        pmin = minimum_filter(parr, size=5)
+                        alpha[(red <= 12) & (pmin < 200)] = 0
+                img = img.convert("RGBA")
+                img.putalpha(Image.fromarray(alpha))
                 name = f"p{page['page']:02d}_{q['id']}{'' if k == 0 else str(k + 1)}.png"
                 img.save(out_dir / name, optimize=True)
                 stamps.append({"img": f"answers/{name}", "rect": [round(x0, 1), round(y0, 1), round(x1, 1), round(y1, 1)]})
@@ -154,7 +339,13 @@ def main():
                 q["stamps"] = stamps
                 made += 1
         print(f"p{page['page']:02d}: {len(blobs)} red marks -> {sum(1 for q in live if q.get('stamps'))} stamps")
+    nudged = nudge_plays(layout, folder)
+    gmoved = nudge_graphics(layout, folder)
     (folder / "layout.json").write_text(json.dumps(layout, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if nudged:
+        print(f"{nudged} Play button(s) moved off a red answer stamp")
+    if gmoved:
+        print(f"{gmoved} graphic button(s) moved clear of the stamp and the Play")
     stamped = [q for p in layout["pages"] for q in p["questions"] if q.get("stamps")]
     missing = sorted(wanted - {q["id"] for q in stamped})
     big = [(q["id"], round(q["stamps"][0]["rect"][3] - q["stamps"][0]["rect"][1], 1), round(q["stamps"][0]["rect"][2] - q["stamps"][0]["rect"][0], 1))

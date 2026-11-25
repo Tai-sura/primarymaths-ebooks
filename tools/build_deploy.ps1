@@ -24,9 +24,11 @@ if (Test-Path $swDst) {
 }
 
 if (Test-Path $Dst) {
-  # Keep the authoring side when the deploy clone is also the source repo (the
-  # maths site carries tools/, docs/ and .cursor/ next to the published files).
-  $keep = @(".git", "tools", "docs", ".cursor", ".gitignore")
+  # The deploy clone is the published copy of this repo. Keep only its git history:
+  # every tracked folder is rebuilt from the source below. Keeping tools/ and docs/
+  # here (the rule until 2026-11-25) left the deploy clone on a stale copy of the
+  # scripts - its extract_pages.py was 17 KB while the source one was 34 KB.
+  $keep = @(".git", ".gitignore")
   Get-ChildItem $Dst -Force | Where-Object { $keep -notcontains $_.Name } | Remove-Item -Recurse -Force
 } else {
   New-Item -ItemType Directory -Force -Path $Dst | Out-Null
@@ -56,6 +58,18 @@ foreach ($d in @("engine", "vendor", "assets")) {
   Copy-Item (Join-Path $Src $d) (Join-Path $Dst $d) -Recurse
 }
 
+# the authoring side that also lives in the published repo: the scripts and docs
+# readers of the repo see. Copied fresh every build, then the QA sandbox and the
+# python caches are dropped - they are never published.
+foreach ($d in @("tools", "docs", ".cursor")) {
+  $from = Join-Path $Src $d
+  if (Test-Path $from) { Copy-Item $from (Join-Path $Dst $d) -Recurse }
+}
+foreach ($junk in @("tools\qa\node_modules", "tools\__pycache__", "tools\qa\__pycache__", "tools\qa\_widgetshots.mjs")) {
+  $p = Join-Path $Dst $junk
+  if (Test-Path $p) { Remove-Item $p -Recurse -Force }
+}
+
 # every requested book, without source PDFs or teacher reference crops
 foreach ($id in $Books) {
   $from = Join-Path $Src "books\$id"
@@ -69,6 +83,23 @@ foreach ($id in $Books) {
   foreach ($d in @("pages", "media", "answers")) {
     $p = Join-Path $from $d
     if (Test-Path $p) { Copy-Item $p (Join-Path $bd $d) -Recurse }
+  }
+  # `extract_pages.py` rewrites layout.json without the stamps; `answer_stamps.py`
+  # puts them back. Shipping the one without them leaves every fill-in answer
+  # invisible, which is exactly what a reader never notices until it is too late.
+  # Counted with a plain match: PowerShell 5.1's ConvertFrom-Json rejects this file.
+  $bookPath = Join-Path $bd "book.json"
+  $layoutPath = Join-Path $bd "layout.json"
+  if ((Test-Path $bookPath) -and (Test-Path $layoutPath)) {
+    $bookText = [IO.File]::ReadAllText($bookPath)
+    if ($bookText -match '"answerStamps"\s*:\s*\[') {
+      $layoutText = [IO.File]::ReadAllText($layoutPath)
+      $stamped = ([regex]::Matches($layoutText, '"stamps"\s*:\s*\[')).Count
+      if ($stamped -lt 1) {
+        throw "books/${id}: layout.json has no stamps but book.json lists answerStamps - run tools/answer_stamps.py ${id} before building"
+      }
+      Write-Output "  ${id}: $stamped stamped answer(s) in the layout"
+    }
   }
 }
 
