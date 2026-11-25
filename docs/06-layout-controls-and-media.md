@@ -114,7 +114,7 @@ a student who stops on the last frame sees an almost empty panel. End on the
 finished picture and hold it for at least 0.5–1 s; frame 0 and the last frame must
 be the same picture (≥ 50 dB after decoding, pixel-identical for the poster).
 
-## 13. One redrawn figure per printed figure, measured from the print
+## 13. One redrawn figure per printed figure, and it is the printed figure
 
 Several sub-questions on one printed figure (Q18–Q23's six circles) get **one**
 redrawn figure, not six generic sliders. Measure its geometry from the page JPEG:
@@ -123,8 +123,29 @@ already shows (1 pt = 3 px). Colour only the circle the question asks about. If
 the printed arrows already mark a length, draw only the dashed line that is asked
 (Q21's circle D draws the radius, not the diameter).
 
-And the print is not always to scale: circles C and F measure 80.7 and 80.3 pt for
-answers of 5 and 6 cm. Draw like the print; keep the reading from the answer key.
+**The first attempt at this was wrong.** The six circles were seeded from a
+downscaled view and fitted with least squares; because the circles overlap, the
+fit slid onto a neighbour's arc. A came out too small and too far left, C too
+large, D shifted, and F landed on a different circle entirely — and the widget had
+already been reviewed and shipped before anyone overlaid it. The rule that came
+out of it:
+
+- sample each rim at 360° and fit **through the ink centre**, one circle at a time,
+  reporting how much of the circumference is visible (an occluded arc biases a fit);
+- never seed from a thumbnail, and never accept "it looks like the print";
+- prove it by drawing the measured geometry **back over `pages/pNN.jpg`** — circles,
+  badges, leaders and printed arrows — and listing the deviation per element;
+  anything above **1.5 px** is wrong;
+- do this **before** placing buttons, cards or colours. A figure that does not match
+  the question makes every later step worthless: the checks, the layout, the review
+  and the student's work all validate a picture the question never showed.
+
+**Check the fit against the printed centimetres.** Every circle must land on the
+same scale: A 42.7 pt for 3 cm, B 28.4 for 2, C 71.1 for 5, D 21.4 for 1.5, E 42.7
+for 3, F 85.3 for 6 ? all 14.2 pt/cm. If one circle only fits at a different scale
+factor, the fit has slid onto a neighbour's arc, not the print. A first pass reported
+C and F at 80.7 and 80.3 pt and nearly produced a rule that "the print is not to
+scale"; the print was fine.
 
 ## 14. Style by measurement, never by eye
 
@@ -135,8 +156,24 @@ not "looks about right".
 
 Gate: `check_play.mjs`.
 
+## 15. A tool has to move with the line it draws
+
+The compass film first drew the arc while the compass stayed upright, and the
+pencil foot was nowhere near the arc — it read as the arc appearing by itself, not
+as the compass drawing it. Two fixes were needed together: the pivots rotate as a
+rigid body (the old code flipped the compass upright so it never crossed 90°, which
+is why it had stopped turning), and one tracker drives **both** the arc and the
+compass, so the pencil is always at the arc's leading end.
+
+Gate: measure it per cell — the tool's axis against the arc's end ≤ 2°, the pencil
+≤ 1 px from the arc, the pivot fixed within 1 px — and keep frame 0 = last frame.
+
 ## How we work
 
+- **The figure before the furniture.** Measure the printed figure, prove the redraw
+  with an overlay, and only then place buttons, cards and colours. If the picture is
+  not the question's picture, every hour spent after it is wasted — this is the one
+  order that must never be reversed.
 - **Fix one, sweep the book.** The same fault appears on every question built the
   same way: four homework rows, six table rows. Re-render every page and look
   before shipping.

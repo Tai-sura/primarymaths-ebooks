@@ -314,17 +314,17 @@ function overlapCircles(root, card) {
  * q18–q23: the printed six-circle figure, redrawn exactly.            *
  * ------------------------------------------------------------------ */
 
-// Geometry measured on books/p5m07a/pages/p04.jpg (3 px per pt): each circle's
-// centre, radius and printed letter badge, in the page's own points. This is the
-// printed figure — same overlaps, same elbow leaders, same 3 cm / 2 cm / 3 cm
-// arrows — so the widget and the book show the student the same picture.
+// Geometry measured on books/p5m07a/pages/p04.jpg (3 px per pt): every rim sampled at
+// 0.25° and fitted through the ink centre (max deviation 1.05 px), badges and elbow
+// leaders measured the same way. The print is drawn to scale at 14.223 pt/cm —
+// A 3, B 2, C 5, D 1.5, E 3, F 6 cm — and B is concentric with C (centres 0.12 pt apart).
 const SIX = [
-  { id: "A", r: 34.8, at: [186.5, 547.2], badge: [186.7, 496.7], colour: C.blue },
-  { id: "B", r: 24.1, at: [117.6, 575.1], badge: [97.7, 536.0], colour: C.green },
-  { id: "C", r: 80.7, at: [135.7, 586.0], badge: [60.0, 505.0], colour: C.amber },
-  { id: "D", r: 19.0, at: [220.7, 652.0], badge: [226.7, 598.3], colour: C.red },
-  { id: "E", r: 42.7, at: [210.3, 674.2], badge: [236.7, 734.3], colour: C.pink },
-  { id: "F", r: 80.3, at: [155.2, 646.9], badge: [76.7, 659.3], colour: C.ink },
+  { id: "A", r: 42.69, at: [194.39, 553.38], badge: [205.05, 496.08], lead: [[195.0, 497.5], [185.0, 497.5], [185.0, 508.5]], colour: C.blue },
+  { id: "B", r: 28.44, at: [127.61, 576.83], badge: [96.50, 537.31], lead: [[106.3, 537.7], [124.5, 537.7], [124.5, 549.7]], colour: C.green },
+  { id: "C", r: 71.07, at: [127.60, 576.71], badge: [59.85, 506.19], lead: [[70.7, 506.4], [88.0, 506.4], [88.0, 515.3]], colour: C.amber },
+  { id: "D", r: 21.37, at: [221.33, 655.84], badge: [227.09, 611.55], lead: [[217.7, 611.7], [209.5, 611.7], [209.5, 637.7]], colour: C.red },
+  { id: "E", r: 42.66, at: [210.33, 674.14], badge: [236.82, 735.38], lead: [[233.0, 735.5], [197.7, 735.5], [197.7, 716.7]], colour: C.pink },
+  { id: "F", r: 85.30, at: [186.52, 638.48], badge: [76.65, 659.19], lead: [[86.0, 659.9], [104.0, 659.9]], colour: C.ink },
 ];
 // page points -> scene px
 const SIX_MAP = { x: 40, y: 470, s: 1.8 };
@@ -333,12 +333,14 @@ const sy = (y) => (y - SIX_MAP.y) * SIX_MAP.s;
 
 // The three lengths the page itself prints: A's radius, B's radius, D's diameter.
 const SIX_GIVEN = [
-  { from: [186.5, 512.4], to: [186.5, 547.2], text: "3 cm" },
-  { from: [93.5, 575.1], to: [117.6, 575.1], text: "2 cm" },
-  { from: [201.7, 652.0], to: [239.7, 652.0], text: "3 cm" },
+  { from: [195.00, 510.33], to: [195.00, 557.67], text: "3 cm" },
+  { from: [98.67, 576.80], to: [130.67, 576.80], text: "2 cm" },
+  { from: [200.00, 656.00], to: [242.67, 656.00], text: "3 cm" },
 ];
 // The book's answers, in centimetres.
 const SIX_CM = { A: 3, B: 2, C: 5, D: 1.5, E: 3, F: 6 };
+// The printed letter badge: 19.9 pt across on the page, at the scene scale.
+const BADGE_R = 9.93 * SIX_MAP.s;
 
 /**
  * q18–q23: one figure, six circles; the question's circle takes its colour and dashes.
@@ -382,15 +384,12 @@ function sixCircles(root, card, start = "A", only = "both") {
     });
   };
 
-  // The badge's elbow leader: out of the badge, then straight to the rim.
-  const lead = (badge, c, R) => {
-    const [bx, by] = badge;
-    const cornerX = bx + (c[0] - bx) * 0.45;
-    const dx = cornerX - c[0];
-    const drop = Math.sqrt(Math.max(0, R * R - dx * dx));
-    const rimY = by < c[1] ? c[1] - drop : c[1] + drop;
-    seg(svg, bx + Math.sign(cornerX - bx) * 12, by, cornerX, by, C.line, { width: 1.3 });
-    seg(svg, cornerX, by, cornerX, rimY, C.line, { width: 1.3 });
+  // The badge's leader, exactly as the page draws it: the measured points, in order.
+  const lead = (it) => {
+    const pts = it.lead.map(([x, y]) => [sx(x), sy(y)]);
+    for (let i = 1; i < pts.length; i += 1) {
+      seg(svg, pts[i - 1][0], pts[i - 1][1], pts[i][0], pts[i][1], C.line, { width: 1.4 });
+    }
   };
 
   const again = () => {
@@ -402,40 +401,52 @@ function sixCircles(root, card, start = "A", only = "both") {
     const tc = [sx(t.at[0]), sy(t.at[1])];
     const R = t.r * SIX_MAP.s;
     for (const it of SIX) {
+      const c = [sx(it.at[0]), sy(it.at[1])];
       S("circle", {
-        cx: sx(it.at[0]), cy: sy(it.at[1]), r: it.r * SIX_MAP.s,
-        fill: "none", stroke: C.grey, "stroke-width": 1.3,
+        cx: c[0], cy: c[1], r: it.r * SIX_MAP.s,
+        fill: "none", stroke: C.line, "stroke-width": 1.2,
       }, svg);
     }
     SIX_GIVEN.forEach(printed);
     S("circle", {
-      cx: tc[0], cy: tc[1], r: R, fill: t.colour, "fill-opacity": 0.09,
-      stroke: t.colour, "stroke-width": 3.2,
+      cx: tc[0], cy: tc[1], r: R, fill: t.colour, "fill-opacity": 0.05,
+      stroke: t.colour, "stroke-width": 2.2,
     }, svg);
-    // the diameter: long dash, on a tilt so it never sits on a printed arrow
+    // the diameter: long dash at 62 degrees, which clears the printed 2 cm label
+    // sitting just above the short horizontal arrow
     if (mode !== "r") {
-      const da = 25 * DEG;
+      const da = 62 * DEG;
       seg(svg, tc[0] - R * Math.cos(da), tc[1] - R * Math.sin(da), tc[0] + R * Math.cos(da), tc[1] + R * Math.sin(da), t.colour, { dash: "13 7", width: 2.6 });
     }
-    // the radius: short dash, centre to rim at 208°
+    // the radius: short dash, centre to rim. On the circle whose diameter the page
+    // already prints (D), a radius leaning up-left would cross that label, so it
+    // leans down-left instead.
     if (mode !== "d") {
-      const ra = 208 * DEG;
+      const ra = (mode === "r" ? 45 : 208) * DEG;
       seg(svg, tc[0], tc[1], tc[0] + R * Math.cos(ra), tc[1] + R * Math.sin(ra), t.colour, { dash: "6 5", width: 2.4 });
     }
     dot(svg, tc[0], tc[1], t.colour);
     // badges and their leaders last, on top of every rim
     for (const it of SIX) {
-      const c = [sx(it.at[0]), sy(it.at[1])];
       const b = [sx(it.badge[0]), sy(it.badge[1])];
-      lead(b, c, it.r * SIX_MAP.s);
+      lead(it);
       S("circle", {
-        cx: b[0], cy: b[1], r: 12, fill: it.id === pick ? it.colour : "#fff",
+        cx: b[0], cy: b[1], r: BADGE_R, fill: it.id === pick ? it.colour : "#fff",
         stroke: it.id === pick ? it.colour : C.line, "stroke-width": 1.6,
       }, svg);
-      T(svg, b[0], b[1] + 5, it.id, {
-        "font-size": 14, "font-weight": 700, "text-anchor": "middle",
+      T(svg, b[0], b[1] + 6, it.id, {
+        "font-size": 16, "font-weight": 700, "text-anchor": "middle",
         fill: it.id === pick ? "#fff" : C.line,
       });
+    }
+    // The centre marks go on top of everything, at one size, so none is hidden by an
+    // arrow or by the target's own highlight.
+    for (const it of SIX) {
+      const c = [sx(it.at[0]), sy(it.at[1])];
+      S("circle", {
+        cx: c[0], cy: c[1], r: it.id === pick ? 6 : 5,
+        fill: it.colour, stroke: "#fff", "stroke-width": 1.6,
+      }, svg);
     }
     const keys = [];
     if (mode !== "d") keys.push(key(t.colour, "6 5", `r = ${fmt(SIX_CM[t.id])} cm 半徑`));

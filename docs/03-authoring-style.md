@@ -74,6 +74,15 @@ Review links connect the wording of a question to the part of the answer it beco
 
 A graphic should make the reasoning visible, not just repeat the algebra.
 
+- **If the question prints a figure, the graphic is that figure — redrawn to the pixel.**
+  Measure it from `pages/pNN.jpg` at 3 px/pt before drawing: every circle's centre and
+  radius from the ink itself (sample the rim at 360° and fit through the ink centre, never
+  from a downscaled view or by eye — a wrong seed slides onto the neighbouring circle's
+  arc), plus each letter badge, each leader and every measurement arrow the page prints.
+  Then prove it: draw the measured geometry back over the page image and show that every
+  element sits within **1.5 px** of the printed line. A figure that is only "similar"
+  teaches a different picture from the question, and every check and review after it is
+  then validating the wrong thing.
 - **It must match the question.** It opens with a question card (the question in brief, then the same "Let …" lines and inequality as the worked solution) and uses the solution's letters.
 - **It must suit the form.** Use pictures, bar models, counters, number lines and shapes. Don't use graphs of functions unless the class has learned them. JM26 (B) Q11 replaced a cost/income graph with a picture of oranges and two money bars.
 - **Standard parts:**
