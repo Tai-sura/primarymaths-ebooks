@@ -213,7 +213,10 @@ Gate: measure it per cell — the tool's axis against the arc's end ≤ 2°, the
 
 ## Known open items
 
-`CircleBasics` still fades out at 13.5 s, and its mid-section uses flat bilingual
-labels while the first and last frames use the printed colour boxes — a style
-switch when it returns to the print. Both are recorded for the next animation
-round.
+None in this book's layout, controls or media. Two things that were open are now closed:
+
+- `CircleBasics` no longer fades to blank; it clears the printed page to white before it
+  draws, and crossfades back at the end (v171).
+- Its mid-section labels stay as flat coloured text, while the first and last frames use
+  the printed colour boxes. **The teacher looked at both and chose to keep the flat
+  labels** — do not "fix" this without asking; it is a decision, not a defect.
