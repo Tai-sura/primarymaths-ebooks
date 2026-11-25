@@ -165,6 +165,8 @@ C_LEG = "#4a4f56"
 C_HI = "#aab1b8"
 C_METAL = "#dfe3e8"
 C_AMBER = "#e8890c"
+C_RULER = "#ffe9a0"        # translucent plastic ruler, cell 6
+C_RULER_EDGE = "#c9a24a"
 
 
 class CircleCompass(Scene):
@@ -206,6 +208,14 @@ class CircleCompass(Scene):
     Step numbers 1-6 sit at each cell's top-left, 5.2 pt tall, as printed. The compass is
     geometrically honest: the needle touches the cell's centre point and the pencil sits
     exactly one radius away, so the arc it draws has radius = the compass opening.
+
+    Cell 6 then measures that radius with a translucent ruler (48 % opaque pale yellow, so
+    the radius line reads through it): its 0 graduation is on the centre and its 3 cm
+    graduation on the rim, the body running 3.6 pt past the last mark like a real ruler's
+    end margin, with the reading "r = 3 cm" written under it inside the circle. The ruler
+    slides in from beyond the region's right edge 0.35 s after the radius is drawn and stays
+    to the end, so the poster (frame 0), the hold before the clear, and the closing frame all
+    carry the same finished comic with the ruler in place.
     """
 
     BOOK = "p5m07a"
@@ -362,6 +372,40 @@ class CircleCompass(Scene):
                        stroke_width=self.w(1.1)))
         return g
 
+    def ruler(self, N, r):
+        """Cell 6: a translucent plastic ruler laid along the radius to measure it.
+
+        The 0 graduation sits on the centre and the 3 cm graduation on the rim, so the
+        measured span is exactly the radius (r = 26 pt in this scene); the body runs 3.6 pt
+        past the last graduation, the way a real ruler has a margin at its end. The band is
+        48 % opaque, so the radius line underneath shows through it, and the graduations and
+        digits are printed in ink at the top edge, clear of that line.
+        """
+        xr = N[0]
+        top, bot = N[1] - 7.6, N[1] + 2.0
+        far = xr - r - 3.6
+        g = VGroup()
+        g.add(Polygon(self.P(xr, top), self.P(far, top), self.P(far, bot), self.P(xr, bot),
+                      color=C_RULER_EDGE, stroke_width=self.w(0.55), stroke_opacity=0.9,
+                      fill_color=C_RULER, fill_opacity=0.48))
+        for k in range(7):                       # 0, 0.5, 1 ... 3 cm
+            x = xr - k * (r / 6.0)
+            major = k % 2 == 0
+            g.add(Line(self.P(x, top), self.P(x, top + (2.2 if major else 1.2)),
+                       color=C_INK, stroke_width=self.w(0.72 if major else 0.5),
+                       stroke_opacity=0.9))
+        for k in range(4):
+            x = xr - k * (r / 3.0)
+            t = Text(str(k), font=CJK, font_size=64, color=C_INK, disable_ligatures=True)
+            t.scale(3.0 * self.k / t.height)
+            t.move_to(self.P(x - 2.0, top + 4.0))
+            g.add(t)
+        cap = Text("r = 3 cm", font=CJK, font_size=64, color=C_INK, disable_ligatures=True)
+        cap.scale(4.2 * self.k / cap.height)
+        cap.move_to(self.P(xr - 9.5, bot + 7.2))
+        g.add(cap)
+        return g
+
     # ---------- the film ----------
 
     def fine(self, i):
@@ -381,7 +425,8 @@ class CircleCompass(Scene):
         if i in (2, 3, 4):
             end = {2: 70.0, 3: 250.0, 4: 360.0}[i]
             return VGroup(self.compass(N, self.R_C), self.arc(N, self.R_C, 0.0, end))
-        return VGroup(self.arc(N, self.R_C, 0.0, 360.0), self.radius(N, self.R_C))
+        return VGroup(self.arc(N, self.R_C, 0.0, 360.0), self.radius(N, self.R_C),
+                      self.ruler(N, self.R_C))
 
     def construct(self):
         self.add(self.background())
@@ -443,13 +488,20 @@ class CircleCompass(Scene):
             self.play(FadeOut(rg), run_time=0.2)
             self.wait(tail)
 
-        # 6: the radius is drawn in
+        # 6: the radius is drawn in, then a clear ruler measures it
         rg = self.ring(5)
         N = self.centre(5)
         self.play(FadeIn(rg), run_time=0.2)
         self.play(Create(self.arc(N, self.R_C, 0.0, 360.0)), run_time=0.55)
         self.play(Create(self.radius(N, self.R_C)), run_time=0.55)
+        self.wait(0.35)                                   # a beat, then the ruler arrives
+        rul = self.ruler(N, self.R_C)
+        # start fully outside the region edge so it slides in rather than popping into view
+        off = np.array([78.0 * self.k, 0.0, 0.0])
+        rul.shift(off)
+        self.add(rul)
+        self.play(rul.animate.shift(-off), run_time=0.72, rate_func=smooth)
         self.play(FadeOut(rg), run_time=0.2)
 
-        # the finished comic holds; nothing fades to white
-        self.wait(1.3)
+        # the finished comic, ruler and reading included, holds; nothing fades to white
+        self.wait(1.0)
