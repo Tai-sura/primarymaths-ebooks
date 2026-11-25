@@ -3,11 +3,12 @@
 The printed page already shows the four names with boxes and arrows; this film adds the
 teaching motion the user asked for without repainting anything printed: it holds the printed
 region as the base layer, fades it out, draws the same circle again cleanly in the page's own
-colours, names the four parts one at a time (bilingual, as the widgets do), turns the radius
-into the diameter by laying a second radius beside it (diameter = 2 x radius), and finally
-shows a shorter parallel line inside the circle so "the diameter is the longest straight line"
-is something you can see. It then fades the printed region back in, so the poster (last frame)
-is the printed page exactly.
+colours, names the four parts one at a time (bilingual, as the widgets do), and turns the radius
+into the diameter by laying a second radius beside it (diameter = 2 x radius). It then sweeps the
+red diameter a full 360 deg about the centre at a constant speed while the remark that the
+diameter is the longest straight line inside the circle comes in, in the same red. Finally the
+overlay cross-fades back to the printed region - the drawn layer fades out as the printed page
+fades in, so no frame is ever blank and the closing frame is the page itself.
 
 Geometry, measured from books/p5m07a/pages/p02.jpg (1786 x 2526 px = 3.000 px/pt):
 
@@ -32,8 +33,8 @@ import numpy as np
 
 from manim import (
     Arc, CapStyleType, Circle, Create, DashedLine, Dot, FadeIn, FadeOut, GrowFromCenter, Line,
-    NORMAL, Polygon, Rectangle, Scene, Text, VGroup, ValueTracker, Write, always_redraw, config,
-    smooth,
+    NORMAL, Polygon, Rectangle, Rotate, Scene, Text, VGroup, ValueTracker, Write, always_redraw,
+    config, linear, smooth,
 )
 
 from jpfm08 import PageFilm
@@ -43,7 +44,6 @@ RED = "#e0453a"
 GREEN = "#8cc63f"
 BLUE = "#2f6fd6"
 INK = "#1a1a1a"
-GREY = "#8a8f98"
 CJK = "Microsoft JhengHei"
 
 
@@ -103,10 +103,11 @@ class CircleBasics(PageFilm):
     def construct(self):
         base = self.base
         self.wait(0.8)
-        self.play(FadeOut(base), run_time=0.6)
 
-        circle = Circle(radius=self.R * self.k, color=ORANGE, stroke_width=self.w(2.2)).move_to(self.P(*self.C))
-        self.play(Create(circle), run_time=1.4)
+        # the clean circle is drawn on while the printed page fades out, so the screen never
+        # passes through a blank white frame
+        circle = Circle(radius=self.R * self.k, color=ORANGE, stroke_width=self.w(3.2)).move_to(self.P(*self.C))
+        self.play(FadeOut(base), Create(circle), run_time=1.3)
 
         # 1. the circumference: a bold run of the rim where the name points
         a0, a1 = 196, 236
@@ -141,19 +142,25 @@ class CircleBasics(PageFilm):
         self.play(Create(rad2), Write(note), run_time=1.6)
         self.wait(0.6)
 
-        # 6. the diameter is the longest straight line inside the circle
-        shorter = self.line((self.C[0] + 40, self.C[1] - 44), (self.C[0] + 40, self.C[1] + 44), GREY, width=1.8)
-        note2 = self.word("直徑是圓內最長的直線", self.C[0], 339, 8.6, INK)
-        self.play(FadeOut(note), Create(shorter), run_time=0.8)
-        self.play(Write(note2), run_time=1.1)
-        self.wait(1.0)
+        # 6. the red diameter sweeps one full turn about the centre, and the remark that it is
+        #    the longest chord inside the circle comes in with it (same red as the diameter)
+        # the green radii and the two leaders would end up lying under the turning diameter, so
+        # they clear out first; only the circle, the diameter, its label and the remark remain
+        note2 = self.word("直徑是圓內最長的直線", self.C[0], 339, 8.6, RED)
+        self.play(FadeOut(note), FadeOut(rad), FadeOut(rad2), FadeOut(cap3), FadeOut(lead3),
+                  FadeOut(lead2), FadeOut(lead4), run_time=0.4)
+        self.play(
+            Rotate(dia, -2 * math.pi, about_point=self.P(*self.C), rate_func=linear, run_time=2.8),
+            FadeIn(note2, run_time=2.8),
+            run_time=2.8,
+        )
+        self.wait(0.25)
 
-        # 7. back to the printed page, so the poster is the page itself
-        drawn = VGroup(circle, arc, cap, lead, dot, cap2, lead2, rad, cap3, lead3, dia, cap4, lead4,
-                       rad2, shorter, note2)
-        self.play(FadeOut(drawn), run_time=0.45)
-        self.play(FadeIn(base), run_time=0.45)
-        self.wait(0.5)
+        # 7. cross-fade back to the printed page: never through a blank frame, and the closing
+        #    frame is the same image the film opens on
+        drawn = VGroup(circle, arc, cap, lead, dot, cap2, dia, cap4, note2)
+        self.play(FadeOut(drawn), FadeIn(base), run_time=0.6)
+        self.wait(0.4)
 
 
 # ------------------------------------------------------------------ the 6-panel comic film

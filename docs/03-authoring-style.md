@@ -80,9 +80,12 @@ A graphic should make the reasoning visible, not just repeat the algebra.
   from a downscaled view or by eye — a wrong seed slides onto the neighbouring circle's
   arc), plus each letter badge, each leader and every measurement arrow the page prints.
   Then prove it: draw the measured geometry back over the page image and show that every
-  element sits within **1.5 px** of the printed line. A figure that is only "similar"
-  teaches a different picture from the question, and every check and review after it is
-  then validating the wrong thing.
+  element sits within **1.5 px** of the printed line (mean and p95, not one max). A figure
+  that is only "similar" teaches a different picture from the question, and every check and
+  review after it is then validating the wrong thing. When you draw it: one pt ? px map for
+  every element (no "corner at 45 %" heuristics), non-target lines at the printed ink weight
+  with a thin target ring and at most 5 % fill, and the explanatory marks (centre dots) drawn
+  **last** and large enough ? the printed arrows run through the centres and will hide them.
 - **It must match the question.** It opens with a question card (the question in brief, then the same "Let …" lines and inequality as the worked solution) and uses the solution's letters.
 - **It must suit the form.** Use pictures, bar models, counters, number lines and shapes. Don't use graphs of functions unless the class has learned them. JM26 (B) Q11 replaced a cost/income graph with a picture of oranges and two money bars.
 - **Standard parts:**

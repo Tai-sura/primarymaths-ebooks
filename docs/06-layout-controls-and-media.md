@@ -142,10 +142,31 @@ out of it:
 
 **Check the fit against the printed centimetres.** Every circle must land on the
 same scale: A 42.7 pt for 3 cm, B 28.4 for 2, C 71.1 for 5, D 21.4 for 1.5, E 42.7
-for 3, F 85.3 for 6 ? all 14.2 pt/cm. If one circle only fits at a different scale
-factor, the fit has slid onto a neighbour's arc, not the print. A first pass reported
-C and F at 80.7 and 80.3 pt and nearly produced a rule that "the print is not to
-scale"; the print was fine.
+for 3, F 85.3 for 6, so all six sit on 14.2 pt/cm. If one circle only fits at a
+different scale factor, the fit has slid onto a neighbour's arc; that is not the
+print being out of scale. A first pass reported C and F at 80.7 and 80.3 pt and
+nearly produced a rule saying "the print is not to scale" — the print was fine.
+
+**Drawing it is its own set of traps**, and each one cost a round of review:
+
+- **One map, no heuristics.** Every element goes through the same pt → scene
+  conversion. The first version computed each badge leader as "a corner at 45 %
+  across, then drop to the rim"; the printed leaders have their own measured
+  corners, so all six were wrong. Store the measured points and draw them.
+- **Weight changes apparent size.** Non-target circles at the printed ink weight
+  (dark, 1.2–1.5 stroke); the target ring thin (≈2.2) with a fill of at most 5 %.
+  A 2.8 ring over a 9 % fill made the highlighted circle read bigger than the
+  printed one, and the teacher reported "C should be smaller" when C was exact.
+- **Explanatory marks go on top, and large enough.** The printed cm arrows run
+  through the centres, so centre dots drawn before the arrows simply vanished —
+  only the highlighted circle's dot was visible. Draw them last, at r ≈ 5–6 scene
+  px with a white halo. Concentric circles (B and C) share one centre.
+- **Prove the finished widget, not just the numbers.** Draw the widget's own
+  coordinates back over the page and measure how far each drawn circle sits from
+  the printed ink: mean and p95, not a single max. The accepted run was mean
+  0.36–0.41 px, p95 0.61 px, max 1.52 px. Two people measured independently and
+  agreed to 0.28 pt; that is the standard to aim for before anyone is asked to
+  judge a picture by eye.
 
 ## 14. Style by measurement, never by eye
 
