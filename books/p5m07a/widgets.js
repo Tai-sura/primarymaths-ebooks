@@ -11,8 +11,8 @@
  *   circlesInRow     q36 hw12        n equal circles in a row: AB spans (n − 1) diameters
  *   overlapCircles   q40             two circles through each other's centres: PQ = 3r
  *
- * There is no "chord" anywhere: the course calls every straight line across a circle a line
- * segment, and only the one through the centre a diameter.
+ * Every straight line across a circle is a line segment here; only the one through the centre
+ * is a diameter. (The course does not use the older word for the others.)
  *
  * The printed page is never touched: the engine only draws a small graphic
  * button beside a question whose id is registered here.

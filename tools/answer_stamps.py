@@ -328,8 +328,12 @@ def main():
                                     best = (hit, dy, dx)
                         _, dy, dx = best
                         parr = np.roll(np.roll(parr, dy, axis=0), dx, axis=1)
-                        pmin = minimum_filter(parr, size=5)
-                        alpha[(red <= 12) & (pmin < 200)] = 0
+                        # Only dense print is dropped. A thin printed box edge round a
+                        # boxed answer must not take the digits with it, so the test is
+                        # how much ink sits in a 9 px neighbourhood, not one pixel.
+                        from scipy.ndimage import uniform_filter
+                        dense = uniform_filter((parr < 190).astype("float32"), size=9)
+                        alpha[(red <= 12) & (dense >= 0.35)] = 0
                 img = img.convert("RGBA")
                 img.putalpha(Image.fromarray(alpha))
                 name = f"p{page['page']:02d}_{q['id']}{'' if k == 0 else str(k + 1)}.png"
