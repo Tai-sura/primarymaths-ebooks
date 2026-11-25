@@ -30,6 +30,12 @@ lower arc (HW14), which shows as a broken shape, not as a moved answer.
 
 Gate: `check_cuts.py` — every column of the line is tested against the page JPEG.
 
+**Scope.** This is a rule for a book whose printed figures run across the page, which is
+the case in the primary maths book. A published secondary book keeps its cuts: re-cutting
+moves every answer below the line and changes a layout the teacher has already approved.
+Check a cut before reusing its region in a new book; never re-cut a finished one on the
+strength of this rule alone.
+
 ## 3. Every tappable is measured, and they clear each other
 
 Three things can sit near an answer: the Play (`playAt`), the amber widget button

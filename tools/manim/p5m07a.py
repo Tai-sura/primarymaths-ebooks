@@ -40,6 +40,7 @@ from manim import (
 from jpfm08 import PageFilm
 
 ORANGE = "#ef9a33"
+ORANGE_DEEP = "#d9791a"
 RED = "#e0453a"
 GREEN = "#8cc63f"
 BLUE = "#2f6fd6"
@@ -102,21 +103,26 @@ class CircleBasics(PageFilm):
 
     def construct(self):
         base = self.base
-        self.wait(0.8)
+        self.wait(0.2)
 
-        # the clean circle is drawn on while the printed page fades out, so the screen never
-        # passes through a blank white frame
+        # the printed page is taken away on its own, and only then does anything get drawn: no
+        # frame ever shows the printed labels and the drawn ones at the same time
+        self.play(FadeOut(base), run_time=0.3)
         circle = Circle(radius=self.R * self.k, color=ORANGE, stroke_width=self.w(3.2)).move_to(self.P(*self.C))
-        self.play(FadeOut(base), Create(circle), run_time=1.3)
+        self.play(Create(circle), run_time=1.4)
 
-        # 1. the circumference: a bold run of the rim where the name points
+        # 1. the circumference: the whole ring changes colour for a moment - same path, same
+        #    3.2 pt stroke - so no stretch of it can ever look thicker than the rest
         a0, a1 = 196, 236
-        arc = Arc(radius=self.R * self.k, start_angle=-math.radians(a0), angle=-math.radians(a1 - a0),
-                  arc_center=self.P(*self.C), color=ORANGE, stroke_width=self.w(5))
-        arc.set_cap_style(CapStyleType.ROUND)
         cap = self.word("圓周 Circumference", 103, 219, 9.6, ORANGE)
-        lead = self.arrow(self.pt(a0 - 4, self.R + 26), self.pt((a0 + a1) / 2 - 3), ORANGE)
-        self.play(Create(arc), FadeIn(cap), Create(lead), run_time=1.3)
+        # the leader stops 3.5 pt outside the rim, so its ink never merges with the
+        # ring and makes that stretch read thicker
+        lead = self.arrow(self.pt(a0 - 4, self.R + 26),
+                          self.pt((a0 + a1) / 2 - 3, self.R + 3.5), ORANGE)
+        self.play(circle.animate.set_stroke(color=ORANGE_DEEP), FadeIn(cap), Create(lead),
+                  run_time=0.9)
+        self.wait(0.5)
+        self.play(circle.animate.set_stroke(color=ORANGE), run_time=0.5)
 
         # 2. the centre
         dot = self.dot(self.C, color=BLUE, r=2.4)
@@ -156,11 +162,12 @@ class CircleBasics(PageFilm):
         )
         self.wait(0.25)
 
-        # 7. cross-fade back to the printed page: never through a blank frame, and the closing
-        #    frame is the same image the film opens on
-        drawn = VGroup(circle, arc, cap, lead, dot, cap2, dia, cap4, note2)
-        self.play(FadeOut(drawn), FadeIn(base), run_time=0.6)
-        self.wait(0.4)
+        # 7. the drawn labels leave first, so no frame ever carries the drawn words and the
+        #    printed ones together; then the geometry cross-fades back to the printed page,
+        #    which is the image the film opens on
+        self.play(FadeOut(VGroup(cap, cap2, cap4, note2, lead)), run_time=0.3)
+        self.play(FadeOut(VGroup(circle, dot, dia)), FadeIn(base), run_time=0.6)
+        self.wait(0.3)
 
 
 # ------------------------------------------------------------------ the 6-panel comic film
