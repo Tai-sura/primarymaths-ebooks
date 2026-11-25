@@ -226,7 +226,8 @@ class CircleCompass(Scene):
     ROWS = (556.67, 653.83, 749.67)
     BAND = 36.3                                  # orange band height in every cell
     R_C = 26.0                                   # the circle the compass draws
-    L = 34.0                                     # compass leg length
+    L = 22.0                                     # compass leg length (short enough to swing
+                                                 # a full turn inside one cell)
 
     def setup(self):
         x0, y0, x1, y1 = self.REGION
@@ -250,7 +251,7 @@ class CircleCompass(Scene):
     def centre(self, i):
         """The needle point of cell i: the centre of the circle drawn there."""
         x0, y0, x1, y1 = self.cell(i)
-        return (x0 + 0.43 * (x1 - x0), y1 - 4.0 - self.R_C)
+        return (x0 + 0.47 * (x1 - x0), y1 - 4.0 - self.R_C)
 
     def polar(self, N, r, a_deg):
         a = math.radians(a_deg)
@@ -294,16 +295,21 @@ class CircleCompass(Scene):
     # ---------- the compass (our own drawing) ----------
 
     def compass(self, N, r, phi=0.0):
-        """Flat 2D compass: needle at N, pencil one radius r away at page angle phi."""
+        """Flat 2D compass: needle at N, pencil one radius r away at page angle phi.
+
+        The body turns rigidly about the needle with phi: the hinge sits on the perpendicular
+        bisector of the two feet, on the side fixed in the instrument's own frame (the side
+        that is "up" when the pencil is at 0 deg). So the pencil foot and the hinge swing round
+        together, exactly as a real compass does when it is turned by its handle, and the leg
+        opening never changes.
+        """
         a = math.radians(phi)
         u = np.array([math.cos(a), math.sin(a)])
         Pn = np.array(N, float)
         Pp = Pn + r * u
         M = (Pn + Pp) / 2.0
         hh = math.sqrt(max(self.L * self.L - (r / 2.0) ** 2, 1.0))
-        nrm = np.array([u[1], -u[0]])
-        if nrm[1] > 0:
-            nrm = -nrm
+        nrm = np.array([u[1], -u[0]])          # rigid: (sin phi, -cos phi), no side flipping
         H = M + hh * nrm
 
         def quad(a0, b0, wa, wb, color):
@@ -326,7 +332,7 @@ class CircleCompass(Scene):
         for foot, dvec in ((foot_n, dn), (foot_p, dp)):
             nn = np.array([-dvec[1], dvec[0]]) * 0.95
             g.add(Line(self.P(*(H + nn)), self.P(*(foot + nn)), color=C_HI, stroke_width=self.w(0.55)))
-        g.add(quad(H, H + nrm * 13.0, 3.1, 2.3, C_LEG))
+        g.add(quad(H, H + nrm * 6.5, 3.1, 2.3, C_LEG))
         # hinge: knurled wheel, body and pin
         g.add(Circle(radius=5.2 * self.k, color=C_HI, stroke_width=self.w(0.7)).move_to(self.P(*H)))
         g.add(Circle(radius=3.3 * self.k, color=C_LEG, stroke_width=0, fill_color=C_LEG,
@@ -334,7 +340,7 @@ class CircleCompass(Scene):
         g.add(Circle(radius=1.2 * self.k, color=C_METAL, stroke_width=0, fill_color=C_METAL,
                      fill_opacity=1.0).move_to(self.P(*H)))
         g.add(Circle(radius=1.8 * self.k, color=C_LEG, stroke_width=0, fill_color=C_LEG,
-                     fill_opacity=1.0).move_to(self.P(*(H + nrm * 13.6))))
+                     fill_opacity=1.0).move_to(self.P(*(H + nrm * 7.1))))
         # the needle and the pencil, both ending exactly on their circles' points
         g.add(Line(self.P(*foot_n), self.P(*Pn), color=C_INK, stroke_width=self.w(0.9)))
         g.add(Dot(self.P(*Pn), radius=0.8 * self.k, color=C_INK))
@@ -424,7 +430,7 @@ class CircleCompass(Scene):
                           Dot(self.P(*N), radius=1.0 * self.k, color=C_INK))
         if i in (2, 3, 4):
             end = {2: 70.0, 3: 250.0, 4: 360.0}[i]
-            return VGroup(self.compass(N, self.R_C), self.arc(N, self.R_C, 0.0, end))
+            return VGroup(self.arc(N, self.R_C, 0.0, end), self.compass(N, self.R_C, end))
         return VGroup(self.arc(N, self.R_C, 0.0, 360.0), self.radius(N, self.R_C),
                       self.ruler(N, self.R_C))
 
@@ -461,30 +467,21 @@ class CircleCompass(Scene):
         self.play(FadeOut(rg), run_time=0.2)
         self.wait(0.25)
 
-        # 3-5: the arc starts, grows, and closes the circle
-        for cell, a_from, a_to, rt, tail in ((2, 0.0, 70.0, 0.9, 0.25),
-                                             (3, 70.0, 250.0, 1.15, 0.25),
-                                             (4, 250.0, 360.0, 1.0, 0.3)):
+        # 3-5: the compass turns about the needle, its pencil foot always on the arc's front
+        for cell, a_from, a_to, rt, tail in ((2, 0.0, 70.0, 1.05, 0.25),
+                                             (3, 70.0, 250.0, 1.35, 0.25),
+                                             (4, 250.0, 360.0, 1.15, 0.3)):
             rg = self.ring(cell)
             N = self.centre(cell)
             self.play(FadeIn(rg), run_time=0.2)
-            # the part already drawn, then the live arc takes it over: drawn once, never twice,
-            # so the closing frame is pixel-identical to the one fine() draws at the start
-            pre = self.arc(N, self.R_C, 0.0, a_from)
-            self.add(self.compass(N, self.R_C), pre)
-            self.remove(pre)
             tr = ValueTracker(a_from)
             live = always_redraw(lambda: VGroup(
                 self.arc(N, self.R_C, 0.0, tr.get_value()),
-                Dot(self.P(*self.polar(N, self.R_C, tr.get_value())), radius=1.15 * self.k,
-                    color=C_AMBER)))
+                self.compass(N, self.R_C, tr.get_value())))
             self.add(live)
             self.play(tr.animate.set_value(a_to), run_time=rt, rate_func=smooth)
             self.remove(live)
-            self.add(self.arc(N, self.R_C, 0.0, a_to))
-            tipdot = Dot(self.P(*self.polar(N, self.R_C, a_to)), radius=1.15 * self.k, color=C_AMBER)
-            self.add(tipdot)
-            self.play(FadeOut(tipdot), run_time=0.25)
+            self.add(self.arc(N, self.R_C, 0.0, a_to), self.compass(N, self.R_C, a_to))
             self.play(FadeOut(rg), run_time=0.2)
             self.wait(tail)
 
