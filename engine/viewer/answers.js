@@ -724,6 +724,32 @@ export function buildOverlay(page, overlay) {
         fontSize: `${Math.max(9, Math.round((ph * 14) / 22))}px`,
       });
       overlay.append(play);
+      // A fill-in question can also carry an interactive picture. It gets a second
+      // button beside the Play: the amber graphic button an inline answer shows in
+      // its control column, drawn at the Play's size, so a stamped answer gains the
+      // picture without drawing anything over the printed page. `graphicAt` is
+      // measured like `playAt` with the Play box already taken, so the two never
+      // share a spot. A question whose widgets.js has no graphic gets no button, and
+      // inline answers keep the graphic button they already had in `.ctl`.
+      if (canGraphic(q.id)) {
+        const ga = q.graphicAt || [Math.max(2, at[0] - pw - 4), at[1]];
+        const g = document.createElement("button");
+        g.type = "button";
+        g.className = "ans-play ans-graphic";
+        g.dataset.act = "graphic";
+        g.dataset.q = q.id;
+        g.title = "Open the interactive picture";
+        g.setAttribute("aria-label", `Open the interactive picture for question ${q.label || q.id}`);
+        g.innerHTML = `<svg viewBox="0 0 20 20"><path d="M3 16h14M5 13l4-5 3 3 4-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        Object.assign(g.style, {
+          left: `${ga[0]}px`,
+          top: `${ga[1]}px`,
+          width: `${pw}px`,
+          height: `${ph}px`,
+          borderRadius: `${Math.max(3, Math.round((ph * 6) / 22))}px`,
+        });
+        overlay.append(g);
+      }
       q.space = 0;
       continue;
     }

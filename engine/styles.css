@@ -1130,4 +1130,9 @@ body.embed-open { overflow: hidden; }
 .ans-play:hover { filter: brightness(0.95); }
 /* Open: the answer is out, so the button inverts and reads as pressed. */
 .ans-play.on { background: #fff; color: var(--ink); }
+/* A stamped answer's interactive-picture button: the amber graphic button an
+   inline answer shows in its control column, at the Play's size, beside it. */
+.ans-play.ans-graphic { background: #fff4e0; border-color: #f0a030; color: #9a5b00; }
+.ans-play.ans-graphic svg { width: 15px; height: 15px; display: block; margin: auto; }
+
 .qa.stamp { pointer-events: none; }
