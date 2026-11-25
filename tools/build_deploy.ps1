@@ -71,8 +71,10 @@ foreach ($junk in @("tools\qa\node_modules", "tools\__pycache__", "tools\qa\__py
 }
 # A `_`-prefixed script is a scratch harness someone ran once for a screenshot or
 # a pixel probe; it must never reach the public repo (one such file shipped the
-# source of a diagnostic that only made sense on the author's machine).
-Get-ChildItem (Join-Path $Dst "tools") -Recurse -File -Include "_*.py", "_*.mjs", "_*.html" -ErrorAction SilentlyContinue |
+# source of a diagnostic that only made sense on the author's machine). The walk
+# is explicit rather than `-Include` with `-Recurse`, which 5.1 and 7 disagree on.
+Get-ChildItem (Join-Path $Dst "tools") -Recurse -File -ErrorAction SilentlyContinue |
+  Where-Object { $_.Name.StartsWith("_") -and @(".py", ".mjs", ".html") -contains $_.Extension } |
   Remove-Item -Force -ErrorAction SilentlyContinue
 
 # every requested book, without source PDFs or teacher reference crops
