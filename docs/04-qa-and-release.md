@@ -53,6 +53,23 @@ python -X utf8 tools/qa/check_answer_chips.py <id>
 
 It maps every chip's `cardAt` back through the page JPEG and fails when a chip covers printed ink. `check_book` already opens every card once, so its fit and scroll warnings cover cards too.
 
+For a book with stamped answers (`answerStamps`), the same check covers the Play button of every stamp — it maps each `playAt` back through the page JPEG, fails when a button covers ink, and fails when two buttons share a box — and then the browser check:
+
+```powershell
+python -X utf8 tools/qa/check_answer_chips.py <id>
+node tools/qa/check_play.mjs <id> --shots $env:TEMP\<id>   # optional page shots
+```
+
+`check_play` fails when a stamped answer has no Play, when the button is not the same box, fill, corner and `▸` glyph as the LQ answer's Play, when the two buttons of one stamped answer (Play and the amber widget button) overlap or sit under the toolbar, when the amber button does not open the drawer, or when a tap does not open and close its answer. The Play must match the LQ Play by measurement, not by eye — and `.ans-play` must keep its `min-width/min-height: 0`, or the global 40 × 40 `button` rule turns it back into a big circle.
+
+Every book, whatever its answer style, also gets the cut-line check:
+
+```powershell
+python -X utf8 tools/qa/check_cuts.py <id>
+```
+
+`extract_pages.py` opens a page by inserting blank space at each question's `region[3]` (`growSheet` in `engine/viewer/answers.js` cuts across the **whole page width**). `check_cuts.py` maps every cut line back to the page JPEG and fails when any column of that line still carries printed ink — a cut through the bottom edge of a printed answer box or through the lower arc of a figure shows up as a broken shape on screen, and no button check would catch it. Stamp questions are skipped (their answer is drawn over the page). A book that fails needs its `region[3]` moved to a row that is blank across the full width, not just under the answer column.
+
 Then check the printed page numbers, because a clean text layer does not prove a folio is visible:
 
 ```powershell

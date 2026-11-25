@@ -90,6 +90,11 @@ For a fill-in worksheet the answer *is* the red mark on the ANS page: a word in 
 
 The reader draws that PNG over the page at `rect` (page points, so it lands exactly where it was on the key) and lays nothing else out: no card, no `space`, no page cut. Each stamp has a small Play button at the top-right of its line: press it and the answer appears in its blank, press it again and it hides. Show all / Hide all drive every stamp. the page reads exactly as printed until the answer is asked for. MC and long questions keep the in-page working.
 
+That Play is **the same button as an inline answer's** (`.ctl button[data-act="next"]` in `engine/styles.css`): 24 × 22 pt, 6 pt corner, `--ink` fill, white `▸` at 14 pt. One book shows one Play. Two things keep it that way:
+
+- `engine/styles.css` `.ans-play` resets `min-width` / `min-height`. The reader's global `button` rule sets a 40 × 40 touch target, and a `width: 13px` on the button does not beat it — without the reset the button renders as a big circle.
+- `layout.json` records where each button goes as `playAt`, measured by `play_spot()` in `tools/extract_pages.py`: flush with the text column's right edge on the line that carries the blank, nudged a few pt and then walked left along that line until the rendered page is blank there, and never out into the page margin — the reader's docked toolbar sits over the last ~18 pt. A mark's bounding box counts as occupied (white inside a printed circle is still the circle), so a figure reaching the column edge pushes the button into the free strip beside it; a scanned page, whose one page-sized image covers the whole sheet, puts its buttons in the left margin. `book.json` can override `playAt` per question.
+
 Run `check_book.mjs` afterwards: it fails when a stamp falls outside the page or has no image, and a missing PNG shows up as an HTTP 404. Re-running `extract_pages.py` re-cuts every stamp, so a page change cannot leave a stale answer behind.
 
 ### Answers in a card (`answerCards`)
@@ -109,7 +114,7 @@ A whole book like that can use `"answers": "cards"` instead, which makes every a
 
 MC and long questions are **not** in the list: they keep the region, the page cut and `space`, exactly as in the physics books.
 
-`py -3.12 tools/qa/check_answer_chips.py <id>` reads `layout.json` and the page images and fails when a chip covers printed ink. `node tools/qa/check_book.mjs <id>` opens every card once, so its fit and scroll warnings cover cards too.
+`py -3.12 tools/qa/check_answer_chips.py <id>` reads `layout.json` and the page images and fails when a chip or a Play button covers printed ink, or when two Play buttons share a box. `node tools/qa/check_play.mjs <id>` proves it in a real browser: one Play per stamped answer, measured and painted exactly like the LQ Play, none under the toolbar, and a tap that opens and closes the answer. `node tools/qa/check_book.mjs <id>` opens every card once, so its fit and scroll warnings cover cards too.
 
 `python -X utf8 tools/layout_triage.py <id>` says which questions need a card (see Stage 2a of [01-workflow.md](01-workflow.md)).
 
@@ -238,3 +243,9 @@ For a full example of each kind of graphic, see `books/jm26b/widgets.js`:
 - MC statement checkers: the `MC` table.
 
 For percentages, growth and decay, see `books/jm27a/widgets.js`: `timeline()` (bars per period, unknown slider, target or threshold line), `change()` (original vs new bar), and the area pictures in Q9 and Q10.
+
+### `playAt` / `playSize` / `blankAt`
+
+`playAt` 是填充題 Play 按鈕的左上角（pt），放在該題填充位的右上角；`playSize` 是它的大小（預設 `[24,22]`，
+窄位可縮到 `[14,12]`，`engine/viewer/answers.js` 按此畫）；`blankAt` 是量到的填充位中心（第三個數字是該行文字右端），
+供 QA 證明按鈕貼住自己嗰格。量唔到（掃描頁冇文字層）時 `blankAt` 為 `null`。

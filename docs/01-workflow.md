@@ -277,6 +277,28 @@ when every remaining WARN has a written acceptance in the chapter log. Run
 `node tools/qa/check_catalog.mjs` too: it fails a live book missing from the
 catalogue, a listed book with no folder, and a live book with no chapter log.
 
+Two more checks guard the answer controls, because they are drawn over the
+printed page and are the part a teacher notices first:
+
+```powershell
+python -X utf8 tools/qa/check_answer_chips.py <id>   # chips and Play buttons on blank paper
+node tools/qa/check_play.mjs <id>                    # Play buttons in a real browser
+python -X utf8 tools/qa/check_cuts.py <id>           # page cut lines on blank paper
+```
+
+`check_answer_chips` reads `layout.json` and the page JPEGs: no `cardAt` chip and
+no `answerStamps` Play button may cover printed ink, the amber widget button of a
+stamped answer must clear both the ink and its Play, and two buttons may not
+share a box. `check_play` opens the reader and proves each stamped answer has one
+Play, that it is the same box, fill, corner and `▸` as the LQ answer's Play, that
+the amber widget button is drawn at its measured `graphicAt` and opens the drawer,
+that none sits under the docked toolbar, and that a tap opens and closes the
+answer. `check_cuts` proves the line where the page is opened for a question
+(`region[3]`, cut across the whole page width) carries no printed ink: a cut
+through a printed answer box or a figure's arc shows as a broken shape, and no
+button check would see it.
+A Play that only looks right on screen is not verified: match it by measurement.
+
 ## Stage 7: Release
 
 1. Set `"status": "live"` in `book.json` (the only place the state lives).
