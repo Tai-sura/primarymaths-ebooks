@@ -327,7 +327,7 @@ const SIX = [
   { id: "F", r: 85.30, at: [186.52, 638.48], badge: [76.65, 659.19], lead: [[86.0, 659.9], [104.0, 659.9]], colour: C.ink },
 ];
 // page points -> scene px
-const SIX_MAP = { x: 40, y: 470, s: 1.8 };
+const SIX_MAP = { x: 40, y: 485, s: 1.8 };
 const sx = (x) => (x - SIX_MAP.x) * SIX_MAP.s;
 const sy = (y) => (y - SIX_MAP.y) * SIX_MAP.s;
 
@@ -342,23 +342,87 @@ const SIX_CM = { A: 3, B: 2, C: 5, D: 1.5, E: 3, F: 6 };
 // The printed letter badge: 19.9 pt across on the page, at the scene scale.
 const BADGE_R = 9.93 * SIX_MAP.s;
 
+// The two dashed lengths sit at one angle each: the diameter at theta, the radius 146 deg
+// further round, so they can never lie on top of one another.
+const THETA_R = 146;
+
+// Every circle leans its own way by default, so the six pictures do not all start alike.
+// The slider opens on the question's own circle's value; picking another circle brings that
+// circle's lean with it (the last circle clicked wins), and a circle nobody has clicked keeps
+// its own entry here for the moment it is first picked. Q21 shows D's radius alone, so it
+// opens on D's 72 and the radius lands at 72 + 146 = 218 deg.
+const SIX_ANGLE = { A: 32, B: 252, C: 252, D: 72, E: 190, F: 288 };
+
+// A dashed length whose two ends both land on ink. The segment's own length is made an odd
+// number of half dash-periods and the period is stretched to match, so both ends stop in the
+// middle of a dash instead of in a gap: with a fixed "13 7" F's 307 px diameter ended about
+// 7 px short of its circle.
+//
+// The half-period count must be ODD-halves, i.e. L/period = k + 0.5. Rounding L/20 straight
+// to a half (round(L/20*2)/2) lands on a whole number for B/C/F's diameters and A/E/F's
+// radii, and a whole number puts the line's end exactly where a gap begins — the end then
+// stops 0.35c (4-7 px) short, the very fault this fixes. So round to the nearest k, then add
+// the half. The period moves by up to ~10% on the smallest circles (D's 77 px diameter: 22.0
+// against 20), which is the least any end-on-ink pattern can do at that length.
+function dashFor(len, on, off) {
+  const target = on + off;
+  const halfPeriods = Math.max(0.5, Math.round(len / target - 0.5) + 0.5);
+  const k = len / halfPeriods / target;
+  return `${(on * k).toFixed(2)} ${(off * k).toFixed(2)}`;
+}
+
 /**
- * q18–q23: one figure, six circles; the question's circle takes its colour and dashes.
- * `only` narrows the dashes to the one length the question asks for: on the 1.5 cm
- * circle the two dashed lines landed on the printed 3 cm arrow, so D shows the radius
- * alone — the length it is asked to find.
+ * q18–q23: one figure, six circles. A–F are toggles, and one button at the end of the row
+ * selects all six or clears them, its label following the state. A single 0–360° slider turns the two dashed lengths on every picked circle: the diameter at
+ * theta and the radius at theta + 146°, so the two never sit on top of each other. It opens on
+ * SIX_ANGLE for the question's own circle, and each newly picked circle brings its own lean
+ * with it (the last one clicked wins) — see SIX_ANGLE above.
+ *
+ * Drawing order is the reader's rule, topmost last: the printed rims, the picked circles'
+ * wash and colour ring, the two dashed lengths, the printed arrows with their haloed readings,
+ * the badges with their leaders, and the centre marks. So a dashed line may pass under a
+ * printed arrow or its "3 cm" but never over it, and every printed length stays whole at any
+ * angle. Each dashed length ends on ink at both ends: its dash period is solved from its own
+ * length (dashFor), so the last dash meets the rim instead of stopping in a gap.
+ * `only` narrows the question's own circle to the one length it asks for (Q21 shows D's
+ * radius alone, leaving the printed 3 cm diameter arrow clear); any other picked circle shows
+ * both lengths.
  */
 function sixCircles(root, card, start = "A", only = "both") {
   root.append(question(card));
-  const svg = scene(480, 500);
-  const keyRow = H("div", { style: "display:flex;flex-wrap:wrap;gap:18px;margin-top:10px;font-size:14px;font-weight:700" });
+  const svg = scene(480, 470);
+  // The drawer is one screen high and the panel also carries a slider, the key row and the A–F
+  // row, so the figure's box follows the window height and keeps its own 480:500 aspect: the
+  // drawing is scaled, never re-measured. The floor keeps the 13 px readings legible; below it
+  // the panel scrolls rather than shrinking the figure to unreadable.
+  svg.style.height = "clamp(300px, calc(100vh - 470px), 560px)";
+  svg.style.width = "auto";
+  const keyRow = H("div", {
+    style: "display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:8px;font-size:14px;font-weight:700;max-height:58px;overflow-y:auto",
+  });
   const out = readout();
-  root.append(svg, keyRow, out.el);
-  let pick = start;
+  const picked = new Set([start]);
+  let theta = SIX_ANGLE[start];
 
-  // A dash swatch beside its reading: the two dashed lengths are named here and
-  // not on the figure, because the six circles overlap and a label set inside a
-  // 1.5 cm circle lands on its neighbours.
+  // One slider for every picked circle: the diameter sits at theta, the radius 146 deg on.
+  const thetaSlider = slider({
+    label: "角度",
+    min: 0,
+    max: 360,
+    step: 1,
+    value: theta,
+    fmt: (v) => `${v}°`,
+    play: false,
+  });
+  thetaSlider.on((v) => {
+    theta = v;
+    again();
+  });
+  root.append(svg, thetaSlider.el, keyRow, out.el);
+
+  // A dash swatch for the legend: the two dashed lengths are named here and not on the
+  // figure, because the six circles overlap and a label inside a 1.5 cm circle lands on
+  // its neighbours.
   const key = (colour, dash, text) => {
     const row = H("span", { style: `display:inline-flex;align-items:center;gap:8px;color:${colour}` });
     const box = S("svg", { width: 54, height: 12, viewBox: "0 0 54 12" }, row);
@@ -392,14 +456,76 @@ function sixCircles(root, card, start = "A", only = "both") {
     }
   };
 
-  const again = () => {
+  // The question's own circle keeps its narrowing; any other picked circle shows both lengths.
+  const modeOf = (id) => (id === start ? only : "both");
+
+  // A–F are toggles; 全選 picks all six, 清除 empties the set. Picking a circle also moves the
+  // slider to that circle's own opening angle (SIX_ANGLE), so the last circle clicked wins;
+  // un-picking leaves the angle alone.
+  const btns = new Map();
+  const btnRow = H("div", { class: "g-btns" });
+  for (const it of SIX) {
+    const b = H("button", {
+      type: "button",
+      onclick: () => {
+        if (picked.has(it.id)) picked.delete(it.id);
+        else {
+          picked.add(it.id);
+          thetaSlider.set(SIX_ANGLE[it.id]);
+          return;
+        }
+        again();
+      },
+    }, [it.id]);
+    btns.set(it.id, b);
+    btnRow.append(b);
+  }
+  // One button closes the row: 全選 while some circle is still out, 清除 once all six are in.
+  const allBtn = H("button", {
+    type: "button",
+    onclick: () => {
+      if (picked.size === SIX.length) picked.clear();
+      else for (const it of SIX) picked.add(it.id);
+      again();
+    },
+  }, ["全選"]);
+  btnRow.append(allBtn);
+
+  function again() {
     clear(svg);
-    const t = SIX.find((it) => it.id === pick) || SIX[0];
-    // The narrowing is for this question's own circle; browsing to another one
-    // shows that circle whole, both lengths.
-    const mode = pick === start ? only : "both";
-    const tc = [sx(t.at[0]), sy(t.at[1])];
-    const R = t.r * SIX_MAP.s;
+    const ids = SIX.filter((it) => picked.has(it.id)).map((it) => it.id);
+    const n = ids.length;
+
+    // 1. the picked circles' wash, lowest of all, so it can tint nothing
+    for (const it of SIX) {
+      if (!picked.has(it.id)) continue;
+      if (n > 2) continue;                       // three or more washes would stack into a blot
+      const c = [sx(it.at[0]), sy(it.at[1])];
+      S("circle", {
+        cx: c[0], cy: c[1], r: it.r * SIX_MAP.s, fill: it.colour,
+        "fill-opacity": 0.05, stroke: "none",
+      }, svg);
+    }
+    // 3. the two dashed lengths: above the wash so they read, below every printed mark
+    for (const it of SIX) {
+      if (!picked.has(it.id)) continue;
+      const c = [sx(it.at[0]), sy(it.at[1])];
+      const R = it.r * SIX_MAP.s;
+      const mode = modeOf(it.id);
+      if (mode !== "r") {
+        const a = theta * DEG;
+        seg(svg, c[0] - R * Math.cos(a), c[1] - R * Math.sin(a),
+          c[0] + R * Math.cos(a), c[1] + R * Math.sin(a), it.colour,
+          { dash: dashFor(2 * R, 13, 7), width: 2.6 });
+      }
+      if (mode !== "d") {
+        const a = (theta + THETA_R) * DEG;
+        seg(svg, c[0], c[1], c[0] + R * Math.cos(a), c[1] + R * Math.sin(a), it.colour,
+          { dash: dashFor(R, 6, 5), width: 2.4 });
+      }
+    }
+    // 2b. the printed rims, ABOVE the dashes: a dash crossing another circle's rim must not
+    //     repaint that rim. With the rims underneath, q18 lost 114 printed-ink pixels to it.
     for (const it of SIX) {
       const c = [sx(it.at[0]), sy(it.at[1])];
       S("circle", {
@@ -407,62 +533,79 @@ function sixCircles(root, card, start = "A", only = "both") {
         fill: "none", stroke: C.line, "stroke-width": 1.2,
       }, svg);
     }
+    // 3b. the colour ring of each picked circle, over the dashes, so no rim is painted over
+    for (const it of SIX) {
+      if (!picked.has(it.id)) continue;
+      const c = [sx(it.at[0]), sy(it.at[1])];
+      S("circle", {
+        cx: c[0], cy: c[1], r: it.r * SIX_MAP.s, fill: "none",
+        stroke: it.colour, "stroke-width": 2.2,
+      }, svg);
+    }
+    // 4. the printed arrows and their readings, above the dashes so they always read whole
     SIX_GIVEN.forEach(printed);
-    S("circle", {
-      cx: tc[0], cy: tc[1], r: R, fill: t.colour, "fill-opacity": 0.05,
-      stroke: t.colour, "stroke-width": 2.2,
-    }, svg);
-    // the diameter: long dash at 62 degrees, which clears the printed 2 cm label
-    // sitting just above the short horizontal arrow
-    if (mode !== "r") {
-      const da = 62 * DEG;
-      seg(svg, tc[0] - R * Math.cos(da), tc[1] - R * Math.sin(da), tc[0] + R * Math.cos(da), tc[1] + R * Math.sin(da), t.colour, { dash: "13 7", width: 2.6 });
-    }
-    // the radius: short dash, centre to rim. On the circle whose diameter the page
-    // already prints (D), a radius leaning up-left would cross that label, so it
-    // leans down-left instead.
-    if (mode !== "d") {
-      const ra = (mode === "r" ? 45 : 208) * DEG;
-      seg(svg, tc[0], tc[1], tc[0] + R * Math.cos(ra), tc[1] + R * Math.sin(ra), t.colour, { dash: "6 5", width: 2.4 });
-    }
-    dot(svg, tc[0], tc[1], t.colour);
-    // badges and their leaders last, on top of every rim
+    // 5. badges and their leaders, on top of every rim
     for (const it of SIX) {
       const b = [sx(it.badge[0]), sy(it.badge[1])];
+      const on = picked.has(it.id);
       lead(it);
       S("circle", {
-        cx: b[0], cy: b[1], r: BADGE_R, fill: it.id === pick ? it.colour : "#fff",
-        stroke: it.id === pick ? it.colour : C.line, "stroke-width": 1.6,
+        cx: b[0], cy: b[1], r: BADGE_R, fill: on ? it.colour : "#fff",
+        stroke: on ? it.colour : C.line, "stroke-width": 1.6,
       }, svg);
       T(svg, b[0], b[1] + 6, it.id, {
         "font-size": 16, "font-weight": 700, "text-anchor": "middle",
-        fill: it.id === pick ? "#fff" : C.line,
+        fill: on ? "#fff" : C.line,
       });
     }
-    // The centre marks go on top of everything, at one size, so none is hidden by an
-    // arrow or by the target's own highlight.
+    // 6. the centre marks last, so no arrow and no highlight hides one
     for (const it of SIX) {
       const c = [sx(it.at[0]), sy(it.at[1])];
       S("circle", {
-        cx: c[0], cy: c[1], r: it.id === pick ? 6 : 5,
+        cx: c[0], cy: c[1], r: picked.has(it.id) ? 6 : 5,
         fill: it.colour, stroke: "#fff", "stroke-width": 1.6,
       }, svg);
     }
-    const keys = [];
-    if (mode !== "d") keys.push(key(t.colour, "6 5", `r = ${fmt(SIX_CM[t.id])} cm 半徑`));
-    if (mode !== "r") keys.push(key(t.colour, "13 7", `d = ${fmt(2 * SIX_CM[t.id])} cm 直徑`));
+    // 7. the toggle row's state: picked = the circle's colour and white letter
+    for (const it of SIX) {
+      const b = btns.get(it.id);
+      const on = picked.has(it.id);
+      b.style.background = on ? it.colour : "#fff";
+      b.style.borderColor = on ? it.colour : C.line;
+      b.style.color = on ? "#fff" : C.line;
+      b.style.fontWeight = "700";
+    }
+    allBtn.textContent = picked.size === SIX.length ? "清除" : "全選";
+    // 8. legend and reading, all of it outside the figure
+    const keys = [key(C.line, "6 5", "短虛線＝半徑 r"), key(C.line, "13 7", "長虛線＝直徑 d")];
+    for (const id of ids) {
+      const it = SIX.find((x) => x.id === id);
+      const cm = SIX_CM[id];
+      keys.push(H("span", {
+        style: `display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid ${it.colour};color:${it.colour}`,
+      }, [`${id}：r ${fmt(cm)} cm、d ${fmt(2 * cm)} cm`]));
+    }
     keyRow.replaceChildren(...keys);
-    out.set(
-      mode === "r"
-        ? `d = ${fmt(2 * SIX_CM[t.id])}\\text{ cm},\\quad r = d \\div 2 = ${fmt(SIX_CM[t.id])}\\text{ cm}`
-        : `r = ${fmt(SIX_CM[t.id])}\\text{ cm},\\quad d = 2r = ${fmt(2 * SIX_CM[t.id])}\\text{ cm}`,
-      true,
-      `圓 ${t.id}：半徑 ${fmt(SIX_CM[t.id])} cm，直徑 ${fmt(2 * SIX_CM[t.id])} cm。圖是印刷頁那個六圓圖，點下面的字母逐個看。`,
-      { yes: mode === "r" ? "r = d ÷ 2" : "d = 2r" },
-    );
-  };
+    if (n === 0) {
+      out.set("\\phantom{x}", null, "未選圓形 — 點下面的字母選擇。");
+    } else if (n === 1) {
+      const it = SIX.find((x) => x.id === ids[0]);
+      const cm = SIX_CM[it.id];
+      const mode = modeOf(it.id);
+      out.set(
+        mode === "r"
+          ? `d = ${fmt(2 * cm)}\\text{ cm},\\quad r = d \\div 2 = ${fmt(cm)}\\text{ cm}`
+          : `r = ${fmt(cm)}\\text{ cm},\\quad d = 2r = ${fmt(2 * cm)}\\text{ cm}`,
+        true,
+        `圓 ${it.id}：半徑 ${fmt(cm)} cm，直徑 ${fmt(2 * cm)} cm。拖「角度」轉動兩條虛線；字母可同時選幾個圓，選得少會加一層淡色。`,
+        { yes: mode === "r" ? "r = d ÷ 2" : "d = 2r" },
+      );
+    } else {
+      out.set("d = 2r", true, `已選 ${n} 個圓。轉動直徑，長度不變：d 永遠 = 2r。`, { yes: "d = 2r" });
+    }
+  }
 
-  root.append(buttonRow(SIX.map((it) => [it.id, () => { pick = it.id; again(); }])));
+  root.append(btnRow);
   again();
 }
 
