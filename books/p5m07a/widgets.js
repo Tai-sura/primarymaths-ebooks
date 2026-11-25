@@ -76,17 +76,19 @@ function circleParts(root, card) {
     dot(svg, x1, y1, C.green);
 
     /* Radius and diameter are collinear, so the only direction clear of both is the normal to
-     * that line. The two length labels go on the upper side of it, the centre's name on the
-     * lower side, which keeps every pair apart for all 360 degrees. */
+     * that line. The length labels ride that normal, the centre's name rides the opposite side,
+     * and each grows away from the line (anchor by the normal's x), which keeps every label off
+     * the drawn lines and off the other labels for all 360 degrees. */
     let nx = -uy, ny = ux;
     if (ny > 0) { nx = -nx; ny = -ny; }
     const size = { class: "g-lab", "font-size": 14, "font-weight": 700 };
+    const anchorFor = (v) => (v > 0.2 ? "start" : v < -0.2 ? "end" : "middle");
     T(svg, cx + ux * R * 0.5 + nx * 22, cy + uy * R * 0.5 + ny * 22 + 5, "半徑 Radius",
-      { ...size, fill: C.blue, "text-anchor": "middle" });
+      { ...size, fill: C.blue, "text-anchor": anchorFor(nx) });
     T(svg, cx - ux * R * 0.5 + nx * 22, cy - uy * R * 0.5 + ny * 22 + 5, "直徑 Diameter",
-      { ...size, fill: C.green, "text-anchor": "middle" });
-    T(svg, cx - nx * 28, cy - ny * 28 + 5, "圓心 Centre",
-      { ...size, fill: C.ink, "text-anchor": "middle" });
+      { ...size, fill: C.green, "text-anchor": anchorFor(nx) });
+    T(svg, cx - nx * 26, cy - ny * 26 + 5, "圓心 Centre",
+      { ...size, fill: C.ink, "text-anchor": anchorFor(-nx) });
 
     // the circumference's name sits above the arc, clear of the rim (the arc is always up-left)
     T(svg, 200, 48, "圓周 Circumference",
@@ -170,13 +172,14 @@ function lineOrDiameter(root, card) {
     seg(svg, cx - hw, y, cx + hw, y, through ? C.green : C.amber, { width: 3 });
     dot(svg, cx, cy);
     T(svg, cx - 16, cy - 8, "O", { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.ink });
-    // A line near the top of the circle has no room above it: the label goes under the line and to
-    // the right of the dotted distance line, so neither the rim nor the reading is crossed; the
-    // reading itself sits on the other side of that line.
+    // The label is a callout at the right end of the line, just outside the rim: the line always
+    // ends on the rim, so this stays outside the circle at every distance and never crosses the
+    // dotted distance line (whose reading sits on its other side).
     if (through) {
-      T(svg, cx + 36, cy - 10, "直徑", { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.green });
+      T(svg, cx + R + 12, cy + 5, "直徑",
+        { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.green });
     } else {
-      T(svg, cx + 12, y + 20, "線段 line segment",
+      T(svg, cx + hw + 12, y + 5, "線段 line segment",
         { class: "g-lab", "font-size": 15, "font-weight": 700, fill: C.amber });
     }
     if (!through) {
