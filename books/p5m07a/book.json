@@ -884,6 +884,21 @@
       }
     }
   },
+  "media": [
+    {
+      "page": 2,
+      "region": [
+        40,
+        130,
+        546,
+        346
+      ],
+      "scene": "p5m07a:CircleBasics",
+      "src": "media/circles-basics.mp4",
+      "poster": "media/circles-basics-poster.png",
+      "title": "The parts of a circle: Centre, Circumference, Radius, Diameter"
+    }
+  ],
   "answerStamps": [
     "q1",
     "q2",

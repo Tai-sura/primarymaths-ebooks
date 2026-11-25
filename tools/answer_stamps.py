@@ -226,6 +226,7 @@ def main():
     for old in out_dir.glob("*.png"):
         old.unlink()
     made = 0
+    trimmed = []
     for page in layout["pages"]:
         qs = page["questions"]
         live = [q for q in qs if q["id"] in wanted]
@@ -267,10 +268,25 @@ def main():
                 # plus a construction drawing.
                 specs = pinned_box if isinstance(pinned_box[0], list) else [pinned_box]
             elif boxes:
-                specs = [[min(b[0] for b in boxes) - MARGIN,
-                          min(b[1] for b in boxes) - MARGIN,
-                          max(b[2] for b in boxes) + MARGIN,
-                          max(b[3] for b in boxes) + MARGIN]]
+                # One stamp per answer mark, not one rectangle round them all: the
+                # rectangle between two answers also holds the printed words, and
+                # drawing those a second time is the ghost the teacher sees. Blobs
+                # are joined only when they touch (letters of one word, a box round
+                # a word); a printed gap splits them.
+                boxes = sorted(boxes, key=lambda b: (round(b[1] / 6), b[0]))
+                groups = []
+                for b in boxes:
+                    for g in groups:
+                        if (b[0] <= max(x[2] for x in g) + 9 and b[2] >= min(x[0] for x in g) - 9
+                                and b[1] <= max(x[3] for x in g) + 6 and b[3] >= min(x[1] for x in g) - 6):
+                            g.append(b)
+                            break
+                    else:
+                        groups.append([b])
+                specs = [[min(b[0] for b in g) - MARGIN, min(b[1] for b in g) - MARGIN,
+                          max(b[2] for b in g) + MARGIN, max(b[3] for b in g) + MARGIN]
+                         for g in groups]
+                specs.sort(key=lambda s: (round(s[1]), s[0]))
             else:
                 continue
             stamps = []
@@ -328,12 +344,10 @@ def main():
                                     best = (hit, dy, dx)
                         _, dy, dx = best
                         parr = np.roll(np.roll(parr, dy, axis=0), dx, axis=1)
-                        # Only dense print is dropped. A thin printed box edge round a
-                        # boxed answer must not take the digits with it, so the test is
-                        # how much ink sits in a 9 px neighbourhood, not one pixel.
-                        from scipy.ndimage import uniform_filter
-                        dense = uniform_filter((parr < 190).astype("float32"), size=9)
-                        alpha[(red <= 12) & (dense >= 0.35)] = 0
+                        # Remove the print only where the page has ink at the same
+                        # pixel after that alignment: a thin arc or a rule then stops
+                        # ghosting, while a boxed digit (blank paper under it) is kept.
+                        alpha[(red <= 12) & (parr < 200)] = 0
                 img = img.convert("RGBA")
                 img.putalpha(Image.fromarray(alpha))
                 name = f"p{page['page']:02d}_{q['id']}{'' if k == 0 else str(k + 1)}.png"
@@ -355,6 +369,10 @@ def main():
     big = [(q["id"], round(q["stamps"][0]["rect"][3] - q["stamps"][0]["rect"][1], 1), round(q["stamps"][0]["rect"][2] - q["stamps"][0]["rect"][0], 1))
            for q in stamped if (q["stamps"][0]["rect"][3] - q["stamps"][0]["rect"][1] > 40 or q["stamps"][0]["rect"][2] - q["stamps"][0]["rect"][0] > 320)]
     print(f"{book_id}: {made} stamps written to {out_dir}")
+    if trimmed:
+        print("  large printed-ink trims (check these stamps still show their answer):")
+        for nm, n in sorted(trimmed, key=lambda t: -t[1])[:6]:
+            print(f"    {nm}: {n} px of printed ink dropped")
     if missing:
         print("no red answer found for:", " ".join(missing))
     if big:

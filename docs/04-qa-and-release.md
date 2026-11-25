@@ -70,6 +70,14 @@ python -X utf8 tools/qa/check_cuts.py <id>
 
 `extract_pages.py` opens a page by inserting blank space at each question's `region[3]` (`growSheet` in `engine/viewer/answers.js` cuts across the **whole page width**). `check_cuts.py` maps every cut line back to the page JPEG and fails when any column of that line still carries printed ink — a cut through the bottom edge of a printed answer box or through the lower arc of a figure shows up as a broken shape on screen, and no button check would catch it. Stamp questions are skipped (their answer is drawn over the page). A book that fails needs its `region[3]` moved to a row that is blank across the full width, not just under the answer column.
 
+For a book with stamped answers, the stamps themselves are checked against the ANS page they came from:
+
+```powershell
+python -X utf8 tools/qa/check_stamps.py <id>
+```
+
+Every stamp is cut from the ANS scan and then trimmed so that printed ink the QUE page already shows is not drawn a second time. `check_stamps.py` re-reads the ANS page and compares: **one red pixel short is a FAIL**, because red is the answer and it is never trimmed. Black ink the trim dropped that landed on paper the page leaves blank is a WARN above 1 % of that stamp's black ink; those must be cleared one by one in `tools/qa/stamp_erase_allow.json` with a reason and a date (a boxed answer printed in black sits close to its box's rules, so an over-eager trim shaves a stroke and only the teacher would notice). The density constant is fixed at 0.35 — a looser value shaves the top off a boxed "2".
+
 Then check the printed page numbers, because a clean text layer does not prove a folio is visible:
 
 ```powershell
@@ -104,6 +112,38 @@ node check_boards.mjs <id> [q1 q5 ...]
 ```
 
 It draws every board with all its steps showing and reports handwriting that overlaps other handwriting, is crossed by a table rule, or runs off the board. Open the screenshots in `books/<id>/reference/boards/`: rings and braces must not cut through numbers, and labels must not sit on bar edges.
+
+## 2b. Display faults: why they slipped through, and the gate for each
+
+Every fault below reached a live book while `check_book` was green. They are not
+random: each one broke an assumption that a tool and the engine did not share.
+This table is the register — when a new display fault appears, add its row and
+the gate that would have caught it, then add that gate to the list above.
+
+| Symptom the teacher saw | Root cause | Assumption that broke | Gate now |
+| --- | --- | --- | --- |
+| Play button on top of the red answer | `answer_stamps.py` cut the stamps *after* `extract_pages.py` had placed the Play, so nothing knew the answer was there | "the answer is not on the page when the button is placed" | `nudge_plays()` + `check_answer_chips.py` |
+| Play on printed text or a figure | `play_spot()` measured the answer column only | "blank under the answer column is blank on the page" | `play_spot()` pixel test + `check_answer_chips.py` |
+| Step-button strip on a figure | the strip is placed at the answer card's right edge, so a region that runs over a figure drags the strip onto it | "a region never covers printed ink" | narrowed `region`, `ctlAt` for the hard cases, `measure_ctl.mjs` |
+| A printed answer box or a circle cut into two | `growSheet()` inserts the band across the **whole page width**, while the cut line was chosen from the answer column only | "a row blank under the answer is blank across the page" | `check_cuts.py` (10 lines in p5m07a) |
+| Printed table rule / figure hidden under a white rectangle | stamps were saved as RGB with an opaque white background | "a stamp is only its answer ink" | alpha cut-out (white → transparent) |
+| Printed words or arcs drawn twice ("aand", double circle) | the crop is a rectangle round the answer, and the ANS scan sits a few points off the QUE scan | "the stamp holds only what the page lacks" | ANS↔QUE alignment + trim of dense print the page already has (`answer_stamps.py`) |
+| A boxed answer lost a stroke | the trim window reached the printed box edge beside the digits | "ink near printed ink is print" | density test (9 px, ≥35%) + red ink never trimmed; the tool prints how much black it removed where the page is blank |
+| Table row's Play in the header, other rows aligned | a stamp's right edge sat exactly on the measured spot, so the nudge pushed the button up and shrank it | "a pinned spot stays pinned" | `playAt` pinned in `book.json` + `check_play.mjs` |
+| Stamped answers missing on the live site | `extract_pages.py` rewrites `layout.json` without stamps; a build ran in that window | "the layout always carries its stamps" | `build_deploy.ps1` throws when `answerStamps` is listed but the layout has none |
+| A widget's labels cross its lines, or three labels stack on a tiny circle | the widget's own layout is not measured by any tool — the harness is eyeballed | "a widget is checked like a page" | none yet; proposed: measure each label box against the lines and the other labels, WARN under 3 px |
+| A Play on blank paper that belongs to no line | the button was measured as "blank here" without asking which line it belongs to (hw7 sat between two lines) | "blank paper is enough" | `playAt` within 70 pt of `blankAt` and ≤18 pt off its own line, checked by `check_play` + `check_answer_chips` |
+| A measured spot with no button on it | the stamp branch returned before drawing the graphic button, so `graphicAt` existed and q1/q11 stayed dormant | "measured means drawn" | `check_play` taps every `.ans-play[data-act="graphic"]` and fails when the drawer does not open |
+| The gate itself is wrong | `check_play` selected `.ans-play`, so the amber widget button was judged against the Play's fill and glyph | "one selector covers the controls" | a new button type needs the QA selector updated in the same change (`:not(.ans-graphic)`) |
+
+Two habits keep the register short:
+
+1. **Measure what the engine draws, not what the tool assumes.** If the engine
+   works across the full page (band insert, card right edge, strip height), the
+   measurement must too. When they disagree, the engine wins.
+2. **Sweep the whole book after fixing one instance.** The same fault shows up
+   on every question built the same way (the four homework rows, the six table
+   rows). Fix one, re-render all pages, and look at every sheet before shipping.
 
 ## 3. Visual pass (screenshots)
 

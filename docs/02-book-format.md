@@ -127,6 +127,28 @@ Re-run `python tools/extract_pages.py <id>` after any `book.json → extract` ch
 - `questions[]`: `{ id, label, section, anchor: [y0, y1], region: [x0, y0, x1, y1], square?, ring?, space? }`;
 - `text[]`: printed rows `[y0, y1, [[x0, x1, "word"], …]]`. The highlighter snaps to these, and review links search them for `q` phrases.
 
+### What the reader draws, and when each piece is made
+
+Display faults on this site have almost all come from one part being measured
+while another part was not yet known. Keep this order in mind:
+
+| Piece | Made by | Drawn by | What it must clear |
+| --- | --- | --- | --- |
+| `region` | `extract_pages.py` | `answers.js` | printed ink at the cut line **across the whole page width** |
+| `playAt` / `playSize` | `play_spot()` in `extract_pages.py` | `.ans-play` | printed ink, and the red answer stamp |
+| `graphicAt` / `graphicSize` | second `play_spot()` call, Play box in `taken` | `.ans-play.ans-graphic` | printed ink, the stamp, and the Play |
+| the step strip | `placeCtl()` in `answers.js`, from the card's right edge | `.ctl` | printed ink beside the region |
+| stamps | `answer_stamps.py`, **after** the layout | `.ans-stamp` | nothing: they carry only ink the printed page lacks |
+
+Two rules follow:
+
+1. `extract_pages.py` rewrites `layout.json` **without** the stamps; always run
+   `tools/answer_stamps.py <id>` after it, and never build in between (the build
+   refuses a book whose `answerStamps` list has no stamps in the layout).
+2. A stamp is cut from the ANS scan and pasted on the QUE scan. The two scans are
+   a few points apart, so the stamp keeps only ink the QUE page does not already
+   print; red ink is never trimmed because that is the answer.
+
 ---
 
 ## solutions.js

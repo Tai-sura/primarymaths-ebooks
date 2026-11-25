@@ -1,0 +1,46 @@
+{
+  "p05_q242": {
+    "why": "the red box round 200 sits over a printed rule; the rule is on the page and the answer 200 is printed inside the box on blank paper",
+    "date": "2026-11-25"
+  },
+  "p05_q28": {
+    "why": "the red box round AOC sits over a printed rule; the letters AOC are printed inside the box on blank paper",
+    "date": "2026-11-25"
+  },
+  "p05_q32": {
+    "why": "same box as q28 - the printed rule under it is dropped, the answer 2 is kept",
+    "date": "2026-11-25"
+  },
+  "p03_q5": {
+    "why": "the crop holds the printed sentence around the boxed answer OA, OC, OD; the page prints it, and the boxed words sit on blank paper",
+    "date": "2026-11-25"
+  },
+  "p03_q52": {
+    "why": "a printed rule under the boxed answer of the same question; the page prints the rule",
+    "date": "2026-11-25"
+  },
+  "p10_hw5": {
+    "why": "the crop is the whole construction figure; the black arcs it drops are the printed circle, and every construction line is red and untouched",
+    "date": "2026-11-25"
+  },
+  "p10_hw62": {
+    "why": "the answer 2.5 is red; the black dropped is the printed 'cm' beside it, which the page prints itself",
+    "date": "2026-11-25"
+  },
+  "p10_hw63": {
+    "why": "the crop holds the printed word inside the red oval ('radius'); the oval is red and the page prints the word",
+    "date": "2026-11-25"
+  },
+  "p10_hw64": {
+    "why": "the crop holds the printed word inside the red oval ('shorter'); the oval is red and the page prints the word",
+    "date": "2026-11-25"
+  },
+  "p10_hw7": {
+    "why": "the crop holds the printed 'can / cannot' line of both parts; the page prints the words, the chosen one is circled in red and untouched",
+    "date": "2026-11-25"
+  },
+  "p10_hw72": {
+    "why": "the crop holds the printed word inside the red oval ('cannot'); the oval is red and the page prints the word",
+    "date": "2026-11-25"
+  }
+}

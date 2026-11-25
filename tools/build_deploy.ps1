@@ -65,10 +65,15 @@ foreach ($d in @("tools", "docs", ".cursor")) {
   $from = Join-Path $Src $d
   if (Test-Path $from) { Copy-Item $from (Join-Path $Dst $d) -Recurse }
 }
-foreach ($junk in @("tools\qa\node_modules", "tools\__pycache__", "tools\qa\__pycache__", "tools\qa\_widgetshots.mjs")) {
+foreach ($junk in @("tools\qa\node_modules", "tools\__pycache__", "tools\qa\__pycache__")) {
   $p = Join-Path $Dst $junk
   if (Test-Path $p) { Remove-Item $p -Recurse -Force }
 }
+# A `_`-prefixed script is a scratch harness someone ran once for a screenshot or
+# a pixel probe; it must never reach the public repo (one such file shipped the
+# source of a diagnostic that only made sense on the author's machine).
+Get-ChildItem (Join-Path $Dst "tools") -Recurse -File -Include "_*.py", "_*.mjs", "_*.html" -ErrorAction SilentlyContinue |
+  Remove-Item -Force -ErrorAction SilentlyContinue
 
 # every requested book, without source PDFs or teacher reference crops
 foreach ($id in $Books) {
