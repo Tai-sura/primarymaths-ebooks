@@ -3,17 +3,17 @@
  * graphic button. House rules: docs/03-authoring-style.md §5.
  *
  * Six pictures, each attached to the questions that ask the same thing:
- *   circleParts      q1  q2          Centre / Circumference / Radius / Diameter,
+ *   circleParts      q1  q2          Center / Circumference / Radius / Diameter,
  *                                    named the way the concept page names them
  *   radiusDiameter   q10 q11 q13     d = 2r, r = d ÷ 2
  *   sixCircles       q18–q23         the printed six-circle figure (A–F) redrawn to
  *                                    scale; one circle is coloured and dashed per question
- *   lineOrDiameter   q12 q34         a line through the centre is a diameter;
+ *   lineOrDiameter   q12 q34         a line through the center is a diameter;
  *                                    any other line across the circle is just a line segment
  *   circlesInRow     q36 hw12        n equal circles in a row: AB spans (n − 1) diameters
- *   overlapCircles   q40             two circles through each other's centres: PQ = 3r
+ *   overlapCircles   q40             two circles through each other's centers: PQ = 3r
  *
- * Every straight line across a circle is a line segment here; only the one through the centre
+ * Every straight line across a circle is a line segment here; only the one through the center
  * is a diameter. (The course does not use the older word for the others.)
  *
  * The printed page is never touched: the engine only draws a small graphic
@@ -78,7 +78,7 @@ function circleParts(root, card) {
     dot(svg, x1, y1, C.green);
 
     /* Radius and diameter are collinear, so the only direction clear of both is the normal to
-     * that line. The length labels ride that normal, the centre's name rides the opposite side,
+     * that line. The length labels ride that normal, the center's name rides the opposite side,
      * and each grows away from the line (anchor by the normal's x), which keeps every label off
      * the drawn lines and off the other labels for all 360 degrees. */
     let nx = -uy, ny = ux;
@@ -89,7 +89,7 @@ function circleParts(root, card) {
       { ...size, fill: C.blue, "text-anchor": anchorFor(nx) });
     T(svg, cx - ux * R * 0.5 + nx * 22, cy - uy * R * 0.5 + ny * 22 + 5, "直徑 Diameter",
       { ...size, fill: C.green, "text-anchor": anchorFor(nx) });
-    T(svg, cx - nx * 26, cy - ny * 26 + 5, "圓心 Centre",
+    T(svg, cx - nx * 26, cy - ny * 26 + 5, "圓心 Center",
       { ...size, fill: C.ink, "text-anchor": anchorFor(-nx) });
 
     // the circumference's name sits above the arc, clear of the rim (the arc is always up-left)
@@ -156,7 +156,7 @@ function radiusDiameter(root, card, start = 9) {
   again();
 }
 
-/** q12, q34: only a line through the centre is a diameter; any other is just a line segment. */
+/** q12, q34: only a line through the center is a diameter; any other is just a line segment. */
 function lineOrDiameter(root, card) {
   root.append(question(card));
   const svg = scene(560, 320);
@@ -164,7 +164,7 @@ function lineOrDiameter(root, card) {
   const cx = 280, cy = 160, R = 120;
 
   const again = () => {
-    const d = offSlider.get();               // distance from the centre, cm
+    const d = offSlider.get();               // distance from the center, cm
     const y = cy - (d / CM_R) * R;
     const half = Math.sqrt(Math.max(0, CM_R * CM_R - d * d));
     clear(svg);
@@ -213,10 +213,13 @@ function lineOrDiameter(root, card) {
 
 /* ------------------------------------------------------------------ *
  * The questions that ask "how far is it across several circles".
- * q36 (four circles), hw12 (five circles): AB joins the first centre
- * to the last, so it spans (n − 1) diameters.                         *
+ * q36: four equal circles, each one through the next circle's center, so
+ * the center-to-center distance is r and AB (leftmost point to rightmost
+ * point) spans 3r + d = 5r.
+ * hw12: five circles just touching, so the center distance is d and AB
+ * (first center to last center) spans (n − 1) diameters.               *
  * ------------------------------------------------------------------ */
-function circlesInRow(root, card, { count = 4, start = 24 } = {}) {
+function circlesInRow(root, card, { count = 4, start = 24, overlap = false } = {}) {
   root.append(question(card));
   const svg = scene(560, 260);
   root.append(svg);
@@ -228,26 +231,37 @@ function circlesInRow(root, card, { count = 4, start = 24 } = {}) {
     // so pulling the slider changes the picture, not just the reading.
     const k = 0.55 + (0.45 * (r - MIN_R)) / (MAX_R - MIN_R);
     const R = ((500 / (2 * count)) * k);
+    const gap = overlap ? R : 2 * R;
+    const width = (count - 1) * gap + 2 * R;
     clear(svg);
-    const x0 = 280 - (count * R);
+    const x0 = 280 - width / 2;
+    // Circles first, then every dash and center dot on top of them: with gap = R the next
+    // circle's fill covers the whole dash and half of the previous center dot.
     for (let i = 0; i < count; i++) {
-      const cx = x0 + R + i * 2 * R;
+      const cx = x0 + R + i * gap;
       S("circle", { cx, cy: y, r: R, fill: C.blueSoft, stroke: C.ink, "stroke-width": 2 }, svg);
-      dot(svg, cx, y);
-      if (i < count - 1) {
-        const nx = cx + 2 * R;
-        seg(svg, cx, y, nx, y, C.green, { dash: "6 4", width: 2 });
-      }
     }
-    const xa = x0 + R, xb = x0 + R + (count - 1) * 2 * R;
+    for (let i = 0; i < count; i++) {
+      const cx = x0 + R + i * gap;
+      if (i < count - 1) {
+        seg(svg, cx, y, cx + gap, y, C.green, { dash: "6 4", width: 2 });
+      }
+      dot(svg, cx, y);
+    }
+    const xa = overlap ? x0 : x0 + R;
+    const xb = overlap ? x0 + width : x0 + R + (count - 1) * gap;
     seg(svg, xa, y + R + 26, xb, y + R + 26, C.ink, { width: 2 });
     for (const x of [xa, xb]) seg(svg, x, y + R + 21, x, y + R + 31, C.ink, { width: 2 });
     T(svg, (xa + xb) / 2 - 22, y + R + 20, "AB", { class: "g-lab", "font-size": 16, "font-weight": 700, fill: C.ink });
-    lab(svg, xa + 6, y - R - 10, `2r = ${2 * r} cm`, C.green);
+    lab(svg, x0 + R + 6, y - R - 10, overlap ? `r = ${r} cm` : `2r = ${2 * r} cm`, C.green);
     out.set(
-      `\\text{AB} = ${count - 1} \\times ${2 * r} = ${(count - 1) * 2 * r}\\text{ cm}`,
+      overlap
+        ? `\\text{AB} = ${count - 1}r + d = ${(count - 1) * r} + ${2 * r} = ${(count - 1) * r + 2 * r}\\text{ cm}`
+        : `\\text{AB} = ${count - 1} \\times ${2 * r} = ${(count - 1) * 2 * r}\\text{ cm}`,
       true,
-      `${count} 個圓排成一行，圓心同圓心之間有 ${count - 1} 個直徑；每個直徑 ${2 * r} cm。`,
+      overlap
+        ? `${count} 個圓相同，每個圓經過下一個圓的圓心，所以相鄰圓心相距 ${r} cm（即一個半徑）。AB 由第一個圓最左點到最後一個圓最右點 = ${count - 1}r + d = ${(count - 1) * r} + ${2 * r} = ${(count - 1) * r + 2 * r} cm。`
+        : `${count} 個圓排成一行，圓心同圓心之間有 ${count - 1} 個直徑；每個直徑 ${2 * r} cm。`,
       { yes: "AB" },
     );
   };
@@ -260,7 +274,7 @@ function circlesInRow(root, card, { count = 4, start = 24 } = {}) {
   again();
 }
 
-/* q40: two circles, each through the other's centre. */
+/* q40: two circles, each through the other's center. */
 function overlapCircles(root, card) {
   root.append(question(card));
   const svg = scene(560, 340);
@@ -282,7 +296,7 @@ function overlapCircles(root, card) {
     for (const [x1, y1, x2, y2] of [[ax, cy, top.x, top.y], [top.x, top.y, bx, cy], [bx, cy, bot.x, bot.y], [bot.x, bot.y, ax, cy]]) {
       seg(svg, x1, y1, x2, y2, C.amber, { width: 2.5 });
     }
-    // AB is one radius: A and B are each R from the other's centre
+    // AB is one radius: A and B are each R from the other's center
     seg(svg, ax, cy, bx, cy, C.green, { width: 3, arrow: true });
     dot(svg, ax, cy); dot(svg, bx, cy);
     lab(svg, ax - 20, cy - 8, "A");
@@ -315,9 +329,9 @@ function overlapCircles(root, card) {
  * ------------------------------------------------------------------ */
 
 // Geometry measured on books/p5m07a/pages/p04.jpg (3 px per pt): every rim sampled at
-// 0.25° and fitted through the ink centre (max deviation 1.05 px), badges and elbow
+// 0.25° and fitted through the ink center (max deviation 1.05 px), badges and elbow
 // leaders measured the same way. The print is drawn to scale at 14.223 pt/cm —
-// A 3, B 2, C 5, D 1.5, E 3, F 6 cm — and B is concentric with C (centres 0.12 pt apart).
+// A 3, B 2, C 5, D 1.5, E 3, F 6 cm — and B is concentric with C (centers 0.12 pt apart).
 const SIX = [
   { id: "A", r: 42.69, at: [194.39, 553.38], badge: [205.05, 496.08], lead: [[195.0, 497.5], [185.0, 497.5], [185.0, 508.5]], colour: C.blue },
   { id: "B", r: 28.44, at: [127.61, 576.83], badge: [96.50, 537.31], lead: [[106.3, 537.7], [124.5, 537.7], [124.5, 549.7]], colour: C.green },
@@ -380,7 +394,7 @@ function dashFor(len, on, off) {
  *
  * Drawing order is the reader's rule, topmost last: the printed rims, the picked circles'
  * wash and colour ring, the two dashed lengths, the printed arrows with their haloed readings,
- * the badges with their leaders, and the centre marks. So a dashed line may pass under a
+ * the badges with their leaders, and the center marks. So a dashed line may pass under a
  * printed arrow or its "3 cm" but never over it, and every printed length stays whole at any
  * angle. Each dashed length ends on ink at both ends: its dash period is solved from its own
  * length (dashFor), so the last dash meets the rim instead of stopping in a gap.
@@ -558,7 +572,7 @@ function sixCircles(root, card, start = "A", only = "both") {
         fill: on ? "#fff" : C.line,
       });
     }
-    // 6. the centre marks last, so no arrow and no highlight hides one
+    // 6. the center marks last, so no arrow and no highlight hides one
     for (const it of SIX) {
       const c = [sx(it.at[0]), sy(it.at[1])];
       S("circle", {
@@ -631,7 +645,7 @@ const REGISTRY = {
   q12: (root) => lineOrDiameter(root, "AD 穿過圓心，OC 只是半徑，BE 是不是直徑？"),
   q34: (root) => lineOrDiameter(root, "AY 不穿過圓心。它還算不算直徑？"),
 
-  q36: (root) => circlesInRow(root, "四個圓排成一行，相鄰圓心相距 24 cm。AB 有多長？", { count: 4, start: 12 }),
+  q36: (root) => circlesInRow(root, "四個相同的圓，直徑 24 cm。圖中每個圓都經過下一個圓的圓心。AB 有多長？", { count: 4, start: 12, overlap: true }),
   hw12: (root) => circlesInRow(root, "五個等圓，每個半徑 12 cm。AB 有多長？", { count: 5, start: 12 }),
 
   q40: (root) => overlapCircles(root, "兩個圓互相穿過對方的圓心，PQ = 48 cm。求半徑與菱形周界。"),

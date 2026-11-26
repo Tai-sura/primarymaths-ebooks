@@ -343,7 +343,7 @@
         "page": 10,
         "label": "5",
         "section": "homework",
-        "note": "Draw two diameters AB and CD; a radius OE; a line segment FG off the centre"
+        "note": "Draw two diameters AB and CD; a radius OE; a line segment FG off the center"
       },
       {
         "id": "hw6",
@@ -399,7 +399,7 @@
         "page": 11,
         "label": "13",
         "section": "homework",
-        "note": "Two large + two small circles: perimeter of the trapezium of centres"
+        "note": "Two large + two small circles: perimeter of the trapezium of centers"
       },
       {
         "id": "hw14",
@@ -668,7 +668,7 @@
         ]
       },
       "q36": {
-        "space": 113
+        "space": 124
       },
       "q37": {
         "space": 283
@@ -896,7 +896,7 @@
       "scene": "p5m07a:CircleBasics",
       "src": "media/circles-basics.mp4",
       "poster": "media/circles-basics-poster.png",
-      "title": "The parts of a circle: Centre, Circumference, Radius, Diameter"
+      "title": "The parts of a circle: Center, Circumference, Radius, Diameter"
     },
     {
       "page": 2,

@@ -16,8 +16,8 @@ export const SOLUTIONS = [
     boxes: [{
       steps: [
         t("Every diameter passes through the same point inside the circle."),
-        t("That point is the centre of the circle."),
-        m(`= ${U("\\text{centre}")}`),
+        t("That point is the center of the circle."),
+        m(`= ${U("\\text{center}")}`),
       ],
     }],
   },
@@ -25,7 +25,7 @@ export const SOLUTIONS = [
     id: "q2",
     boxes: [{
       steps: [
-        t("A line segment from the centre to any point on the circumference is a radius."),
+        t("A line segment from the center to any point on the circumference is a radius."),
         m(`= ${U("\\text{radius}")}`),
       ],
     }],
@@ -44,7 +44,7 @@ export const SOLUTIONS = [
     id: "q4",
     boxes: [{
       steps: [
-        t("The point marked in the middle of the circle is the centre."),
+        t("The point marked in the middle of the circle is the center."),
         m(`= ${U("O")}`),
       ],
     }],
@@ -53,7 +53,7 @@ export const SOLUTIONS = [
     id: "q5",
     boxes: [{
       steps: [
-        t("A radius joins the centre O to a point on the circumference."),
+        t("A radius joins the center O to a point on the circumference."),
         m(`= ${U("OA, OC, OD, OF")}`),
       ],
     }],
@@ -62,7 +62,7 @@ export const SOLUTIONS = [
     id: "q6",
     boxes: [{
       steps: [
-        t("The longest straight lines in a circle pass through the centre."),
+        t("The longest straight lines in a circle pass through the center."),
         t("These are AD and CF, and each of them is a diameter."),
         m(`= ${U("AD")} \\text{ and } ${U("CF")}; \\text{ they are } ${U("\\text{diameters}")}`),
       ],
@@ -72,7 +72,7 @@ export const SOLUTIONS = [
     id: "q7",
     boxes: [{
       steps: [
-        t("A line segment with both end points on the circumference, passing through the centre,"),
+        t("A line segment with both end points on the circumference, passing through the center,"),
         t("is a diameter."),
         m(`= ${U("\\text{diameter}")}`),
       ],
@@ -82,7 +82,7 @@ export const SOLUTIONS = [
     id: "q8",
     boxes: [{
       steps: [
-        t("All radii of the same circle join the centre to the circumference."),
+        t("All radii of the same circle join the center to the circumference."),
         m(`= \\text{the } ${U("\\text{same}")} \\text{ length}`),
       ],
     }],
@@ -109,13 +109,14 @@ export const SOLUTIONS = [
     id: "q11",
     boxes: [{
       steps: [
-        t("OR joins the centre O to R on the circumference, so OR is a radius."),
+        t("OR joins the center O to R on the circumference, so OR is a radius."),
         m(`\\text{(a) } = ${U("\\text{radius}")}`),
       ],
     }, {
       steps: [
-        t("QR passes through the centre O with both ends on the circumference."),
-        m(`\\text{(b) } = ${U("\\text{diameter}")}`),
+        t("QR passes through the center O with both ends on the circumference."),
+        m(`\\text{(b) } = ${U("\\text{diameters}")}`),
+        note("The answer book writes the plural diameters, as in \"all diameters have the same length\"; one such line on its own is a diameter."),
       ],
     }, {
       steps: [
@@ -129,7 +130,7 @@ export const SOLUTIONS = [
     id: "q12",
     boxes: [{
       steps: [
-        t("BE passes through the centre O, so BE is a diameter. ✓"),
+        t("BE passes through the center O, so BE is a diameter. ✓"),
         m(`\\text{(a) } = ${U("\\checkmark")}`),
       ],
     }, {
@@ -296,7 +297,7 @@ export const SOLUTIONS = [
     id: "q26",
     boxes: [{
       steps: [
-        t("The point marked in the middle of the circle is the centre."),
+        t("The point marked in the middle of the circle is the center."),
         m(`= ${U("O")}`),
       ],
     }],
@@ -305,7 +306,7 @@ export const SOLUTIONS = [
     id: "q27",
     boxes: [{
       steps: [
-        t("A radius joins the centre to the circumference."),
+        t("A radius joins the center to the circumference."),
         m(`= ${U("OA, OC, OF")}`),
       ],
     }],
@@ -314,7 +315,7 @@ export const SOLUTIONS = [
     id: "q28",
     boxes: [{
       steps: [
-        t("AC passes through the centre O with both ends on the circumference."),
+        t("AC passes through the center O with both ends on the circumference."),
         m(`= ${U("AC")}`),
       ],
     }],
@@ -352,9 +353,9 @@ export const SOLUTIONS = [
     id: "q33",
     boxes: [{
       steps: [
-        t("BD joins the centre of the large circle to the centre of a small circle,"),
+        t("BD joins the center of the large circle to the center of a small circle,"),
         m(`\\text{BD} = R + r = 24`),
-        t("AC joins the two small-circle centres and passes through B,"),
+        t("AC = AB + BC, where AB = R + r and BC = R (C is on the large circle),"),
         m(`\\text{AC} = (R + r) + R = 39`),
         m(`R = 39 - 24 = 15`),
         m(`\\text{(a) diameter} = 2 \\times 15 = ${U("30")} \\text{ cm}`),
@@ -371,8 +372,8 @@ export const SOLUTIONS = [
     id: "q34",
     boxes: [{
       steps: [
-        t("AX and CX are radii, so X is the centre; BX is also a radius."),
-        t("AY does not pass through the centre X, so AY is not a diameter."),
+        t("AX and CX are radii, so X is the center; BX is also a radius."),
+        t("AY does not pass through the center X, so AY is not a diameter."),
         m(`\\text{not correct} = ${U("B")}`),
       ],
     }],
@@ -392,10 +393,10 @@ export const SOLUTIONS = [
     id: "q36",
     boxes: [{
       steps: [
-        t("AB joins the centre of the first circle to the centre of the fourth."),
-        m(`\\text{4 circles} \\to 3 \\text{ gaps, each } 24 \\text{ cm}`),
-        m(`\\text{AB} = 3 \\times 24`),
-        m(`= ${U("72")} \\text{ cm} \\quad (B)`),
+        t("From the figure, each circle passes through the next circle's center, so the distance between neighboring centers is one radius (12 cm)."),
+        m(`d = 24 \\to r = 12`),
+        m(`\\text{AB} = 3r + d = 3 \\times 12 + 24 = ${U("60")} \\text{ cm} \\quad (C)`),
+        note("If the circles only touched and AB joined the first and last centers, AB = 72 cm (B)."),
       ],
     }],
   },
@@ -420,7 +421,7 @@ export const SOLUTIONS = [
     id: "q38",
     boxes: [{
       steps: [
-        t("F lies on AB, not on the circumference, so FG is not a radius."),
+        t("F lies on the chord EB, inside the circle, so FG is not a radius."),
         m(`\\text{not correct} = ${U("B")}`),
       ],
     }],
@@ -430,7 +431,7 @@ export const SOLUTIONS = [
     boxes: [{
       steps: [
         m(`\\text{side of square} = 12 \\div 4 = 3 \\text{ m}`),
-        t("The gardener stands at the centre, so the shortest walk is half a side."),
+        t("The gardener stands at the center, so the shortest walk is half a side."),
         m(`= 3 \\div 2 = ${U("1.5")} \\text{ m} \\quad (A)`),
       ],
     }],
@@ -439,7 +440,7 @@ export const SOLUTIONS = [
     id: "q40",
     boxes: [{
       steps: [
-        t("Each circle passes through the other's centre, so AB = r."),
+        t("Each circle passes through the other's center, so AB = r."),
         m(`\\text{PQ} = r + r + r = 48`),
         m(`r = 16 \\text{ cm}`),
       ],
@@ -476,7 +477,7 @@ export const SOLUTIONS = [
     id: "q43",
     boxes: [{
       steps: [
-        t("A, B and C are centres, so each side of the triangle is 2r."),
+        t("A, B and C are centers, so each side of the triangle is 2r."),
         m(`3 \\times 2r = 54`),
         m(`\\text{diameter} = 54 \\div 3`),
         m(`= ${U("18")} \\text{ cm}`),
@@ -513,9 +514,11 @@ export const SOLUTIONS = [
     id: "q46",
     boxes: [{
       steps: [
+        t("The small circle touches both the middle and the large circle, so OR = 8 − 2 = 6 and the middle radius is 6 − 2 = 4, giving OP = 4."),
         m(`\\text{large radius} = 8 \\text{ cm}`),
         m(`\\text{small diameter} = 8 \\div 2 = 4 \\text{ cm}`),
         m(`\\text{(a) small radius} = 4 \\div 2 = ${U("2")} \\text{ cm}`),
+        note("The question never gives the middle circle's radius. Both (b) 12 and (c) 16 depend on the unstated assumption that the small circle touches the middle circle and the large circle."),
       ],
     }, {
       steps: [
@@ -543,7 +546,7 @@ export const SOLUTIONS = [
     id: "hw2",
     boxes: [{
       steps: [
-        t("The diameter passes through the centre O and has both ends on the circumference."),
+        t("The diameter passes through the center O and has both ends on the circumference."),
         m(`= ${U("AC")}`),
       ],
     }],
@@ -552,7 +555,7 @@ export const SOLUTIONS = [
     id: "hw3",
     boxes: [{
       steps: [
-        t("A radius joins the centre O to a point on the circumference."),
+        t("A radius joins the center O to a point on the circumference."),
         m(`= ${U("OC, OD")} \\text{ (they are } ${U("\\text{radii}")} \\text{)}`),
       ],
     }],
@@ -561,7 +564,7 @@ export const SOLUTIONS = [
     id: "hw4",
     boxes: [{
       steps: [
-        t("C and D are on the circumference and O is the centre,"),
+        t("C and D are on the circumference and O is the center,"),
         t("so OC = OD and triangle CDO is isosceles."),
         m(`= ${U("D, O")}`),
       ],
@@ -573,7 +576,7 @@ export const SOLUTIONS = [
       steps: [
         t("(a) Draw AB through O, with A and B on the circle — a diameter."),
         t("(b) Draw another diameter CD through O, not on AB."),
-        t("(c) Draw OE from the centre to the circumference — a radius."),
+        t("(c) Draw OE from the center to the circumference — a radius."),
         t("(d) Draw FG with F and G on the circle, the line missing O."),
       ],
     }],
@@ -585,6 +588,7 @@ export const SOLUTIONS = [
         t("Measure the diameter AB and the radius OE from the figure."),
         m(`\\text{(a) AB} = ${U("5")} \\text{ cm}`),
         m(`\\text{OE} = ${U("2.5")} \\text{ cm}`),
+        note("On the A4 sheet the circle prints 4.57 × 4.59 cm (about 4.6), so measuring about 4.6 cm is normal; the official answer follows the answer book: 5 cm and 2.5 cm."),
       ],
     }, {
       steps: [
@@ -593,8 +597,8 @@ export const SOLUTIONS = [
       ],
     }, {
       steps: [
-        t("FG is a line segment that does not pass through the centre."),
-        t("A line segment that misses the centre is shorter than the diameter, so (c) FG is shorter than AB."),
+        t("FG is a line segment that does not pass through the center."),
+        t("A line segment that misses the center is shorter than the diameter, so (c) FG is shorter than AB."),
       ],
     }],
   },
