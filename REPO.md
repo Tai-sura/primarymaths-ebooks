@@ -64,12 +64,25 @@ sites must be ported, not assumed.
 |---|---|
 | `workspace\ebook-maths` | a clone whose `main` is an unrelated history (66 commits, no common ancestor with `origin/main`), with a few unpushed edits in `books/p5m07a`, `tools/extract_ans_refs.py` and `docs/06-layout-controls-and-media.md`. It is **frozen**: never push it, never merge it. Salvage single files onto a clean worktree when they are needed. |
 
-## 6. Docs and tools live here
+## 6. Docs and tools
 
-`docs/01-workflow.md` … `06-layout-controls-and-media.md`, `docs/chapters/` and `tools/`
-are **here**, and they are the shared process material for both subjects — the physics
-repository carries none of it (it carries only its own `tools/qa`). When working on a
-physics book, read the docs from this repository.
+`tools/` lives **here** and is the shared tooling; the physics repository carries only its
+own `tools/qa`, added 2026-11-27.
+
+`docs/01-workflow.md` … `06-layout-controls-and-media.md` are now carried by **both**
+repositories. The physics repository committed its own copy on 2026-11-27, taken from its
+local clone, which held the newer edits (the printed-figure rule, the physics-lead sign-off
+at Stage 0 and Stage 7). Only `03-authoring-style.md` was newer here, and that one was
+copied from this repository into that one.
+
+From now on the documents drift the same way `engine/` does: edit the copy you are working
+in, port as a patch only when the other site needs the change, and never overwrite a whole
+file from the other repository.
+
+`docs/chapters/` holds the notes for the maths books (jm*, m211-4, p5m07a). This repository
+also still carries chapter notes for four physics books (`jpfm08`, `phy11`, `spem02`,
+`phy06-force2`); since 2026-11-27 the physics repository holds them as well and is the copy
+to edit. They are left here rather than deleted.
 
 ## 7. Checks
 
