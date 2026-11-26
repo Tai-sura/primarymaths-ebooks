@@ -79,10 +79,19 @@ From now on the documents drift the same way `engine/` does: edit the copy you a
 in, port as a patch only when the other site needs the change, and never overwrite a whole
 file from the other repository.
 
-`docs/chapters/` holds the notes for the maths books (jm*, m211-4, p5m07a). This repository
-also still carries chapter notes for four physics books (`jpfm08`, `phy11`, `spem02`,
-`phy06-force2`); since 2026-11-27 the physics repository holds them as well and is the copy
-to edit. They are left here rather than deleted.
+`docs/chapters/` holds the notes for the maths books only (`jm*`, `m211-4`, `p5m07a`, plus
+the template). The four physics chapter notes (`jpfm08`, `phy11`, `spem02`,
+`phy06-force2`) were deleted from here on 2026-11-27; they live in the physics repository.
+
+`docs/topics/` carries the **maths** topic registry — `maths.json`, 176 topics and 371
+subtopics, imported from the official list on 2026-11-26 — with a `README.md` holding the
+level-1 table. `tools/check_topic.py` checks a book's `code` and `title` against it and
+loads only the registries present here, so the physics registry is never consulted.
+
+`consistency.md` was not copied either: it is a generated report over the old combined tree.
+Note that running the checker on `p5m07a` fails — its code is `P5 Maths 07`, and the
+official list has no such code (the P5 circles topic is `P508 Circles`). That is a known
+book-code issue in this repository, not a fault of the registry.
 
 ## 7. Checks
 

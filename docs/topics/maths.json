@@ -1,0 +1,5532 @@
+{
+  "source_file": "Maths Topics List(Update 6) (1).xlsx",
+  "imported": "2026-11-26",
+  "level1": [
+    {
+      "code": "CH1",
+      "sort_order": "1",
+      "name_en": "Number & Estimation",
+      "name_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "radar": "必修五軸",
+      "topic_count": "52"
+    },
+    {
+      "code": "CH2",
+      "sort_order": "2",
+      "name_en": "Algebra & Functions",
+      "name_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "radar": "必修五軸",
+      "topic_count": "26"
+    },
+    {
+      "code": "CH3",
+      "sort_order": "3",
+      "name_en": "Mensuration & Geometry",
+      "name_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "radar": "必修五軸",
+      "topic_count": "51"
+    },
+    {
+      "code": "CH4",
+      "sort_order": "4",
+      "name_en": "Coordinates & Trigonometry",
+      "name_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "radar": "必修五軸；小學隱藏",
+      "topic_count": "14"
+    },
+    {
+      "code": "CH5",
+      "sort_order": "5",
+      "name_en": "Statistics & Probability",
+      "name_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "radar": "必修五軸",
+      "topic_count": "22"
+    },
+    {
+      "code": "CH6",
+      "sort_order": "6",
+      "name_en": "Calculus",
+      "name_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "radar": "只在 M1／M2 顯示",
+      "topic_count": "11"
+    }
+  ],
+  "abilities": [
+    {
+      "Code": "MA1",
+      "數學能力": "概念理解能力",
+      "Maths Ability": "Conceptual Understanding Ability",
+      "入庫位置": "skill_dimension",
+      "錯因標籤": "C",
+      "說明": "概念。不是課題，也不是 Level_1。"
+    },
+    {
+      "Code": "MA2",
+      "數學能力": "代數運算能力",
+      "Maths Ability": "Algebraic Computing Ability",
+      "入庫位置": "skill_dimension",
+      "錯因標籤": "E",
+      "說明": "運算。"
+    },
+    {
+      "Code": "MA3",
+      "數學能力": "圖文轉化能力",
+      "Maths Ability": "Representational Transformation Ability",
+      "入庫位置": "skill_dimension",
+      "錯因標籤": "R",
+      "說明": "審題與建模。"
+    },
+    {
+      "Code": "MA4",
+      "數學能力": "邏輯推理能力",
+      "Maths Ability": "Logical Reasoning Ability",
+      "入庫位置": "skill_dimension",
+      "錯因標籤": "R",
+      "說明": "審題與建模。"
+    },
+    {
+      "Code": "MA5",
+      "數學能力": "幾何處理能力",
+      "Maths Ability": "Geometric Processing Ability",
+      "入庫位置": "skill_dimension",
+      "錯因標籤": "E",
+      "說明": "作圖與幾何處理。"
+    },
+    {
+      "Code": "MA6",
+      "數學能力": "分析整合能力",
+      "Maths Ability": "Integrative Thinking Ability",
+      "入庫位置": "skill_dimension",
+      "錯因標籤": "—",
+      "說明": "跨 C、R、E，不要寫成單一錯因。"
+    }
+  ],
+  "topics": [
+    {
+      "code": "P101",
+      "sort_order": "79",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Position",
+      "name_zh": "位置",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Position",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P101.1",
+          "name_en": "Position",
+          "name_zh": "位置",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P102",
+      "sort_order": "1",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Numbers within 20",
+      "name_zh": "20以內的數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "NumTo20",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P102.1",
+          "name_en": "Numbers within 20",
+          "name_zh": "20以內的數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P103",
+      "sort_order": "2",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Composition of Numbers",
+      "name_zh": "數的分和合",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "NumBonds",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P103.1",
+          "name_en": "Composition of Numbers",
+          "name_zh": "數的分和合",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P104",
+      "sort_order": "80",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Length and Distance",
+      "name_zh": "長度和距離",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "LenDist",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P104.1",
+          "name_en": "Length and Distance",
+          "name_zh": "長度和距離",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P105",
+      "sort_order": "3",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Basic Addition",
+      "name_zh": "基本加法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "BasicAdd",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P105.1",
+          "name_en": "Basic Addition",
+          "name_zh": "基本加法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P106",
+      "sort_order": "4",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Basic Subtraction",
+      "name_zh": "基本減法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "BasicSub",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P106.1",
+          "name_en": "Basic Subtraction",
+          "name_zh": "基本減法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P107",
+      "sort_order": "5",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Numbers within 100",
+      "name_zh": "100以內的數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "NumTo100",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P107.1",
+          "name_en": "Numbers within 100",
+          "name_zh": "100以內的數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P108",
+      "sort_order": "6",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Methods of Counting",
+      "name_zh": "數數方法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Counting",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P108.1",
+          "name_en": "Methods of Counting",
+          "name_zh": "數數方法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P109",
+      "sort_order": "81",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Time",
+      "name_zh": "時間",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TellTime",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P109.1",
+          "name_en": "Time",
+          "name_zh": "時間",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P110",
+      "sort_order": "82",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Dates",
+      "name_zh": "日期",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Calendar",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P110.1",
+          "name_en": "Dates",
+          "name_zh": "日期",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P111",
+      "sort_order": "83",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "3-D Shapes",
+      "name_zh": "立體圖形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "SolidP1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P111.1",
+          "name_en": "3-D Shapes",
+          "name_zh": "立體圖形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P112",
+      "sort_order": "84",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Plane Figures",
+      "name_zh": "平面圖形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "PlaneFigs",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P112.1",
+          "name_en": "Plane Figures",
+          "name_zh": "平面圖形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P113",
+      "sort_order": "7",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Addition",
+      "name_zh": "加法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "TwoDigAdd",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P113.1",
+          "name_en": "Addition",
+          "name_zh": "加法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P114",
+      "sort_order": "8",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Subtraction and Mixed Problems",
+      "name_zh": "減法及加減應用題",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AddSubApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P114.1",
+          "name_en": "Subtraction and Mixed Problems",
+          "name_zh": "減法及加減應用題",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P115",
+      "sort_order": "85",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Centimetres",
+      "name_zh": "厘米",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CmLength",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P115.1",
+          "name_en": "Centimetres",
+          "name_zh": "厘米",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P116",
+      "sort_order": "86",
+      "department": "Primary Maths",
+      "level": "P1",
+      "name_en": "Hong Kong Coins",
+      "name_zh": "香港的硬幣",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "HKCoins",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P116.1",
+          "name_en": "Hong Kong Coins",
+          "name_zh": "香港的硬幣",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P201",
+      "sort_order": "9",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "3-digit Numbers",
+      "name_zh": "三位數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "ThreeDig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P201.1",
+          "name_en": "3-digit Numbers",
+          "name_zh": "三位數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P202",
+      "sort_order": "10",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Addition",
+      "name_zh": "加法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Add3Dig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P202.1",
+          "name_en": "Addition",
+          "name_zh": "加法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P203",
+      "sort_order": "11",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Subtraction and Mixed Problems",
+      "name_zh": "減法及加減應用題",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "SubMixApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P203.1",
+          "name_en": "Subtraction and Mixed Problems",
+          "name_zh": "減法及加減應用題",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P204",
+      "sort_order": "87",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Angles and Perpendicular Lines",
+      "name_zh": "角和垂直線",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AnglesPerp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P204.1",
+          "name_en": "Angles and Perpendicular Lines",
+          "name_zh": "角和垂直線",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P205",
+      "sort_order": "88",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Directions",
+      "name_zh": "方向",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "FourDir",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P205.1",
+          "name_en": "Directions",
+          "name_zh": "方向",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P206",
+      "sort_order": "12",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Basic Multiplication (1)",
+      "name_zh": "基本乘法（一）",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultBasic1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P206.1",
+          "name_en": "Basic Multiplication (1)",
+          "name_zh": "基本乘法（一）",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P207",
+      "sort_order": "13",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Basic Multiplication (2)",
+      "name_zh": "基本乘法（二）",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultBasic2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P207.1",
+          "name_en": "Basic Multiplication (2)",
+          "name_zh": "基本乘法（二）",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P208",
+      "sort_order": "89",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Time",
+      "name_zh": "時間",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "MinuteTime",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P208.1",
+          "name_en": "Time",
+          "name_zh": "時間",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P209",
+      "sort_order": "90",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Dates",
+      "name_zh": "日期",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "DayDates",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P209.1",
+          "name_en": "Dates",
+          "name_zh": "日期",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P210",
+      "sort_order": "91",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "3-D Shapes",
+      "name_zh": "立體圖形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "SolidP2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P210.1",
+          "name_en": "3-D Shapes",
+          "name_zh": "立體圖形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P211",
+      "sort_order": "14",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "4-digit Numbers",
+      "name_zh": "四位數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FourDig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P211.1",
+          "name_en": "4-digit Numbers",
+          "name_zh": "四位數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P212",
+      "sort_order": "92",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Hong Kong Currency",
+      "name_zh": "香港的貨幣",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "HKMoney",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P212.1",
+          "name_en": "Hong Kong Currency",
+          "name_zh": "香港的貨幣",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P213",
+      "sort_order": "15",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Subtraction",
+      "name_zh": "減法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Sub3Dig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P213.1",
+          "name_en": "Subtraction",
+          "name_zh": "減法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P214",
+      "sort_order": "16",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Mixed Addition and Subtraction",
+      "name_zh": "加減混合計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AddSubMix",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P214.1",
+          "name_en": "Mixed Addition and Subtraction",
+          "name_zh": "加減混合計算",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P215",
+      "sort_order": "93",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Metres and Centimetres",
+      "name_zh": "米和厘米",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "MetreCm",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P215.1",
+          "name_en": "Metres and Centimetres",
+          "name_zh": "米和厘米",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P216",
+      "sort_order": "17",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Sharing",
+      "name_zh": "分物活動",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Sharing",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P216.1",
+          "name_en": "Sharing",
+          "name_zh": "分物活動",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P217",
+      "sort_order": "18",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Basic Division",
+      "name_zh": "基本除法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "BasicDiv",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P217.1",
+          "name_en": "Basic Division",
+          "name_zh": "基本除法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P218",
+      "sort_order": "94",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Line Segments and Quadrilaterals",
+      "name_zh": "線段和四邊形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "SegQuad",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P218.1",
+          "name_en": "Line Segments and Quadrilaterals",
+          "name_zh": "線段和四邊形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P219",
+      "sort_order": "144",
+      "department": "Primary Maths",
+      "level": "P2",
+      "name_en": "Pictograms",
+      "name_zh": "象形圖",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "Pictogram",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P219.1",
+          "name_en": "Pictograms",
+          "name_zh": "象形圖",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P301",
+      "sort_order": "19",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "5-digit Numbers",
+      "name_zh": "五位數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FiveDig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P301.1",
+          "name_en": "5-digit Numbers",
+          "name_zh": "五位數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P302",
+      "sort_order": "95",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Kilometres and Millimetres",
+      "name_zh": "公里和毫米",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "KmAndMm",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P302.1",
+          "name_en": "Kilometres and Millimetres",
+          "name_zh": "公里和毫米",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P303",
+      "sort_order": "20",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Multiplication",
+      "name_zh": "乘法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultP3",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P303.1",
+          "name_en": "Multiplication",
+          "name_zh": "乘法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P304",
+      "sort_order": "96",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Time",
+      "name_zh": "時間",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TimeInt",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P304.1",
+          "name_en": "Time",
+          "name_zh": "時間",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P305",
+      "sort_order": "21",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Division",
+      "name_zh": "除法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Div3Dig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P305.1",
+          "name_en": "Division",
+          "name_zh": "除法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P306",
+      "sort_order": "97",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Weight",
+      "name_zh": "重量",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Weight",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P306.1",
+          "name_en": "Weight",
+          "name_zh": "重量",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P307",
+      "sort_order": "98",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Parallel Lines and Quadrilaterals",
+      "name_zh": "平行線和四邊形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "ParQuads",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P307.1",
+          "name_en": "Parallel Lines and Quadrilaterals",
+          "name_zh": "平行線和四邊形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P308",
+      "sort_order": "99",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "24-hour Time",
+      "name_zh": "24小時報時制",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Time24hr",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P308.1",
+          "name_en": "24-hour Time",
+          "name_zh": "24小時報時制",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P309",
+      "sort_order": "22",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Mixed Addition and Subtraction",
+      "name_zh": "加減混合計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MixAddSub",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P309.1",
+          "name_en": "Mixed Addition and Subtraction",
+          "name_zh": "加減混合計算",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P310",
+      "sort_order": "23",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Mixed Operations with Multiplication",
+      "name_zh": "乘加和乘減混合計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultAddMix",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P310.1",
+          "name_en": "Mixed Operations with Multiplication",
+          "name_zh": "乘加和乘減混合計算",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P311",
+      "sort_order": "100",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Triangles",
+      "name_zh": "三角形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Triangles",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P311.1",
+          "name_en": "Triangles",
+          "name_zh": "三角形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P312",
+      "sort_order": "24",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Introduction to Fractions",
+      "name_zh": "分數的認識",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "IntroFrac",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P312.1",
+          "name_en": "Introduction to Fractions",
+          "name_zh": "分數的認識",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P313",
+      "sort_order": "25",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Addition and Subtraction of Like Fractions",
+      "name_zh": "同分母分數加減",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "LikeFrac",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P313.1",
+          "name_en": "Addition and Subtraction of Like Fractions",
+          "name_zh": "同分母分數加減",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P314",
+      "sort_order": "101",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Capacity",
+      "name_zh": "容量",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Capacity",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P314.1",
+          "name_en": "Capacity",
+          "name_zh": "容量",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P315",
+      "sort_order": "145",
+      "department": "Primary Maths",
+      "level": "P3",
+      "name_en": "Bar Charts",
+      "name_zh": "棒形圖",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "BarChart1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P315.1",
+          "name_en": "Bar Charts",
+          "name_zh": "棒形圖",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P401",
+      "sort_order": "26",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Multiplication",
+      "name_zh": "乘法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultP4",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P401.1",
+          "name_en": "Multiplication",
+          "name_zh": "乘法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P402",
+      "sort_order": "27",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Division",
+      "name_zh": "除法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "DivAndTest",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P402.1",
+          "name_en": "Division",
+          "name_zh": "除法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P403",
+      "sort_order": "102",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Quadrilaterals",
+      "name_zh": "四邊形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "QuadP4",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P403.1",
+          "name_en": "Quadrilaterals",
+          "name_zh": "四邊形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P404",
+      "sort_order": "103",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Dissection and Tessellation",
+      "name_zh": "圖形分割和拼砌",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Dissect",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P404.1",
+          "name_en": "Dissection and Tessellation",
+          "name_zh": "圖形分割和拼砌",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P405",
+      "sort_order": "28",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Multiples and Factors",
+      "name_zh": "倍數和因數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultFact",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P405.1",
+          "name_en": "Multiples and Factors",
+          "name_zh": "倍數和因數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P406",
+      "sort_order": "29",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Common Factors and Common Multiples",
+      "name_zh": "公因數和公倍數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "HcfAndLcm",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P406.1",
+          "name_en": "Common Factors and Common Multiples",
+          "name_zh": "公因數和公倍數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P407",
+      "sort_order": "104",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Eight Directions",
+      "name_zh": "八個方向",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "EightDir",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P407.1",
+          "name_en": "Eight Directions",
+          "name_zh": "八個方向",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P408",
+      "sort_order": "146",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Bar Charts",
+      "name_zh": "棒形圖",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "BarChart2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P408.1",
+          "name_en": "Bar Charts",
+          "name_zh": "棒形圖",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P409",
+      "sort_order": "30",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Mixed Four Operations",
+      "name_zh": "四則混合計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FourOps",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P409.1",
+          "name_en": "Mixed Four Operations",
+          "name_zh": "四則混合計算",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P410",
+      "sort_order": "105",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Perimeter",
+      "name_zh": "周界",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Perimeter",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P410.1",
+          "name_en": "Perimeter",
+          "name_zh": "周界",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P411",
+      "sort_order": "106",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Area",
+      "name_zh": "面積",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AreaP4",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P411.1",
+          "name_en": "Area",
+          "name_zh": "面積",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P412",
+      "sort_order": "31",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Further Work on Fractions",
+      "name_zh": "進一步認識分數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MoreFrac",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P412.1",
+          "name_en": "Further Work on Fractions",
+          "name_zh": "進一步認識分數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P413",
+      "sort_order": "32",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Addition and Subtraction of Fractions",
+      "name_zh": "分數加減",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FracAdd4",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P413.1",
+          "name_en": "Addition and Subtraction of Fractions",
+          "name_zh": "分數加減",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P414",
+      "sort_order": "33",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Introduction to Decimals",
+      "name_zh": "小數的認識",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "IntroDec",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P414.1",
+          "name_en": "Introduction to Decimals",
+          "name_zh": "小數的認識",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P415",
+      "sort_order": "34",
+      "department": "Primary Maths",
+      "level": "P4",
+      "name_en": "Addition and Subtraction of Decimals",
+      "name_zh": "小數的加減",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "DecAddSub",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P415.1",
+          "name_en": "Addition and Subtraction of Decimals",
+          "name_zh": "小數的加減",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P501",
+      "sort_order": "35",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Multi-digit numbers",
+      "name_zh": "多位數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MultiDigit",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P501.1",
+          "name_en": "Multi-digit numbers",
+          "name_zh": "多位數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P502",
+      "sort_order": "107",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Areas of Triangles and Quadrilaterals",
+      "name_zh": "三角形、四邊形的面積",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TriQuadArea",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P502.1",
+          "name_en": "Areas of Triangles and Quadrilaterals",
+          "name_zh": "三角形、四邊形的面積",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P503",
+      "sort_order": "108",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Area of Polygons",
+      "name_zh": "多邊形的面積",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "PolygonArea",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P503.1",
+          "name_en": "Area of Polygons",
+          "name_zh": "多邊形的面積",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P504",
+      "sort_order": "36",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Comparing Fractions, and Addition and Subtraction of Fractions",
+      "name_zh": "分數的比較和加減",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FracAddSub",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P504.1",
+          "name_en": "Comparing Fractions, and Addition and Subtraction of Fractions",
+          "name_zh": "分數的比較和加減",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P505",
+      "sort_order": "37",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Multiplication of Fractions",
+      "name_zh": "分數乘法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FracMult",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P505.1",
+          "name_en": "Multiplication of Fractions",
+          "name_zh": "分數乘法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P506",
+      "sort_order": "53",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Algebraic Expressions and Simple Equations (1)",
+      "name_zh": "代數式和簡易方程（一）",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "SimpleEqn1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P506.1",
+          "name_en": "Algebraic Expressions and Simple Equations (1)",
+          "name_zh": "代數式和簡易方程（一）",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P507",
+      "sort_order": "147",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Compound Bar Charts",
+      "name_zh": "複合棒形圖",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "CompBarChart",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P507.1",
+          "name_en": "Compound Bar Charts",
+          "name_zh": "複合棒形圖",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P508",
+      "sort_order": "109",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Circles",
+      "name_zh": "圓",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "IntroCircle",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P508.1",
+          "name_en": "Circles",
+          "name_zh": "圓",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P509",
+      "sort_order": "110",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Cross Sections of 3-D Shapes",
+      "name_zh": "立體的截面",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "SolidCrossSec",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P509.1",
+          "name_en": "Cross Sections of 3-D Shapes",
+          "name_zh": "立體的截面",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P510",
+      "sort_order": "111",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "3-D Shapes",
+      "name_zh": "立體圖形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "SolidShapes",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P510.1",
+          "name_en": "3-D Shapes",
+          "name_zh": "立體圖形",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P511",
+      "sort_order": "38",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Multiplication of Decimals",
+      "name_zh": "小數乘法",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "DecMult",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P511.1",
+          "name_en": "Multiplication of Decimals",
+          "name_zh": "小數乘法",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P512",
+      "sort_order": "39",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Division and Mixed Arithmetic Operations of Fractions",
+      "name_zh": "分數除法及四則混合計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FracDivMix",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P512.1",
+          "name_en": "Division and Mixed Arithmetic Operations of Fractions",
+          "name_zh": "分數除法及四則混合計算",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P513",
+      "sort_order": "54",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Algebraic Expressions and Simple Equations (2)",
+      "name_zh": "代數式和簡易方程（二）",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "SimpleEqn2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P513.1",
+          "name_en": "Algebraic Expressions and Simple Equations (2)",
+          "name_zh": "代數式和簡易方程（二）",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P514",
+      "sort_order": "112",
+      "department": "Primary Maths",
+      "level": "P5",
+      "name_en": "Volume",
+      "name_zh": "體積",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CuboidVol",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P514.1",
+          "name_en": "Volume",
+          "name_zh": "體積",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P601",
+      "sort_order": "40",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Division and Mixed Arithmetic Operations of Decimals",
+      "name_zh": "小數除法及四則混合計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "DecDivMix",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P601.1",
+          "name_en": "Division and Mixed Arithmetic Operations of Decimals",
+          "name_zh": "小數除法及四則混合計算",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P602",
+      "sort_order": "41",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Interconversion between Decimals and Fractions",
+      "name_zh": "小數和分數互化",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "DecFracConv",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P602.1",
+          "name_en": "Interconversion between Decimals and Fractions",
+          "name_zh": "小數和分數互化",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P603",
+      "sort_order": "148",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Averages",
+      "name_zh": "平均數",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "Averages",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P603.1",
+          "name_en": "Averages",
+          "name_zh": "平均數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P604",
+      "sort_order": "42",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Percentages",
+      "name_zh": "百分數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "IntroPercent",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P604.1",
+          "name_en": "Percentages",
+          "name_zh": "百分數",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P605",
+      "sort_order": "43",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Application of Percentages",
+      "name_zh": "百分數的應用",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "PercentApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P605.1",
+          "name_en": "Application of Percentages",
+          "name_zh": "百分數的應用",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P606",
+      "sort_order": "113",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Capacity and Volume",
+      "name_zh": "容量和體積",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CapVolume",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P606.1",
+          "name_en": "Capacity and Volume",
+          "name_zh": "容量和體積",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P607",
+      "sort_order": "114",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Circumference",
+      "name_zh": "圓周",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Circumfer",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P607.1",
+          "name_en": "Circumference",
+          "name_zh": "圓周",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P608",
+      "sort_order": "115",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Area of Circles",
+      "name_zh": "圓面積",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CircleArea",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P608.1",
+          "name_en": "Area of Circles",
+          "name_zh": "圓面積",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P609",
+      "sort_order": "116",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Angles and Degree",
+      "name_zh": "角和度",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AngleDegree",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P609.1",
+          "name_en": "Angles and Degree",
+          "name_zh": "角和度",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P610",
+      "sort_order": "149",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Pie Charts",
+      "name_zh": "圓形圖",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "PieChart",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P610.1",
+          "name_en": "Pie Charts",
+          "name_zh": "圓形圖",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P611",
+      "sort_order": "44",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Time and Speed",
+      "name_zh": "時間和速率",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "TimeSpeed",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P611.1",
+          "name_en": "Time and Speed",
+          "name_zh": "時間和速率",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P612",
+      "sort_order": "55",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Simple Equations",
+      "name_zh": "簡易方程",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "SimpleEqn3",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P612.1",
+          "name_en": "Simple Equations",
+          "name_zh": "簡易方程",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P613",
+      "sort_order": "150",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Broken Line Graphs",
+      "name_zh": "折線圖",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "BrokenLine",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P613.1",
+          "name_en": "Broken Line Graphs",
+          "name_zh": "折線圖",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P614",
+      "sort_order": "151",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Uses of Statistical Charts",
+      "name_zh": "統計圖的應用",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "StatChartApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P614.1",
+          "name_en": "Uses of Statistical Charts",
+          "name_zh": "統計圖的應用",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "P615",
+      "sort_order": "117",
+      "department": "Primary Maths",
+      "level": "P6",
+      "name_en": "Axial Symmetry",
+      "name_zh": "軸對稱",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AxialSymm",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "P615.1",
+          "name_en": "Axial Symmetry",
+          "name_zh": "軸對稱",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM00",
+      "sort_order": "45",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Basic Computation",
+      "name_zh": "基礎計算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "BasicComp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM00.1",
+          "name_en": "Four Operations",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM00.2",
+          "name_en": "Prime and Prime Factorization",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM00.3",
+          "name_en": "L.C.M. and H.C.F.",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM00.4",
+          "name_en": "Test of Divisibility",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM01",
+      "sort_order": "46",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Directed Numbers",
+      "name_zh": "有向數",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "DirNum",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM01.1",
+          "name_en": "Number Line",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM01.2",
+          "name_en": "Method for removing brackets",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM01.3",
+          "name_en": "Addition and Subtraction of Directed Numbers",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM01.4",
+          "name_en": "Multiplication and Division of Directed Numbers",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM02",
+      "sort_order": "56",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Algebraic Equations",
+      "name_zh": "代數方程",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AlgEqn",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM02.1",
+          "name_en": "Basic Algebra",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM02.2",
+          "name_en": "Substitution",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM02.3",
+          "name_en": "Algebra Equation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM02.4",
+          "name_en": "Removing Brackets in Equation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM02.5",
+          "name_en": "Cancelling Denominators in Equation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM02.6",
+          "name_en": "Application",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM03",
+      "sort_order": "47",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Percentages I",
+      "name_zh": "百分比 I",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Percent1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM03.1",
+          "name_en": "Percentage",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM03.2",
+          "name_en": "Percentage change",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM03.3",
+          "name_en": "Profit %",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM03.4",
+          "name_en": "Loss %",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM03.5",
+          "name_en": "Mark and Selling Price",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM04",
+      "sort_order": "48",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Approximation and Estimation",
+      "name_zh": "估算",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "ApproxEst",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM04.1",
+          "name_en": "Calculating by estimating",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM04.2",
+          "name_en": "Significant figures",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM04.3",
+          "name_en": "Cluster Value",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM04.4",
+          "name_en": "Compatible Numbers",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM04.5",
+          "name_en": "Compensation Strategy",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM04.6",
+          "name_en": "Translation Strategy",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM05",
+      "sort_order": "118",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Intro. to Geometry",
+      "name_zh": "幾何簡介",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "IntroGeo",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM05.1",
+          "name_en": "Types of Angles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM05.2",
+          "name_en": "Types of Triangles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM05.3",
+          "name_en": "Types of Polygons",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM05.4",
+          "name_en": "Angle sum of triangle",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM05.5",
+          "name_en": "Polyhedra and Non-polyhedra",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM05.6",
+          "name_en": "Faces, Edges and Vertices",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "7",
+          "code": "JM05.7",
+          "name_en": "Cross Section of solids",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "8",
+          "code": "JM05.8",
+          "name_en": "Drawing Solid",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM06",
+      "sort_order": "152",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Statistics I",
+      "name_zh": "統計 I",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "StatChart1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM06.1",
+          "name_en": "Collection and Classification of Data",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM06.2",
+          "name_en": "Organization of Data",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM06.3",
+          "name_en": "Simple Statistical Diagrams",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM06.4",
+          "name_en": "Stem-and-Leaf Diagrams",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM06.5",
+          "name_en": "Histograms",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM06.6",
+          "name_en": "Scatter Diagrams",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM07",
+      "sort_order": "119",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Areas and Volumes I",
+      "name_zh": "面積和體積 I",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AreaVol1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM07.1",
+          "name_en": "Area of different shapes",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM07.2",
+          "name_en": "Volume of Prisms",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM07.3",
+          "name_en": "Total surface Areas of Prisms",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM08",
+      "sort_order": "130",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Intro. to Coordinates",
+      "name_zh": "坐標簡介",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "IntroCoord",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM08.1",
+          "name_en": "Basic Coordinate",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM08.2",
+          "name_en": "Distance of Coordinate",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM08.3",
+          "name_en": "Area of Coordinate",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM08.4",
+          "name_en": "Translation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM08.5",
+          "name_en": "Reflection across the axes",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM08.6",
+          "name_en": "Rotation about the origin",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "7",
+          "code": "JM08.7",
+          "name_en": "Polar Coordinate",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM09",
+      "sort_order": "120",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Angles related to Lines",
+      "name_zh": "線與角度",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "LineAngles",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM09.1",
+          "name_en": "Angles related to intersecting lines",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM09.2",
+          "name_en": "Angles related to parallel lines",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM09.3",
+          "name_en": "Identifying parallel lines",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM10",
+      "sort_order": "57",
+      "department": "Junior Maths",
+      "level": "S1",
+      "name_en": "Simple Polynomials",
+      "name_zh": "簡單多項式",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "SimpPoly",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM10.1",
+          "name_en": "Laws of Positive Integral Indices",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM10.2",
+          "name_en": "Monomials",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM10.3",
+          "name_en": "Polynomials",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM10.4",
+          "name_en": "Addition and Subtraction of polynomial",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM10.5",
+          "name_en": "Multiplication of polynomial",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM15",
+      "sort_order": "121",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Congruence",
+      "name_zh": "全等三角形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Congruence",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM15.1",
+          "name_en": "Properties of congruent triangles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM15.2",
+          "name_en": "Condition of congruent triangles",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM16",
+      "sort_order": "49",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Rate, Ratio and Proportion",
+      "name_zh": "率及比",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "RateRatio",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM16.1",
+          "name_en": "Rate",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM16.2",
+          "name_en": "Ratio",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM16.3",
+          "name_en": "Direct & Inverse Proportion",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM17",
+      "sort_order": "122",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Similarity",
+      "name_zh": "相似三角形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Similarity",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM17.1",
+          "name_en": "Properties of similar triangles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM17.2",
+          "name_en": "Condition of similar triangles",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM11",
+      "sort_order": "50",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Errors",
+      "name_zh": "誤差",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MeasError",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM11.1",
+          "name_en": "Significant Figures",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM11.2",
+          "name_en": "Errors",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM12",
+      "sort_order": "58",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Identities and Factorization",
+      "name_zh": "恆等式和因式分解",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "IdentFact",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM12.1",
+          "name_en": "Meaning of Identities",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM12.2",
+          "name_en": "Algebraic Identities",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM12.3",
+          "name_en": "Factorization of Simple Algebraic Expressions",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM13",
+      "sort_order": "59",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Algebraic Fractions and Formulae",
+      "name_zh": "代數分式與公式",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AlgFracForm",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM13.1",
+          "name_en": "Manipulation of Simple Algebraic Fractions",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM13.2",
+          "name_en": "Formulas and their Manipulations",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM14",
+      "sort_order": "123",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Angles related to Figures",
+      "name_zh": "與圖相關的角度",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "FigAngles",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM14.1",
+          "name_en": "Angles and Sides of a Triangle",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM14.2",
+          "name_en": "Angles of a Polygon",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM18",
+      "sort_order": "153",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Statistics II",
+      "name_zh": "統計 II",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "StatDiag2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM18.1",
+          "name_en": "Frequency Distribution and its Graphical Representation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM18.2",
+          "name_en": "Choosing an Appropriate Diagram to Present Data",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM18.3",
+          "name_en": "Abuses of Statistical Diagrams",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM19",
+      "sort_order": "60",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Simultaneous Equations",
+      "name_zh": "聯立方程",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "SimulEqn",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM19.1",
+          "name_en": "Linear Equations in Two Unknowns and their Graphs",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM19.2",
+          "name_en": "Simultaneous Linear Equations in Two Unknowns and their Solutions",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM19.3",
+          "name_en": "Applications of Simultaneous Linear Equations in Two Unknowns",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM20",
+      "sort_order": "131",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Pythagoras' Theorem",
+      "name_zh": "畢氏定理",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Pythagoras",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM20.1",
+          "name_en": "Pythagoras' Theorem",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM20.2",
+          "name_en": "Converse of Pythagoras' Theorem",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM20.3",
+          "name_en": "Applications of Pythagoras' Theorem and its Converse",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM21",
+      "sort_order": "124",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Deductive Geometry",
+      "name_zh": "演繹幾何",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "DeductGeo",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM21.1",
+          "name_en": "Deductive Reasoning",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM21.2",
+          "name_en": "Deductive Geometry",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM21.3",
+          "name_en": "Deductive Proofs about Angles related to Lines",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM21.4",
+          "name_en": "Deductive Proofs about Congruent, Isosceles and Similar Triangles",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM22",
+      "sort_order": "132",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Trigonometric Ratios",
+      "name_zh": "三角比率",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TrigRatio",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM22.1",
+          "name_en": "Sine Ratio",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM22.2",
+          "name_en": "Cosine Ratio",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM22.3",
+          "name_en": "Tangent Ratio",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM22.4",
+          "name_en": "Simple Applications of Trigonometric Ratios",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM23",
+      "sort_order": "125",
+      "department": "Junior Maths",
+      "level": "S2",
+      "name_en": "Areas and Volumes II",
+      "name_zh": "面積和體積 II",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AreaVol2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM23.1",
+          "name_en": "Circles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM23.2",
+          "name_en": "Arcs and Sectors",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM23.3",
+          "name_en": "Cylinders",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM24",
+      "sort_order": "61",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Laws of Indices",
+      "name_zh": "指數定律",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "IndexLaws",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM24.1",
+          "name_en": "Laws of Positive Integral Indices",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM24.2",
+          "name_en": "Zero and Negative Integral Indices",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM24.3",
+          "name_en": "Scientific Notation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM24.4",
+          "name_en": "Binary Systems and Denary Systems",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM25",
+      "sort_order": "62",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "More about Factorization of Polynomials",
+      "name_zh": "續多項式因式分解",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AdvFact",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM25.1",
+          "name_en": "Factorization by Cross-method",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM26",
+      "sort_order": "63",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Inequalities I",
+      "name_zh": "不等式 I",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Inequal1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM26.1",
+          "name_en": "Basic Inequalities",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM26.2",
+          "name_en": "Linear Inequalities in One Unknown",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM27",
+      "sort_order": "51",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Percentages II",
+      "name_zh": "百分比 II",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Percent2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM27.1",
+          "name_en": "More about Percentage Increase and Decrease",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM27.2",
+          "name_en": "Increase or Decrease at a Constant Rate",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM27.3",
+          "name_en": "Interest",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM27.4",
+          "name_en": "Taxation",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM28",
+      "sort_order": "126",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Special Lines and Centres in Triangles",
+      "name_zh": "三角形的特殊線和中心",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TriCentres",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM28.1",
+          "name_en": "Important Lines in a Triangle",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM28.2",
+          "name_en": "Relationship among the Three Sides of a Triangle",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM28.3",
+          "name_en": "Centres of a Triangle",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM29",
+      "sort_order": "127",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Quadrilaterals",
+      "name_zh": "四邊形",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Quadrilat",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM29.1",
+          "name_en": "Quadrilaterals",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM29.2",
+          "name_en": "Parallelograms",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM29.3",
+          "name_en": "Rectangles, Squares, Rhombuses, Trapeziums and Kites",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM29.4",
+          "name_en": "Simple Proofs related to Parallelograms",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM29.5",
+          "name_en": "Mid-point Theorem",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM29.6",
+          "name_en": "Intercept Theorem",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM30",
+      "sort_order": "154",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Probabilities",
+      "name_zh": "概率",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "IntroProb",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM30.1",
+          "name_en": "Basic Concept of Probability",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM30.2",
+          "name_en": "Tree Diagram and Tabulation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM30.3",
+          "name_en": "Expected number and Expected Value",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM31",
+      "sort_order": "155",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Measures of Central Tendencies",
+      "name_zh": "集中趨勢的量度",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "CentralTend",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM31.1",
+          "name_en": "Central Tendency",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM31.2",
+          "name_en": "Arithmetic Means",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM31.3",
+          "name_en": "Medians",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM31.4",
+          "name_en": "Modes and Modal Classes",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM31.5",
+          "name_en": "Comparing Different Types of Average",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "JM31.6",
+          "name_en": "Misuses of Averages and the Consequences of Misuses",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "7",
+          "code": "JM31.7",
+          "name_en": "Weighted Mean",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM32",
+      "sort_order": "128",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Areas and Volumes III",
+      "name_zh": "面積和體積 III",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AreaVol3",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM32.1",
+          "name_en": "Pyramids",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM32.2",
+          "name_en": "Circular Cones",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM32.3",
+          "name_en": "Spheres",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM32.4",
+          "name_en": "Formulas for Lengths, Areas and Volumes",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "JM32.5",
+          "name_en": "Similar Shapes",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM33",
+      "sort_order": "133",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Coordinates of Straight Lines",
+      "name_zh": "直線坐標",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CoordLine",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM33.1",
+          "name_en": "Distance of Two Points on a Plane",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM33.2",
+          "name_en": "Slope of a Straight Line",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM33.3",
+          "name_en": "Parallel and Perpendicular Lines",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM33.4",
+          "name_en": "Point of Division",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM34",
+      "sort_order": "134",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Trigonometric Relations",
+      "name_zh": "三角關係",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TrigRelat",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM34.1",
+          "name_en": "Trigonometric Ratios of Special Angles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM34.2",
+          "name_en": "Finding Trigonometric Ratios by Constructing Right-Angled Triangles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM34.3",
+          "name_en": "Trigonometric Identities",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "JM35",
+      "sort_order": "135",
+      "department": "Junior Maths",
+      "level": "S3",
+      "name_en": "Application of Trigonometry",
+      "name_zh": "三角學應用",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TrigApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "JM35.1",
+          "name_en": "Gradients",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "JM35.2",
+          "name_en": "Angles of Elevation and Depression",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "JM35.3",
+          "name_en": "Bearings",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "JM35.4",
+          "name_en": "Applications of Trigonometry to Rectilinear Figures",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M101",
+      "sort_order": "64",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Binomial Expansion and Exponential Function",
+      "name_zh": "二項式展開與指數函數",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "BinoExpM1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M101.1",
+          "name_en": "Binomial expansion",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M101.2",
+          "name_en": "Exponential function and Logarithmic function",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M101.3",
+          "name_en": "Linear transformation",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M102",
+      "sort_order": "166",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Derivative of Functions",
+      "name_zh": "函數極限與微分概念",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "LimDerivM1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M102.1",
+          "name_en": "Limits",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M102.2",
+          "name_en": "First principle",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M103",
+      "sort_order": "167",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Differentiation of a Function",
+      "name_zh": "函數的微分法",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "DiffRulesM1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M103.1",
+          "name_en": "Rules of differentiation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M103.2",
+          "name_en": "Derivative of Exponential function and Logarithmic function",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M103.3",
+          "name_en": "Second Derivative",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M104",
+      "sort_order": "168",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Application of Differentiation",
+      "name_zh": "微分應用",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "DiffAppM1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M104.1",
+          "name_en": "Tangent of a curve",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M104.2",
+          "name_en": "Maxima and Minima",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M104.3",
+          "name_en": "Rate of change",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M105",
+      "sort_order": "169",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Indefinite Integrals and Their Applications",
+      "name_zh": "不定積分法的應用",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "IndefIntM1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M105.1",
+          "name_en": "Basic Integration Formulae",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M105.2",
+          "name_en": "Substitution",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M105.3",
+          "name_en": "Application of Indefinite Integrals",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M106",
+      "sort_order": "170",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Definite Integrals and Their Application",
+      "name_zh": "定積分法的應用",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "DefIntM1",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M106.1",
+          "name_en": "Evaluation of Definite Integrals",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M106.2",
+          "name_en": "Substitution",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M106.3",
+          "name_en": "Area under the curve",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "M106.4",
+          "name_en": "Application of Definite Integrals",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M107",
+      "sort_order": "171",
+      "department": "Mathematics Module 1",
+      "level": "S4",
+      "name_en": "Trapezoidal Rule",
+      "name_zh": "梯形法則",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "TrapRule",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M107.1",
+          "name_en": "Trapezoidal Rule",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M107.2",
+          "name_en": "Application of Trapezoidal Rule",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M201",
+      "sort_order": "65",
+      "department": "Mathematics Module 2",
+      "level": "S4",
+      "name_en": "Mathematical Induction",
+      "name_zh": "數學歸納法",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MathInduct",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M201.1",
+          "name_en": "Mathematical Induction Rules",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M202",
+      "sort_order": "66",
+      "department": "Mathematics Module 2",
+      "level": "S4",
+      "name_en": "Binomial Theorem",
+      "name_zh": "二項式定理",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "BinomThm",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M202.1",
+          "name_en": "Binomial Expansion Formula",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M203",
+      "sort_order": "136",
+      "department": "Mathematics Module 2",
+      "level": "S4",
+      "name_en": "More about Trigonometric Function",
+      "name_zh": "三角函數",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "TrigFuncM2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M203.1",
+          "name_en": "Introduction to Radian",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M203.2",
+          "name_en": "Compound Angle Formula",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M203.3",
+          "name_en": "Sum-to-Product Formula and Product-to-Sum Formula",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M204",
+      "sort_order": "172",
+      "department": "Mathematics Module 2",
+      "level": "S4",
+      "name_en": "Limits and the number e",
+      "name_zh": "極限與數學常數e",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "LimNumE",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M204.1",
+          "name_en": "Limits Rules",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M204.2",
+          "name_en": "Number e",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M205",
+      "sort_order": "173",
+      "department": "Mathematics Module 2",
+      "level": "S4",
+      "name_en": "Derivative of function",
+      "name_zh": "微分法法則",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "DiffRulesM2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M205.1",
+          "name_en": "Slope of tangent",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M205.2",
+          "name_en": "Differential Rules",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M205.3",
+          "name_en": "Chain Rule",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "M205.4",
+          "name_en": "Inverse and Implicit Differentiation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "M205.5",
+          "name_en": "Trigonometric Differentiation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "M205.6",
+          "name_en": "Exponential and Logarithmic Functions",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "7",
+          "code": "M205.7",
+          "name_en": "Second Derivative",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M206",
+      "sort_order": "174",
+      "department": "Mathematics Module 2",
+      "level": "S4",
+      "name_en": "Application of Differentiation",
+      "name_zh": "微分應用",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "DiffAppM2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M206.1",
+          "name_en": "Equation of Tangent",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M206.2",
+          "name_en": "Local Maximum and Minimum",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M206.3",
+          "name_en": "Point of Inflexion",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "M206.4",
+          "name_en": "Asymptotes",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "M206.5",
+          "name_en": "Sketch of Curve",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "M206.6",
+          "name_en": "Application of Extrema",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "7",
+          "code": "M206.7",
+          "name_en": "Rate of Change",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM01",
+      "sort_order": "52",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "Number System",
+      "name_zh": "數系",
+      "level1_code": "CH1",
+      "level1_en": "Number & Estimation",
+      "level1_zh": "數與估算",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "NumSystem",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM01.1",
+          "name_en": "Complex Number",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM01.2",
+          "name_en": "Quadratic Equation with Complex Number",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM02",
+      "sort_order": "67",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "Quadratic Equations in One Unknown",
+      "name_zh": "一元二次方程",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "QuadEqn",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM02.1",
+          "name_en": "Quadratic formula",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM02.2",
+          "name_en": "Nature of Roots of a Quadratic Equation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM02.3",
+          "name_en": "Solving Problems Involving Quadratic Equations",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "SM02.4",
+          "name_en": "Forming a Quadratic Equation",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM03",
+      "sort_order": "68",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "Functions and Graphs",
+      "name_zh": "函數及其圖像",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "FuncGraph",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM03.1",
+          "name_en": "Functions",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM03.2",
+          "name_en": "Quadratic Functions and Graphs",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM03.3",
+          "name_en": "Extreme Values of Quadratic Functions by Algebraic Method",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM04",
+      "sort_order": "137",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "Equations of Straight Lines",
+      "name_zh": "直線方程",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "LineEqn",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM04.1",
+          "name_en": "Equation of a Straight Line",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM04.2",
+          "name_en": "Point of Intersection of Two Straight Lines",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM05",
+      "sort_order": "69",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "More about Polynomials",
+      "name_zh": "續多項式",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AdvPoly",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM05.1",
+          "name_en": "Operations on Polynomials",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM05.2",
+          "name_en": "Method of Long Division",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM05.3",
+          "name_en": "Remainder Theorems",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "SM05.4",
+          "name_en": "Factor Theorems",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "SM05.5",
+          "name_en": "H.C.F. & L.C.M.",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM06",
+      "sort_order": "70",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "Exponential and Logarithmic Functions",
+      "name_zh": "指數函數與對數函數",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "ExpLogFunc",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM06.1",
+          "name_en": "Surds",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM06.2",
+          "name_en": "Exponential Function",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM06.3",
+          "name_en": "Logarithm Function",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM07",
+      "sort_order": "71",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "More about Equations",
+      "name_zh": "續方程",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "AdvEqn",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM07.1",
+          "name_en": "Solving Simultaneous Equations by Graphical Method",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM07.2",
+          "name_en": "Solving Simultaneous Equations by Algebraic Method",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM08",
+      "sort_order": "72",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "Variations",
+      "name_zh": "變分",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Variation",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM08.1",
+          "name_en": "Direct & Inverse Variations",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM08.2",
+          "name_en": "Joint & Partial Variations",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM08.3",
+          "name_en": "Real-Life Application of Variations",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM09",
+      "sort_order": "138",
+      "department": "Senior Maths",
+      "level": "S4",
+      "name_en": "More About Trigonometry",
+      "name_zh": "續三角學",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "AdvTrig",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM09.1",
+          "name_en": "Trigonometric Relationships",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM09.2",
+          "name_en": "Trigonometric Identities",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM09.3",
+          "name_en": "Trigonometric Graphs",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M108",
+      "sort_order": "156",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Conditional Probability and Bayes' Theorem",
+      "name_zh": "條件機率及貝葉斯定理",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "BayesProb",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M108.1",
+          "name_en": "Conditional Probability",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M108.2",
+          "name_en": "Bayes' Theorem",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M109",
+      "sort_order": "157",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Discrete Random Variable and Probability Distributions",
+      "name_zh": "隨機變數",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "DiscRandVar",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M109.1",
+          "name_en": "Random Variable and Probability Distributions",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M109.2",
+          "name_en": "Expectation and Variance",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M110",
+      "sort_order": "158",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Binomial Distribution",
+      "name_zh": "二項分佈",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "BinomDist",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M110.1",
+          "name_en": "Binomial Distribution",
+          "name_zh": "二項分佈",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M111",
+      "sort_order": "159",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Poisson Distribution",
+      "name_zh": "泊松分佈",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "PoissonDist",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M111.1",
+          "name_en": "Poisson Distribution",
+          "name_zh": "泊松分佈",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M112",
+      "sort_order": "160",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Normal Distribution",
+      "name_zh": "正態分佈",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "NormalDist",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M112.1",
+          "name_en": "Use of the Standard Normal Table",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M112.2",
+          "name_en": "Applications of the Normal Distribution",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M113",
+      "sort_order": "161",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Sampling Distribution",
+      "name_zh": "抽樣分佈",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "SampleDist",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M113.1",
+          "name_en": "Sampling Distribution of the Sample Mean and Estimation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M113.2",
+          "name_en": "Sample Proportion",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M114",
+      "sort_order": "162",
+      "department": "Mathematics Module 1",
+      "level": "S5",
+      "name_en": "Interval Estimation",
+      "name_zh": "置信區間",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "ConfInterv",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M114.1",
+          "name_en": "Confidence Interval for Population Mean",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M114.2",
+          "name_en": "Confidence Interval for Population Proportion",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M207",
+      "sort_order": "175",
+      "department": "Mathematics Module 2",
+      "level": "S5",
+      "name_en": "Indefinite Integrals",
+      "name_zh": "不定積分",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "IndefIntM2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M207.1",
+          "name_en": "Power Function and Exponential",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M207.2",
+          "name_en": "Integration of Trigonometric Function",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M207.3",
+          "name_en": "Integration using Substitution",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "M207.4",
+          "name_en": "Substitution of Trigonometric Function",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "M207.5",
+          "name_en": "Integration By Part",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "M207.6",
+          "name_en": "Application of Integration",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M208",
+      "sort_order": "176",
+      "department": "Mathematics Module 2",
+      "level": "S5",
+      "name_en": "Definite Integrals",
+      "name_zh": "定積分",
+      "level1_code": "CH6",
+      "level1_en": "Calculus",
+      "level1_zh": "微積分",
+      "strand_en": "Calculus (M1/M2 only)",
+      "strand_zh": "微積分（只限 M1／M2）",
+      "shorthand": "DefIntM2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M208.1",
+          "name_en": "Definite Integration Rules",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M208.2",
+          "name_en": "Integration using Substitution",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M208.3",
+          "name_en": "Integration By Part",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "M208.4",
+          "name_en": "Integration of Even, Odd and Periodic Function",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "M208.5",
+          "name_en": "Area Under Curve by Integration",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "M208.6",
+          "name_en": "Volume by Integration",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M209",
+      "sort_order": "73",
+      "department": "Mathematics Module 2",
+      "level": "S5",
+      "name_en": "Matrices and Determinants",
+      "name_zh": "矩陣與行列式",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "MatrixDet",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M209.1",
+          "name_en": "Matrix Operations",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M209.2",
+          "name_en": "Determinant",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M209.3",
+          "name_en": "Inverse of Matrices",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M210",
+      "sort_order": "74",
+      "department": "Mathematics Module 2",
+      "level": "S5",
+      "name_en": "System of Linear Equations",
+      "name_zh": "線性方程組",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "LinearSys",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M210.1",
+          "name_en": "Cramer's Rule",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M210.2",
+          "name_en": "Augmented Matrix",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M210.3",
+          "name_en": "Different Cases of Solution set",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "M211",
+      "sort_order": "139",
+      "department": "Mathematics Module 2",
+      "level": "S5",
+      "name_en": "Introduction to Vectors",
+      "name_zh": "向量",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Vectors",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "M211.1",
+          "name_en": "Vector Properties",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "M211.2",
+          "name_en": "Magnitude of Vectors",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "M211.3",
+          "name_en": "Addition and Subtraction of Vectors",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "M211.4",
+          "name_en": "Dot Product (Scalar Product)",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "5",
+          "code": "M211.5",
+          "name_en": "Cross Product (Vector Product)",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "6",
+          "code": "M211.6",
+          "name_en": "Application of Vectors",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM10",
+      "sort_order": "129",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Basic Properties of Circles + Tangents to Circles",
+      "name_zh": "圓的基本性質 + 圓的切線",
+      "level1_code": "CH3",
+      "level1_en": "Mensuration & Geometry",
+      "level1_zh": "度量與幾何",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CircleProp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM10.1",
+          "name_en": "Basic Properties of Circles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM10.2",
+          "name_en": "Tangents of Circles",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM11",
+      "sort_order": "75",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Inequalities II",
+      "name_zh": "不等式 II",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "Inequal2",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM11.1",
+          "name_en": "Linear Inequalities",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM11.2",
+          "name_en": "Quadratic Inequalities",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM12",
+      "sort_order": "76",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Linear programming",
+      "name_zh": "線性規劃",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "LinearProg",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM12.1",
+          "name_en": "Graph and System of Linear Inequalities in Two Unknowns",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM12.2",
+          "name_en": "Linear Programming",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM13",
+      "sort_order": "140",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Application of Trigonometry in 2D",
+      "name_zh": "三角學在平面圖形中的應用",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Trig2DApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM13.1",
+          "name_en": "Sine Formula",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM13.2",
+          "name_en": "Cosine formula",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM13.3",
+          "name_en": "Area of a Triangle",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "SM13.4",
+          "name_en": "Bearings & Elevation",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM14",
+      "sort_order": "141",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Application of Trigonometry in 3D",
+      "name_zh": "三角學在三維立體圖形中的應用",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Trig3DApp",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM14.1",
+          "name_en": "Angles and Lines in 3D Figures",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM14.2",
+          "name_en": "Problems in 3D",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM15",
+      "sort_order": "142",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Equations of Circles",
+      "name_zh": "圓方程",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "CircleEqn",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM15.1",
+          "name_en": "Different Forms of the Equations of Circles",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM15.2",
+          "name_en": "Features of Circles from the Equations",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM15.3",
+          "name_en": "Intersection of a Straight line and a Circle",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM16",
+      "sort_order": "143",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Locus",
+      "name_zh": "軌跡",
+      "level1_code": "CH4",
+      "level1_en": "Coordinates & Trigonometry",
+      "level1_zh": "坐標與三角學",
+      "strand_en": "Measures, Shape and Space",
+      "strand_zh": "度量、圖形與空間",
+      "shorthand": "Locus",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM16.1",
+          "name_en": "Sketching Simple Locus",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM16.2",
+          "name_en": "Describing Locus with an Algebraic Equation",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM17",
+      "sort_order": "163",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Statistics III",
+      "name_zh": "統計 III",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "Dispersion",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM17.1",
+          "name_en": "Measures of central tendency",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM17.2",
+          "name_en": "Measures of dispersion",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM17.3",
+          "name_en": "Standard Score",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "SM17.4",
+          "name_en": "Sampling Techniques",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM18",
+      "sort_order": "164",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "Permutation and Combination",
+      "name_zh": "排列與組合",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "PermComb",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM18.1",
+          "name_en": "The Counting Principle",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM18.2",
+          "name_en": "Permutation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM18.3",
+          "name_en": "Combination",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM19",
+      "sort_order": "165",
+      "department": "Senior Maths",
+      "level": "S5",
+      "name_en": "More About Probability",
+      "name_zh": "續概率",
+      "level1_code": "CH5",
+      "level1_en": "Statistics & Probability",
+      "level1_zh": "統計與概率",
+      "strand_en": "Data Handling",
+      "strand_zh": "數據處理",
+      "shorthand": "AdvProb",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM19.1",
+          "name_en": "Addition Law of Probability",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM19.2",
+          "name_en": "Multiplication Law of Probability",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM19.3",
+          "name_en": "The Concept of Set",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM20",
+      "sort_order": "77",
+      "department": "Senior Maths",
+      "level": "S6",
+      "name_en": "Arithmetic and Geometric Sequences",
+      "name_zh": "等差數列與等比數列及其求和法",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "ArithGeoSeq",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM20.1",
+          "name_en": "General Sequences",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM20.2",
+          "name_en": "Arithmetic Sequences",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM20.3",
+          "name_en": "Geometric Sequences",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "4",
+          "code": "SM20.4",
+          "name_en": "Summation of ASGS",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "code": "SM21",
+      "sort_order": "78",
+      "department": "Senior Maths",
+      "level": "S6",
+      "name_en": "More about Graphs of Functions (Transformation)",
+      "name_zh": "續函數圖像",
+      "level1_code": "CH2",
+      "level1_en": "Algebra & Functions",
+      "level1_zh": "代數與函數",
+      "strand_en": "Number and Algebra",
+      "strand_zh": "數與代數",
+      "shorthand": "GraphTrans",
+      "subtopics": [
+        {
+          "no": "1",
+          "code": "SM21.1",
+          "name_en": "Translation",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "2",
+          "code": "SM21.2",
+          "name_en": "Enlargement and Reduction",
+          "name_zh": "",
+          "note": ""
+        },
+        {
+          "no": "3",
+          "code": "SM21.3",
+          "name_en": "Reflection",
+          "name_zh": "",
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "orphan_subtopics": []
+}
