@@ -1,3 +1,5 @@
+<!-- canon: ebook-starter-v2/docs/03-authoring-style.md · 由 CTO 於 2026-11-27 三路合併 · 改這份，唔好改副本 -->
+
 # Authoring style
 
 These rules make every book look and read like the teacher's own notes. Each one was approved, or asked for, during the JM26 (B) build. When a new chapter needs something these rules don't cover, decide it with the teacher, then add it here.
@@ -176,3 +178,23 @@ Rules from here on:
    the Q6 widget went from `HT 250` to `270` so the v_y arrow stays whole when the ball reaches
    the floor.
 
+
+## 9. The rules in one place
+
+[06-layout-controls-and-media.md](06-layout-controls-and-media.md) collects every layout, control
+and media rule with the symptom, the cause, the rule and the check that enforces it. Read it before
+starting a new book; §2 covers the cut line that `check_cuts.py` now guards in this repo too.
+
+---
+
+## Physics only (verbatim from the physics repo — NOT yet reconciled with the base above)
+
+6. **The poster is what the student sees before pressing ▶.** It must be the **finished** figure
+   (the same image the film ends on), never a blank grid or a mid-draw frame — otherwise the page
+   hides the printed figure behind an empty panel. Frame 0 and the last frame must be the same
+   drawing (`PSNR inf` on the poster, ≥50 dB between first and last decoded frames), and the film
+   must never fade to blank at the end: hold the finished figure for at least 0.5–1 s.
+7. **A tool must move with the line it draws.** On the compass film the body had to turn about the
+   needle so the pencil stayed at the arc's leading end; a static tool with an arc appearing beside
+   it reads as magic, not as drawing. Measure it: the tool's axis and the arc's end differ by
+   ≤2°, the pencil sits ≤1 px from the arc, and the pivot does not move (<1 px).

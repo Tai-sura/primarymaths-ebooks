@@ -1,3 +1,7 @@
+<!-- canon: ebook-starter-v2/docs/chapters/_template.md · 由 CTO 於 2026-11-27 三路合併 · 改這份，唔好改副本 -->
+
+<!-- canon: ebook-starter-v2/docs/chapters/_template.md · 由 CTO 於 2026-11-27 三路合併 · 改這份，唔好改副本 -->
+
 # <code> <title> (`<id>`)
 
 | | |

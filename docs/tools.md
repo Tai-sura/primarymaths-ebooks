@@ -1,3 +1,5 @@
+<!-- canon: ebook-starter-v2/docs/tools.md · 由 CTO 於 2026-11-27 三路合併 · 改這份，唔好改副本 -->
+
 # Tools and skills we depend on
 
 What the e-book pipeline and the film line actually run, where each piece is used, and where it

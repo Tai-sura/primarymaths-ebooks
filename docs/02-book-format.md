@@ -1,3 +1,5 @@
+<!-- canon: ebook-starter-v2/docs/02-book-format.md · 由 CTO 於 2026-11-27 三路合併 · 改這份，唔好改副本 -->
+
 # Book format
 
 A book is one folder, `books/<id>/`, containing the files below. The engine never contains chapter content: anything specific to one book goes in its folder.
@@ -74,7 +76,7 @@ ffmpeg -y -i books/<id>/media/<name>.mp4 -vf "select=eq(n\,0)" -frames:v 1 books
 The poster must equal frame 0 pixel for pixel (SSIM 1.0). `render_media.py` writes
 the *last* frame by default, which only fits a scene that ends on the printed page
 — for a panel that starts from it, take frame 0 as above. `check_media.mjs` counts
-the 300 KB budget per `src` file, so a light poster beside a 130 KB clip is fine.
+the 900 KB budget per `src` file, so a light poster beside a 130 KB clip is fine.
 
 
 ---
@@ -95,7 +97,9 @@ python -X utf8 tools/relayout_pdf.py <in.pdf> <out.pdf> --page 7 --at 796.8 --ad
 
 That keeps every printed mark where it is (only what lies below the cut moves down) and makes the page taller than A4, which is why `layout.json` records a height per page and the reader honours it.
 
-### Answers stamped from the ANS page (`answerStamps`)
+### Answers stamped from the ANS page (`answerStamps`) — Maths only
+
+> **Maths only.** Physics has no stamp code today (`engine/viewer/answers.js` has none); if a physics book wants stamps later, go back to Stage 2 and re-do extraction plus `answerStamps`.
 
 For a fill-in worksheet the answer *is* the red mark on the ANS page: a word in a red box, a number, a circle round the choice. Copying that mark is a closer match to the printed key than any re-typesetting, and it answers "show me the answer, not an explanation".
 
@@ -125,7 +129,7 @@ A worksheet page such as `p5m07a` has no blank paper under a question — the ne
 A whole book like that can use `"answers": "cards"` instead, which makes every answer a card. For a question in the list:
 
 - the printed page never moves and is never cut (`space` is ignored for it);
-- a 15 × 15 pt `?` chip sits at the **top-right of the printed line that carries the blank**: `layout.json` records that spot as `cardAt` (the extractor finds the row with the underscores, so a blank on the question's second line still gets its chip on that line, not beside the question number). The chip steps right, then above or out into the margin, if printed ink is there;
+- a control button 22 px tall (`engine/styles.css:408` `.ctl button`) whose 15×15 `?` icon (`engine/styles.css:423` `.ctl button svg`) sits at the **top-right of the printed line that carries the blank**: `layout.json` records that spot as `cardAt` (the extractor finds the row with the underscores, so a blank on the question's second line still gets its chip on that line, not beside the question number). The chip steps right, then above or out into the margin, if printed ink is there;
 - tapping it opens a card over the page with that question's worked solution at the book's type size, wrapped to the card's width, with the usual step buttons (▸ » ◂ ↺) and a ✕; Escape or a tap outside closes it. The card opens with the whole working shown — a `?` tap is a lookup — and ↺ hides the steps again;
 - the card is as tall as the working needs (up to almost the page height) and scrolls only if the working is taller than that.
 
@@ -288,3 +292,21 @@ For percentages, growth and decay, see `books/jm27a/widgets.js`: `timeline()` (b
 `playAt` 是填充題 Play 按鈕的左上角（pt），放在該題填充位的右上角；`playSize` 是它的大小（預設 `[24,22]`，
 窄位可縮到 `[14,12]`，`engine/viewer/answers.js` 按此畫）；`blankAt` 是量到的填充位中心（第三個數字是該行文字右端），
 供 QA 證明按鈕貼住自己嗰格。量唔到（掃描頁冇文字層）時 `blankAt` 為 `null`。
+
+
+---
+
+## Physics only (verbatim from the physics repo — NOT yet reconciled with the base above)
+
+| `media` | Optional animations laid over printed panels: `[{ "page", "region": [x0, y0, x1, y1], "scene": "module:Class", "src": "media/x.mp4", "poster": "media/x.jpg", "title" }]`. The scene is a Manim class in `tools/manim/<module>.py`; `python tools/render_media.py <id>` renders `src` and `poster` (its last frame), and `--still` saves layout previews to `reference/media/`. The poster covers the panel until the round ▶ button on its corner is tapped. An entry may also carry `"widget": "<id>"` (and `"widgetTitle"`): a widgets.js graphic that belongs to the same printed panel, opened from one more round button beside ▶ — the panel's interactive version. The scene class is part of the delivery: commit `tools/manim/<module>.py` in the same commit as the `mp4` and the poster, and add its row to `books/<id>/media/SOURCES.md` (source, rebuild command, duration, size, md5) — a film the repo cannot rebuild is not delivered, see [06-layout-controls-and-media.md § 17](06-layout-controls-and-media.md). |
+| `guides` | Optional figure animations that walk through a question's solution: `[{ "q": "q5", "scene": "module:Class", "src": "media/guide-q5.mp4", "poster": "media/guide-q5.jpg" }]`. The question's control strip (or, for a printed answer, its corner chip) gets a film button that opens the video in a dialog. The scene (a `GuideScene` from `tools/manim/guide.py`) sets its own `PAGE` and `REGION`; the poster is the first frame, the plain figure. `python tools/render_media.py <id> --still` saves `reference/guides/<Class>_cmp.png` (print above the first frame) and `<Class>_sheet.png` (a frame every 2 s). `python tools/audit_guides.py <id>` lists every label that touches a mark, another label or the frame edge. A guide's scene class is committed with its video in the same commit, and listed in `books/<id>/media/SOURCES.md`, as for `media`. |
+
+| `answerCards` | `["q1", …]`: these questions' working opens in a card from a labelled **Answer** control button (22 px tall `engine/styles.css:408` `.ctl button`, 15×15 `?` icon `engine/styles.css:423` `.ctl button svg`) at the top-right of their fill-in line; every other question keeps the in-page working, page cuts and `space` (see "Answers in a card"). Use it for fill-in questions on worksheet pages; leave MC and long questions out. |
+| `answers` | `"cards"`: the whole book uses cards (no page is ever cut). Only for a book where every page is a worksheet with no blank space; otherwise use `answerCards`. |
+
+**Measure the cut on the image the reader actually serves.** The reader displays `pages/pNN.jpg` (`engine/book.js:53`), which `extract_pages.py` writes with `jpg_quality=86` (`tools/extract_pages.py:299`). JPEG puts 1–2 pt of anti-aliasing around every printed edge, so a row that is white in a fresh PDF render can carry grey pixels in the JPG that gets cut; measuring the PDF hides exactly those rows. Measure the saved `pages/pNN.jpg` (1 pt = 3 px at zoom 3) and require the cut row to be clear **across the whole page width**, not just across the region's x range, with 0 px below 245; inside the region itself require 0 px below 170. On jpwm01 a cut at 782.0 passed a PDF-render check and still carried 7 px below 245 in the JPG (the anti-aliased top of an option's glyphs), while 780.5 was clear.
+
+- a control button 22 px tall (`engine/styles.css:408` `.ctl button`) with a 15×15 `?` icon (`engine/styles.css:423` `.ctl button svg`) sits at the **top-right of the printed line that carries the blank**: `layout.json` records that spot as `cardAt` (the extractor finds the row with the underscores, so a blank on the question's second line still gets its button on that line, not beside the question number). The button moves right, then above or out into the margin, if printed ink is there, and it is kept inside the page edge;
+- tapping it opens a card over the page with that question's worked solution at the book's type size, wrapped to the card's width, with the usual step buttons (▸ » ◂ ↺) and a ✕; Escape or a tap outside closes it. The card opens with the whole working shown — the button is a lookup, not a puzzle — and ↺ hides the steps again;
+
+`py -3.12 tools/qa/check_answer_chips.py <id>` reads `layout.json` and the page images and fails when a chip covers printed ink. `node tools/qa/check_book.mjs <id>` opens every card once, so its fit and scroll warnings cover cards too.
