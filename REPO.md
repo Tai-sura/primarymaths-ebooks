@@ -22,7 +22,13 @@ and nothing maths is authored there.
   CACHE = PREFIX + "v<N>";`. Both sites are one origin, so they share one CacheStorage, and
   `activate` may delete only caches under this site's own prefix. See
   `docs/adr/ADR-0003-per-site-cache-prefix.md`.
-- Tag every deploy `pre-<book>-v<number>`.
+- Tag every deploy, and record the commit, tag and CACHE in the report. Three naming lines,
+  because a tag should say what kind of release it is:
+  - `pre-<book>-v<number>` — a book release, e.g. `pre-p5m07a-v174`.
+  - `pre-sw-v<number>` — a release that touches only `sw.js`, e.g. `pre-sw-v190`.
+  - `pre-docs-<change>-v1` — docs or ADR only, named after the change: `pre-docs-canon-v1`,
+    `pre-docs-fix-v1`, `pre-adr0004-v1`. No book and no cache number moved, so the number
+    would say nothing about what is being rolled back.
 
 ## 2. What belongs in the catalogue
 
