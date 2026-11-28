@@ -494,8 +494,9 @@ A Play that only looks right on screen is not verified: match it by measurement.
 1. Set `"status": "live"` in `book.json` (the only place the state lives).
 2. Bump `CACHE` in `sw.js` — the site root file, where `const CACHE = PREFIX + "v18"`
    becomes `PREFIX + "v19"` (the prefix stays, the number moves) — so iPads fetch the new files. Bump it for **any** changed
-   file, not only a video: a missed bump leaves every reader on the old copy
-   until the next release.
+   file the reader fetches, not only a video: a missed bump leaves every reader on the old copy
+   until the next release. A docs or tools change is not one of those — the reader never
+   fetches it, so it needs no bump.
 3. Commit and push (details in [04-qa-and-release.md](04-qa-and-release.md)).
    Before pushing, tag the previous state (`git tag pre-<id>-vN`) so a bad
    release can be reverted in one command (`git revert` or `git reset --hard
