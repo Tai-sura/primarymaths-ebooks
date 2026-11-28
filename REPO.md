@@ -15,9 +15,11 @@ and nothing maths is authored there.
 - Deploy from a **clean worktree created from `origin/main`**. A local clone whose `main`
   has its own unrelated history can never be pushed (no common ancestor, so no merge);
   see section 5.
-- Every deploy bumps `CACHE` in `sw.js`, and the number must be the **next free number
-  across both repositories** — this site and the physics one share one counter. If the
-  physics repository already shipped `v159`, the next maths deploy is `v160`.
+- Every deploy that changes a file the reader fetches bumps `CACHE` in `sw.js`; a docs-only
+  or tools-only change does not, because bumping would send every iPad to re-download the
+  page images for nothing. The number must be the **next free number across both
+  repositories** — this site and the physics one share one counter. If the physics
+  repository already shipped `v159`, the next maths deploy is `v160`.
 - The cache **name carries this site's prefix**: `const PREFIX = "primarymaths-ebooks-"; const
   CACHE = PREFIX + "v<N>";`. Both sites are one origin, so they share one CacheStorage, and
   `activate` may delete only caches under this site's own prefix. See
