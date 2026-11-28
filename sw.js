@@ -1,5 +1,10 @@
-﻿// Bump on every release so iPads drop the old copy (docs/04-qa-and-release.md).
-const CACHE = "ebooks-v174";
+// Bump on every release so iPads drop the old copy (docs/04-qa-and-release.md).
+// CacheStorage is shared by every site on this origin, so the cache name carries this
+// site's own prefix: without one, activating here deletes the other site's offline copy.
+const PREFIX = "primarymaths-ebooks-";
+const CACHE = PREFIX + "v190";
+// This site's cache from before the prefix existed. Deleted once; drop this line later.
+const LEGACY = ["ebooks-v174"];
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -8,7 +13,16 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((k) => (k.startsWith(PREFIX) || LEGACY.includes(k)) && k !== CACHE)
+            .map((k) => caches.delete(k))
+        )
+      )
+      .then(() => self.clients.claim())
   );
 });
 
@@ -56,8 +70,10 @@ self.addEventListener("fetch", (event) => {
     return response;
   };
   if (STATIC.test(new URL(request.url).pathname)) {
-    event.respondWith(caches.match(request).then((hit) => hit || fetch(request).then(store)));
+    event.respondWith(
+      caches.match(request, { cacheName: CACHE }).then((hit) => hit || fetch(request).then(store))
+    );
     return;
   }
-  event.respondWith(fetch(request).then(store).catch(() => caches.match(request)));
+  event.respondWith(fetch(request).then(store).catch(() => caches.match(request, { cacheName: CACHE })));
 });
