@@ -17,7 +17,7 @@ and nothing maths is authored there.
   see section 5.
 - Every deploy bumps `CACHE` in `sw.js`, and the number must be the **next free number
   across both repositories** — this site and the physics one share one counter. If the
-  physics repository already shipped `ebooks-v159`, the next maths deploy is `v160`.
+  physics repository already shipped `v159`, the next maths deploy is `v160`.
 - The cache **name carries this site's prefix**: `const PREFIX = "primarymaths-ebooks-"; const
   CACHE = PREFIX + "v<N>";`. Both sites are one origin, so they share one CacheStorage, and
   `activate` may delete only caches under this site's own prefix. See
