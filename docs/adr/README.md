@@ -13,7 +13,8 @@
 | 編號 | 標題 | 狀態 | 日期 |
 |---|---|---|---|
 | [ADR-0001](ADR-0001-deploy-from-origin-main-worktree.md) | 部署只由建在 `origin/main` 的乾淨 worktree 做 | 已接受 | 2026-11-27 |
-| [ADR-0002](ADR-0002-shared-cache-numbering.md) | 兩個站的 CACHE 號碼共用一組，一號一內容 | 已接受 | 2026-11-27 |
+| [ADR-0002](ADR-0002-shared-cache-numbering.md) | 兩個站的 CACHE 號碼共用一組，一號一內容 | 已接受（第 4 點驗收由 ADR-0003 取代） | 2026-11-27 |
+| [ADR-0003](ADR-0003-per-site-cache-prefix.md) | 快取名帶站前綴，activate 只刪自己的 cache | 已接受 | 2026-11-28 |
 
 ## 規則
 

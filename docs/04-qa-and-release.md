@@ -164,8 +164,11 @@ Run this on the live link after release, or on the local Wi-Fi preview.
 1. **Every check in §2 must be 0 FAIL *and* 0 WARN.** A WARN is not a pass; bring it to
    zero or write down why it cannot be, before anything else.
 2. Set `"status": "live"` in `books/<id>/book.json`, and make sure the id is in `books/catalog.json`.
-3. Bump `CACHE` in `sw.js` (`ebooks-v5` → `ebooks-v6`). Never reuse a number and never
-   publish without bumping it: iPads that already opened the site keep the old files.
+3. Bump `CACHE` in `sw.js` (`primarymaths-ebooks-v189` → `primarymaths-ebooks-v190`), keeping
+   the site prefix: both sites share one origin and one CacheStorage, so a name without the
+   prefix lets `activate` delete the other site's offline copy
+   (`docs/adr/ADR-0003-per-site-cache-prefix.md`). Never reuse a number and never publish
+   without bumping it: iPads that already opened the site keep the old files.
 4. Build the deploy clone from the source clone (`tools/build_deploy.ps1`). **Only the deploy
    clone pushes**; the source clone only commits. A build that copies `tools/` and `docs/`
    must filter the temp harnesses (`_*.py`, `_*.mjs`, `_*.html`) — they are not for the
@@ -340,7 +343,7 @@ Two habits keep the register short:
    rows). Fix one, re-render all pages, and look at every sheet before shipping.
 
 1. Set `"status": "live"` in `books/<id>/book.json`, and make sure the id is in `books/catalog.json`.
-2. Bump `CACHE` in `sw.js` (`ebooks-v5` → `ebooks-v6`). Without this, iPads that already opened the site keep serving the old files.
+2. Bump `CACHE` in `sw.js` (`primarymaths-ebooks-v189` → `primarymaths-ebooks-v190`), keeping the site prefix — both sites share one CacheStorage, so a name without the prefix lets `activate` delete the other site's offline copy (`docs/adr/ADR-0003-per-site-cache-prefix.md`). Without this, iPads that already opened the site keep serving the old files.
 3. Commit and push:
 
    git add -A

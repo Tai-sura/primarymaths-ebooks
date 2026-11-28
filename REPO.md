@@ -18,6 +18,10 @@ and nothing maths is authored there.
 - Every deploy bumps `CACHE` in `sw.js`, and the number must be the **next free number
   across both repositories** — this site and the physics one share one counter. If the
   physics repository already shipped `ebooks-v159`, the next maths deploy is `v160`.
+- The cache **name carries this site's prefix**: `const PREFIX = "primarymaths-ebooks-"; const
+  CACHE = PREFIX + "v<N>";`. Both sites are one origin, so they share one CacheStorage, and
+  `activate` may delete only caches under this site's own prefix. See
+  `docs/adr/ADR-0003-per-site-cache-prefix.md`.
 - Tag every deploy `pre-<book>-v<number>`.
 
 ## 2. What belongs in the catalogue
@@ -100,6 +104,7 @@ cd tools/qa && npm install          # once: puppeteer-core (needs a local Chrome
 node tools/qa/check_book.mjs p5m07a --verbose
 node tools/qa/measure_ctl.mjs p5m07a
 node tools/qa/check_subject.mjs     # catalogue vs subject
+node tools/qa/check_live.mjs p5m07a # after a push: is the live site serving this build?
 ```
 
 `tools/qa/check_book.mjs`, `measure_ctl.mjs` and `check_media.mjs` here differ in content

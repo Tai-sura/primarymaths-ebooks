@@ -254,7 +254,7 @@ What a region can hold is fixed by the printed page: the blank already there, pl
    because it was answering from an earlier snapshot in memory. A verdict from an old snapshot is
    redone, never reconciled.
 1. Set `"status": "live"` in `book.json`.
-2. Bump `CACHE` in `sw.js` (e.g. `ebooks-v5` → `ebooks-v6`), so iPads fetch the new files.
+2. Bump `CACHE` in `sw.js` (e.g. `primarymaths-ebooks-v189` → `primarymaths-ebooks-v190`, keeping the site prefix), so iPads fetch the new files.
 3. Commit and push (details in [04-qa-and-release.md](04-qa-and-release.md)). GitHub Pages updates the live link in about a minute.
 4. Update the book table in `README.md` and the chapter log.
 
@@ -492,8 +492,8 @@ button check would see it.
 A Play that only looks right on screen is not verified: match it by measurement.
 
 1. Set `"status": "live"` in `book.json` (the only place the state lives).
-2. Bump `CACHE` in `sw.js` — the site root file, `const CACHE = "ebooks-v17"` →
-   `"ebooks-v18"` — so iPads fetch the new files. Bump it for **any** changed
+2. Bump `CACHE` in `sw.js` — the site root file, where `const CACHE = PREFIX + "v18"`
+   becomes `PREFIX + "v19"` (the prefix stays, the number moves) — so iPads fetch the new files. Bump it for **any** changed
    file, not only a video: a missed bump leaves every reader on the old copy
    until the next release.
 3. Commit and push (details in [04-qa-and-release.md](04-qa-and-release.md)).
